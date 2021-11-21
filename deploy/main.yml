@@ -1,0 +1,9 @@
+- name: Start PXE server
+  hosts: localhost
+  roles:
+    - pxe-server
+
+#- name: Create Kubernetes cluster
+#  hosts: metal
+#  roles:
+#    - k3s

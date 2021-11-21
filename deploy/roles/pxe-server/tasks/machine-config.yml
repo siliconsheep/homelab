@@ -1,0 +1,20 @@
+---
+- name: Render GRUB config
+  template:
+    src: grub-machine.cfg.j2
+    dest: "{{ role_path }}/files/data/pxe-config/tftp/{{ hostvars[item]['mac'] }}.conf"
+
+- name: Create cloud-init directory
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/http/{{ item }}"
+    state: directory
+
+- name: Copy cloud-init meta-data
+  copy:
+    content: 'instance-id: focal-autoinstall'
+    dest: "{{ role_path }}/files/data/pxe-config/http/{{ item }}/meta-data"
+
+- name: Render cloud-init user-data
+  template:
+    src: cloud-init.j2
+    dest: "{{ role_path }}/files/data/pxe-config/http/{{ item }}/user-data"

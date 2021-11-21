@@ -1,0 +1,55 @@
+- name: Download ISO
+  get_url:
+    url: "{{ iso_url }}"
+    dest: "{{ role_path }}/files/data/iso/{{ iso_url | basename }}"
+    checksum: "{{ iso_checksum }}"
+  register: iso
+
+- name: Extract the ISO
+  command:
+    cmd: "xorriso -osirrox on -indev {{ iso.dest }} -extract / {{ role_path }}/files/data/os"
+    creates: "{{ role_path }}/files/data/os/casper/initrd"
+
+- name: Copy files for PXE boot
+  copy:
+    src: "{{ role_path }}/files/data/os/{{ item }}"
+    dest: "{{ role_path }}/files/data/pxe-config/tftp/{{ item | basename }}"
+    remote_src: true
+  with_items:
+  - casper/initrd
+  - casper/vmlinuz
+  - EFI/BOOT/grubx64.efi
+
+- name: Render DHCP config
+  template:
+    src: dhcpd.conf.j2
+    dest: "{{ role_path }}/files/data/pxe-config/dhcp/dhcpd.conf"
+
+- name: Render base GRUB config
+  template:
+    src: grub-base.cfg.j2
+    dest: "{{ role_path }}/files/data/pxe-config/tftp/grub.cfg"
+
+- name: Render machine-specific config
+  include_tasks: machine-config.yml
+  loop: "{{ groups['k3s_nodes'] }}"
+
+
+# - name: Render machine specific GRUB CONFIG
+#  template:
+#    src: grub-machine.cfg.j2
+#    dest: "{{ role_path }}/files/data/pxe-config/tftp/{{ hostvars[item]['mac'] }}.conf"
+#  loop: "{{ groups['k3s_nodes'] }}"
+
+# - name: Render machine specific cloud-init files
+#  template:
+#    src: cloud-init.j2
+#    dest: "{{ role_path }}/files/data/pxe-config/http/{{ hostvars[item]['mac'] }}.conf"
+#  loop: "{{ groups['k3s_nodes'] }}"
+
+# - name: Start ephemeral PXE server
+#  docker_compose:
+#    project_src: "{{ role_path }}/files"
+#    state: present
+#    restarted: yes
+#    build: yes
