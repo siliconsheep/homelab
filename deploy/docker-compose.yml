@@ -17,6 +17,16 @@ services:
       - "69:69/udp"
     volumes:
       - ./roles/pxe-server/files/data/pxe-config/tftp:/var/lib/tftpboot:ro
+  #udpbridge:
+  #  build:
+  #    context: ./docker
+  #    dockerfile: udpbridge.Dockerfile
+  #  environment:
+  #    - LISTEN_PORT=10069
+  #    - TARGET_PORT=69
+  #    - TARGET_HOST=tftp
+  #  ports:
+  #    - "10069:10069"
   http:
     build:
       context: ./docker
