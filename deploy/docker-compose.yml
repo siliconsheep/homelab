@@ -7,34 +7,18 @@ services:
       dockerfile: dhcp.Dockerfile
     volumes:
       - ./roles/pxe-server/files/data/pxe-config/dhcp/dhcpd.conf:/etc/dhcp/dhcpd.local.conf:ro
-    #ports:
-    #  - "67:67/udp"
     network_mode: host
   tftp:
     build:
       context: ./docker
       dockerfile: tftp.Dockerfile
-    #ports:
-    #  - "69:69/udp"
     network_mode: host
     volumes:
       - ./roles/pxe-server/files/data/pxe-config/tftp:/var/lib/tftpboot:ro
-  #udpbridge:
-  #  build:
-  #    context: ./docker
-  #    dockerfile: udpbridge.Dockerfile
-  #  environment:
-  #    - LISTEN_PORT=10069
-  #    - TARGET_PORT=69
-  #    - TARGET_HOST=tftp
-  #  ports:
-  #    - "10069:10069"
   http:
     build:
       context: ./docker
       dockerfile: http.Dockerfile
-    #ports:
-    #  - "80:80"
     network_mode: host
     volumes:
       - ./roles/pxe-server/files/data/iso:/usr/share/nginx/html/iso:ro

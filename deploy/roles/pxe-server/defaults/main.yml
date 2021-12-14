@@ -1,4 +1,4 @@
-deploy_network: 172.27.30.0/255.255.255.0
+deploy_network: 172.27.20.0/255.255.255.0
 
 iso_name: "Ubuntu 20.04.3"
 iso_url: "http://se.releases.ubuntu.com/20.04/ubuntu-20.04.3-live-server-amd64.iso"

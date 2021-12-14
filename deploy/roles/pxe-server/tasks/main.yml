@@ -10,6 +10,24 @@
     cmd: "xorriso -osirrox on -indev {{ iso.dest }} -extract / {{ role_path }}/files/data/os"
     creates: "{{ role_path }}/files/data/os/casper/initrd"
 
+- name: Delete any pre-existing pxe-config directories
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/{{ item }}"
+    state: absent
+  with_items:
+    - dhcp
+    - tftp
+    - http
+
+- name: Create pxe-config directories
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/{{ item }}"
+    state: directory
+  with_items:
+    - dhcp
+    - tftp
+    - http
+
 - name: Copy files for PXE boot
   copy:
     src: "{{ role_path }}/files/data/os/{{ item }}"

@@ -1,6 +1,9 @@
 #!/bin/sh
 
-DOCKER_IP=$(ip addr show dev eth0 | grep 'inet\b' | awk '{print $2}')
+# Listen on host network
+DOCKER_IP=$(ip addr show dev enp0s9 | grep 'inet\b' | awk '{print $2}')
+# Listen on local Docker network
+# DOCKER_IP=$(ip addr show dev docker0 | grep 'inet\b' | awk '{print $2}')
 DOCKER_NETWORK=$(ipcalc -n --no-decorate $DOCKER_IP)
 DOCKER_MASK=$(ipcalc -m --no-decorate $DOCKER_IP)
 
