@@ -37,7 +37,7 @@
   - casper/initrd
   - casper/vmlinuz
   - EFI/BOOT/grubx64.efi
-  - EFI/BOOT/BOOTx64.efi
+  - EFI/BOOT/BOOTx64.EFI
 
 - name: Create tftp grub directory
   file:
