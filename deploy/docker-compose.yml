@@ -6,7 +6,7 @@ services:
       context: ./docker
       dockerfile: dhcp.Dockerfile
     volumes:
-      - ./roles/pxe-server/files/data/pxe-config/dhcp/dhcpd.conf:/etc/dhcp/dhcpd.local.conf:ro
+      - ./roles/pxe-server/files/data/pxe-config/dhcp/dhcpd.conf:/etc/dhcp/dhcpd.conf:ro
     network_mode: host
   tftp:
     build:
