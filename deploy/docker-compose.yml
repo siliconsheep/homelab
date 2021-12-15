@@ -14,7 +14,7 @@ services:
       dockerfile: tftp.Dockerfile
     network_mode: host
     volumes:
-      - ./roles/pxe-server/files/data/pxe-config/tftp:/var/lib/tftpboot/boot/grub:ro
+      - ./roles/pxe-server/files/data/pxe-config/tftp:/var/lib/tftpboot:ro
   http:
     build:
       context: ./docker

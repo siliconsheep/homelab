@@ -3,7 +3,7 @@ timeout=5
 timeout_style=menu
 
 menuentry "Focal Live Installer - automated" --id=autoinstall {
-    configfile /$net_default_mac.conf
+    configfile /grub/$net_default_mac.conf
 }
 menuentry "Focal Live Installer" --id=install {
     echo "Loading Kernel..."
