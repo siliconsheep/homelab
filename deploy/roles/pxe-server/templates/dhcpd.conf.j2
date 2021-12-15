@@ -11,10 +11,11 @@ subnet {{ deploy_network | ipaddr('network/prefix') | ipaddr('network') }} netma
 
     class "pxeclients" {
         match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
-        next-server {{ ansible_default_ipv4.address }};
+        next-server 192.168.1.41;
+        # next-server {{ ansible_default_ipv4.address }};
 
         if option architecture-type = 00:07 {
-            filename "grubx64.efi";
+            filename "boot/grub/grubx64.efi";
         }
     }
 }
