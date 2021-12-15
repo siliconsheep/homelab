@@ -39,8 +39,9 @@
   - EFI/BOOT/grubx64.efi
 
 - name: Create tftp grub directory
-  path: "{{ role_path }}/files/data/pxe-config/tftp/grub"
-  state: directory
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/tftp/grub"
+    state: directory
 
 - name: Render DHCP config
   template:
