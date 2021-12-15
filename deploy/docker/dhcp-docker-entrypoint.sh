@@ -11,6 +11,10 @@ if test -f /etc/dhcp/dhcpd.local.conf; then
     cat /etc/dhcp/dhcpd.local.conf >> /etc/dhcp/dhcpd.conf
 fi
 
+if test -f /var/lib/dhcp/dhcpd.leases; then
+    echo "" > /var/lib/dhcp/dhcpd.leases
+fi
+
 echo """
 # Needed so dhcpd will start
 # We'll use a DHCP relay to get DHCP traffic to the Docker container
