@@ -11,7 +11,7 @@ subnet {{ deploy_network | ipaddr('network/prefix') | ipaddr('network') }} netma
 
     class "pxeclients" {
         match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
-        next-server 192.168.1.41;
+        next-server 172.27.20.1;
         # next-server {{ ansible_default_ipv4.address }};
 
         if option architecture-type = 00:07 {

@@ -28,6 +28,33 @@
     - tftp
     - http
 
+# http://ftp.acc.umu.se/ubuntu/pool/main/g/grub2/
+
+- name: Download UEFI boot files
+  get_url:
+    url: "http://ftp.acc.umu.se/ubuntu/pool/main/{{ item }}"
+    dest: "/tmp/{{ item | basename }}"
+  with_items:
+    - g/grub2/grub-common_2.06-2ubuntu3_amd64.deb
+    - g/grub2-signed/grub-efi-amd64-signed_1.176+2.06-2ubuntu3_amd64.deb
+    - s/shim-signed/shim-signed_1.51+15.4-0ubuntu9_amd64.deb
+
+
+- name: Copy UEFI boot files
+  shell:
+    cmd: dpkg-deb --fsys-tarfile {{ item["tarfile"] }}*deb  | tar x {{ item["filename"] }} -O > {{ role_path }}/files/data/pxe-config/tftp/{{ item["output"] }}
+    chdir: /tmp
+  with_items:
+    - tarfile: shim-signed
+      filename: ./usr/lib/shim/shimx64.efi.signed
+      output: bootx64.efi
+    - tarfile: grub-efi-amd64-signed
+      filename: ./usr/lib/grub/x86_64-efi-signed/grubnetx64.efi.signed
+      output: grubx64.efi
+    - tarfile: grub-common
+      filename: ./usr/share/grub/unicode.pf2
+      output: unicode.pf2
+
 - name: Copy files for PXE boot
   copy:
     src: "{{ role_path }}/files/data/os/{{ item }}"
@@ -36,21 +63,11 @@
   with_items:
   - casper/initrd
   - casper/vmlinuz
-  - EFI/BOOT/grubx64.efi
-  - EFI/BOOT/BOOTx64.EFI
 
 - name: Create tftp grub directory
   file:
     path: "{{ role_path }}/files/data/pxe-config/tftp/boot/grub"
     state: directory
-
-- name: Copy files for PXE boot
-  copy:
-    src: "{{ role_path }}/files/data/os/{{ item }}"
-    dest: "{{ role_path }}/files/data/pxe-config/tftp/{{ item }}"
-    remote_src: true
-  with_items:
-  - boot/grub/font.pf2
 
 - name: Render DHCP config
   template:
