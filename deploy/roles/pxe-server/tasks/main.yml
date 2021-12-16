@@ -66,7 +66,7 @@
 
 - name: Create tftp grub directory
   file:
-    path: "{{ role_path }}/files/data/pxe-config/tftp/boot/grub"
+    path: "{{ role_path }}/files/data/pxe-config/tftp/grub"
     state: directory
 
 - name: Render DHCP config
@@ -77,7 +77,7 @@
 - name: Render base GRUB config
   template:
     src: grub-base.cfg.j2
-    dest: "{{ role_path }}/files/data/pxe-config/tftp/boot/grub/grub.cfg"
+    dest: "{{ role_path }}/files/data/pxe-config/tftp/grub/grub.cfg"
 
 - name: Render machine-specific config
   include_tasks: machine-config.yml
