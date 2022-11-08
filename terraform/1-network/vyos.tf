@@ -1,3 +1,32 @@
+resource "oci_core_network_security_group" "vyos_nsg" {
+  compartment_id = var.compartment_ocid
+  vcn_id         = oci_core_vcn.default.id
+  display_name   = "NSG for VyOS"
+
+  defined_tags = local.defined_tags
+
+  lifecycle {
+    ignore_changes = [defined_tags["Oracle-Tags.CreatedBy"], defined_tags["Oracle-Tags.CreatedOn"]]
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "vyos_allow_wg" {
+  network_security_group_id = oci_core_network_security_group.vyos_nsg.id
+  direction                 = "INGRESS"
+  protocol                  = local.protocol_UDP
+  description               = "Allow incoming WireGuard traffic"
+
+  source      = "0.0.0.0/0"
+  source_type = "CIDR_BLOCK"
+
+  udp_options {
+    destination_port_range {
+      max = 51820
+      min = 51820
+    }
+  }
+}
+
 resource "oci_core_instance" "vyos_instance" {
   compartment_id       = var.compartment_ocid
   display_name         = "VyOS instance"
@@ -14,7 +43,7 @@ resource "oci_core_instance" "vyos_instance" {
     defined_tags           = local.defined_tags
     display_name           = "Primary VNIC for VyOS"
     hostname_label         = "vyos"
-    nsg_ids                = []
+    nsg_ids                = [oci_core_network_security_group.vyos_nsg.id]
     private_ip             = local.vyos_ip
     skip_source_dest_check = true
     subnet_id              = oci_core_subnet.public-subnet.id
