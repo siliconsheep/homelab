@@ -1,0 +1,3 @@
+creation_rules:
+- filename_regex: secrets.yaml
+  age: age1anja8eu5kzmjg26lvqzwa37avw5ljgdr3y38ydwm6706m9ytce4sjhp5ka

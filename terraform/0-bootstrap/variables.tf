@@ -1,27 +1,27 @@
 variable "tenancy_ocid" {
-    type = string
+  type = string
 }
 
 variable "user_ocid" {
-    type = string
+  type = string
 }
 
 variable "fingerprint" {
-    type = string
+  type = string
 }
 
 variable "private_key" {
-    type = string
+  type = string
 }
 
 variable "compartment_ocid" {
-    type = string
+  type = string
 }
 
 variable "namespace" {
-    type = string
+  type = string
 }
 
 variable "region" {
-    type = string
+  type = string
 }
