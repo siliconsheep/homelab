@@ -25,11 +25,3 @@ variable "namespace" {
 variable "region" {
   type = string
 }
-
-variable "namedotcom_username" {
-  type = string
-}
-
-variable "namedotcom_token" {
-  type = string
-}

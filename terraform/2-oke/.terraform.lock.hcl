@@ -1,47 +1,6 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/hashicorp/null" {
-  version = "3.2.0"
-  hashes = [
-    "h1:pfjuwssoCoBDRbutlVLAP8wiDrkQ3G4d3rs+f7uSh2A=",
-    "zh:1d88ea3af09dcf91ad0aaa0d3978ca8dcb49dc866c8615202b738d73395af6b5",
-    "zh:3844db77bfac2aca43aaa46f3f698c8e5320a47e838ee1318408663449547e7e",
-    "zh:538fadbd87c576a332b7524f352e6004f94c27afdd3b5d105820d328dc49c5e3",
-    "zh:56def6f00fc2bc9c3c265b841ce71e80b77e319de7b0f662425b8e5e7eb26846",
-    "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
-    "zh:8fce56e5f1d13041d8047a1d0c93f930509704813a28f8d39c2b2082d7eebf9f",
-    "zh:989e909a5eca96b8bdd4a0e8609f1bd525949fd226ae870acedf2da0c55b0451",
-    "zh:99ddc34ad13e04e9c3477f5422fbec20fc13395ff940720c287bfa5c546d2fbc",
-    "zh:b546666da4b4b60c0eec23faab7f94dc900e48f66b5436fc1ac0b87c6709ef04",
-    "zh:d56643cb08cba6e074d70c4af37d5de2bd7c505f81d866d6d47c9e1d28ec65d1",
-    "zh:f39ac5ff9e9d00e6a670bce6825529eded4b0b4966abba36a387db5f0712d7ba",
-    "zh:fe102389facd09776502327352be99becc1ac09e80bc287db84a268172be641f",
-  ]
-}
-
-provider "registry.terraform.io/hashicorp/oci" {
-  version = "4.99.0"
-  hashes = [
-    "h1:UkIJiL7NWOx+D3lWGpvfjJhDQzJzuWdHN9XybK+S23o=",
-    "zh:252cdb93dca5fbc6acdd9b45cd43cb4454dcba953f56ed3e4f8b5b6fd9868a22",
-    "zh:2701a8e26c97484bb458fa579625bc238db48cdd7d88d1b12e7b90e9365fba28",
-    "zh:2bec51e08dfea0afaedb3ceaf3d0ef44f0b14c68ed44790da85adb0d8b0f8cc3",
-    "zh:30cf0e3a5805094759bf0182b56db5bcf2582eb771b0f77cc457a2cb185c5ddd",
-    "zh:540710866604f9cf6acc3110205c115e0cc3120053ce8ab7e16b38e0cf4ef084",
-    "zh:69097d01d80138545a4d09e7a3431c2ad19e3f5bec0c0bb694314307a2e79c56",
-    "zh:6a345d539a8490a9f0f8d1451553a45f75541604e56a708d886d797b49e460e0",
-    "zh:6f1f79ff708bfec4c6e61bb60e72df5fbf585731f959671ad357ccdb8a073331",
-    "zh:80ec6d046a6b4936043e8cd30cb9c929bd1edb1b41a8699e36e20784349bc340",
-    "zh:8df33360750b395350c7ee938c1559c59318d6ab9959cc35c71f2dfb75c19de4",
-    "zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425",
-    "zh:bc9d9e75a8b7a2fb9800104feb4a36798718575dcf80841c8b9cc7c4ea7c9a84",
-    "zh:c7c8cfd9fd645d3d74d8b7f520188b20c60e73b8b7f0b7524f9f7c668e46a5a4",
-    "zh:f73ed44cd49ddcb7a0a730443cf79ec23d91e7105dab0196e0dad795dbd8ea40",
-    "zh:f7a480a9cec004c631b1d0f94ca0f888c14ef98f0f09d25b5316cbd0e011bc24",
-  ]
-}
-
 provider "registry.terraform.io/lexfrei/namedotcom" {
   version     = "1.2.0"
   constraints = "~> 1.2"

@@ -12,7 +12,7 @@ data "oci_core_images" "vyos-images" {
 }
 
 data "oci_core_private_ips" "vyos" {
-  ip_address = local.vyos_ip
+  ip_address = oci_core_instance.vyos_instance.private_ip
   subnet_id  = oci_core_subnet.public-subnet.id
 
   depends_on = [

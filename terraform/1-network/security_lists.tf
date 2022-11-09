@@ -35,6 +35,24 @@ resource "oci_core_security_list" "public-security-list" {
     stateless   = "false"
   }
 
+  ingress_security_rules {
+    description = "Allow private -> public subnet traffic"
+    protocol    = "all"
+
+    source      = local.secrets.private_subnet_cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
+  }
+
+  ingress_security_rules {
+    description = "Allow internal LAN -> public subnet traffic"
+    protocol    = "all"
+
+    source      = local.secrets.internal_lan_cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
+  }
+
   defined_tags = local.defined_tags
 
   lifecycle {
@@ -75,6 +93,24 @@ resource "oci_core_security_list" "private-security-list" {
     protocol    = local.protocol_ICMP
 
     source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
+  }
+
+  ingress_security_rules {
+    description = "Allow public -> private subnet traffic"
+    protocol    = "all"
+
+    source      = local.secrets.public_subnet_cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
+  }
+
+  ingress_security_rules {
+    description = "Allow internal LAN -> private subnet traffic"
+    protocol    = "all"
+
+    source      = local.secrets.internal_lan_cidr_block
     source_type = "CIDR_BLOCK"
     stateless   = "false"
   }
