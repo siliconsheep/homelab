@@ -4,16 +4,8 @@ resource "oci_core_security_list" "public-security-list" {
 
   display_name = "Security List for Public subet"
 
-  egress_security_rules {
-    destination      = "0.0.0.0/0"
-    destination_type = "CIDR_BLOCK"
-
-    protocol  = "all"
-    stateless = "false"
-  }
-
   ingress_security_rules {
-    description = "SSH"
+    description = "VyOS - Allow SSH"
     protocol    = local.protocol_TCP
 
     source      = "0.0.0.0/0"
@@ -27,7 +19,7 @@ resource "oci_core_security_list" "public-security-list" {
   }
 
   ingress_security_rules {
-    description = "Allow ICMP"
+    description = "VyOS - Allow ICMP"
     protocol    = local.protocol_ICMP
 
     source      = "0.0.0.0/0"
@@ -36,7 +28,7 @@ resource "oci_core_security_list" "public-security-list" {
   }
 
   ingress_security_rules {
-    description = "Allow private -> public subnet traffic"
+    description = "Common - Allow all traffic from private subnet"
     protocol    = "all"
 
     source      = local.secrets.private_subnet_cidr_block
@@ -45,12 +37,20 @@ resource "oci_core_security_list" "public-security-list" {
   }
 
   ingress_security_rules {
-    description = "Allow internal LAN -> public subnet traffic"
+    description = "Common - Allow all traffic from internal LAN"
     protocol    = "all"
 
     source      = local.secrets.internal_lan_cidr_block
     source_type = "CIDR_BLOCK"
     stateless   = "false"
+  }
+
+  egress_security_rules {
+    destination      = "0.0.0.0/0"
+    destination_type = "CIDR_BLOCK"
+
+    protocol  = "all"
+    stateless = "false"
   }
 
   defined_tags = local.defined_tags
@@ -66,19 +66,38 @@ resource "oci_core_security_list" "private-security-list" {
 
   display_name = "Security List for Private subet"
 
-  egress_security_rules {
-    destination      = "0.0.0.0/0"
-    destination_type = "CIDR_BLOCK"
+  ingress_security_rules {
+    description = "K8S - Allow pods on one worker node to communicate with pods on other worker nodes"
+    protocol    = "all"
 
-    protocol  = "all"
-    stateless = "false"
+    source      = local.secrets.private_subnet_cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
   }
 
   ingress_security_rules {
-    description = "SSH"
-    protocol    = local.protocol_TCP
+    description = "K8S - Path discovery"
+    protocol    = local.protocol_ICMP
 
     source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
+  }
+
+  ingress_security_rules {
+    description = "K8S - Allow Kubernetes control plane and Load Balancers to communicate with worker nodes"
+    protocol    = "all"
+
+    source      = local.secrets.public_subnet_cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless   = "false"
+  }
+
+  ingress_security_rules {
+    description = "K8S - Allow inbound SSH traffic to worker nodes"
+    protocol    = local.protocol_TCP
+
+    source      = local.secrets.internal_lan_cidr_block
     source_type = "CIDR_BLOCK"
     stateless   = "false"
 
@@ -88,31 +107,12 @@ resource "oci_core_security_list" "private-security-list" {
     }
   }
 
-  ingress_security_rules {
-    description = "Allow ICMP"
-    protocol    = local.protocol_ICMP
+  egress_security_rules {
+    destination      = "0.0.0.0/0"
+    destination_type = "CIDR_BLOCK"
 
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    stateless   = "false"
-  }
-
-  ingress_security_rules {
-    description = "Allow public -> private subnet traffic"
-    protocol    = "all"
-
-    source      = local.secrets.public_subnet_cidr_block
-    source_type = "CIDR_BLOCK"
-    stateless   = "false"
-  }
-
-  ingress_security_rules {
-    description = "Allow internal LAN -> private subnet traffic"
-    protocol    = "all"
-
-    source      = local.secrets.internal_lan_cidr_block
-    source_type = "CIDR_BLOCK"
-    stateless   = "false"
+    protocol  = "all"
+    stateless = "false"
   }
 
   defined_tags = local.defined_tags
