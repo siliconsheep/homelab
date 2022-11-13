@@ -1,0 +1,8 @@
+---
+k3s_channel: v1.24
+# k3s_version: v1.24.7+k3s1
+ansible_user: k3s
+systemd_dir: /etc/systemd/system
+master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+extra_server_args: "--disable local-storage --disable servicelb --cluster-cidr 10.127.0.0/16 --service-cidr 10.28.0.0/16 --node-label k8s.siliconsheep.se/location=home"
+extra_agent_args: "--node-label k8s.siliconsheep.se/location=home"
