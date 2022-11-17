@@ -1,0 +1,4 @@
+- name: foo
+  namespace: foo
+  chartPath: foo
+  valueFile: values.yaml

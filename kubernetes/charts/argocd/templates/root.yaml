@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: root
+spec:
+  generators:
+    - clusters:
+      selector:
+        matchLabels:
+          argocd.argoproj.io/secret-type: cluster
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  template:
+    metadata:
+      name: 'cluster-{{ nameNormalized }}-app'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: '/kubernetes/charts/cluster-app'
+    spec:
+      project: default
+      source:
+        path: 'kubernetes/charts/cluster-app'
+        targetRevision: HEAD
+        repoURL: https://github.com/siliconsheep/homelab.git
+        helm:
+          values: |
+            cluster: '{{ name }}'
+            clusterNormalized: '{{ nameNormalized }}'
+      destination:
+        namespace: argocd
+        name: '{{ cluster }}'
+      syncPolicy:
+        #  automated: {}
+        syncOptions:
+          - ApplyOutOfSyncOnly=true
+          - CreateNamespace=true

@@ -1,0 +1,13 @@
+argo-cd:
+  controller:
+    metrics:
+      serviceMonitor:
+        enabled: false
+  server:
+    metrics:
+      serviceMonitor:
+        enabled: false
+  repoServer:
+    metrics:
+      serviceMonitor:
+        enabled: false
