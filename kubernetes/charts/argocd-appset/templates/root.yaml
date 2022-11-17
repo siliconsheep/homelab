@@ -27,7 +27,7 @@ spec:
             clusterNormalized: {{`'{{ nameNormalized }}'`}}
       destination:
         namespace: argocd
-        name: {{`'{{ name }}'`}}
+        name: in-cluster
       syncPolicy:
         #  automated: {}
         syncOptions:
