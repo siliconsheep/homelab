@@ -5,14 +5,14 @@ metadata:
 spec:
   generators:
     - clusters:
-      selector:
-        matchLabels:
-          argocd.argoproj.io/secret-type: cluster
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
   syncPolicy:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: '{{`cluster-{{ nameNormalized }}-app`}}'
+      name: {{`'cluster-{{ nameNormalized }}-app'`}}
       annotations:
         argocd.argoproj.io/manifest-generate-paths: '/kubernetes/charts/cluster-app'
     spec:
@@ -23,11 +23,11 @@ spec:
         repoURL: https://github.com/siliconsheep/homelab.git
         helm:
           values: |
-            cluster: '{{`{{ name }}`}}'
-            clusterNormalized: '{{`{{ nameNormalized }}`}}'
+            cluster: {{`'{{ name }}'`}}
+            clusterNormalized: {{`'{{ nameNormalized }}'`}}
       destination:
         namespace: argocd
-        name: '{{`{{ name }}`}}'
+        name: {{`'{{ name }}'`}}
       syncPolicy:
         #  automated: {}
         syncOptions:
