@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: 'cluster-{{ .Values.clusterNormalized }}'
+  name: cluster-{{ .Values.clusterNormalized }}
 spec:
   generators:
     - git:
@@ -13,21 +13,21 @@ spec:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: {{`{{ name }}`}}
+      name: {{`'{{ name }}'`}}
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: {{`/kubernetes/charts/{{ chartPath }}`}}
+        argocd.argoproj.io/manifest-generate-paths: {{`'/kubernetes/charts/{{ chartPath }}'`}}
     spec:
       project: default
       source:
-        path: {{`kubernetes/charts/{{ chartPath }}`}}
+        path: {{`'kubernetes/charts/{{ chartPath }}'`}}
         targetRevision: HEAD
         repoURL: https://github.com/siliconsheep/homelab.git
         helm:
           valueFiles:
             - values.yaml
-            - {{`{{ valueFile }}`}}
+            - {{`'{{ valueFile }}'`}}
       destination:
-        namespace: {{`{{ namespace }}`}}
+        namespace: {{`'{{ namespace }}'`}}
         name: '{{ .Values.clusterNormalized }}'
       syncPolicy:
         #  automated: {}
