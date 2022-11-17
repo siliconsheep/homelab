@@ -8,7 +8,7 @@ spec:
         repoURL: https://github.com/siliconsheep/homelab.git
         revision: HEAD
         files:
-          - path: "kubernetes/clusters/{{ .Values.clusterNormalized }}/*.yaml"
+          - path: "kubernetes/clusters/{{ .Values.clusterNormalized }}.yaml"
   syncPolicy:
     preserveResourcesOnDeletion: true
   template:
