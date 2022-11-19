@@ -13,21 +13,24 @@ spec:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: {{`'{{ name }}'`}}
+      name: {{`'{{ .name }}'`}}
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: {{`'/kubernetes/charts/{{ chartPath }}'`}}
+        argocd.argoproj.io/manifest-generate-paths: {{`'/kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
     spec:
       project: default
       source:
-        path: {{`'kubernetes/charts/{{ chartPath }}'`}}
+        path: {{`'kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
         targetRevision: HEAD
         repoURL: https://github.com/siliconsheep/homelab.git
+        {{`'{{- if .valueFiles }}'`}}
         helm:
           valueFiles:
-            - values.yaml
-            - {{`'{{ valueFile }}'`}}
+          {{`'{{- range .valueFiles }}'`}}
+            - {{`'{{ . }}'`}}
+          {{`'{{- end }}'`}}
+        {{`'{{- end }}'`}}
       destination:
-        namespace: {{`'{{ namespace }}'`}}
+        namespace: {{`'{{or (index . "namespace") .name }}'`}}
         name: '{{ .Values.clusterNormalized }}'
       syncPolicy:
         automated:
