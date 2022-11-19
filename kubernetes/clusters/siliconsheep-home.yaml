@@ -1,7 +1,9 @@
 # - name: cert-manager # Requires Vault
 #   valueFiles:
+#   - base.yaml
 #   - monitoring.yaml # Requires Prometheus
 # - name: external-dns # Requires Vault
 #   valueFiles:
+#   - base.yaml
 #   - values-home.yaml
 #   - monitoring.yaml # Requires Prometheus

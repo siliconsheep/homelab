@@ -1,7 +1,9 @@
 - name: cert-manager
-  valueFiles: []
+  valueFiles:
+  - base.yaml
 # - monitoring.yaml # Requires Prometheus
 - name: external-dns
   valueFiles:
+  - base.yaml
   - values-oke.yaml
 # - monitoring.yaml # Requires Prometheus
