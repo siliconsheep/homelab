@@ -39,7 +39,3 @@ terraform.rc
 
 # Tools workspace
 workspace/*
-
-
-# Helm dependencies
-**/charts/*.tgz
