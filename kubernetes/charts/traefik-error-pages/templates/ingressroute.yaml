@@ -14,4 +14,4 @@ spec:
           name: error-pages
           port: 8080
   tls:
-    secretName: {{ printf "wildcard-%s" (replace "." "-" .Values.domain) }}
+    secretName: {{ printf "wildcard-%s" (replace "." "-" .Values.global.domain) }}
