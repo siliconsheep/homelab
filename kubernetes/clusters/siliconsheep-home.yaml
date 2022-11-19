@@ -1,4 +1,7 @@
-- name: foo
-  namespace: foo
-  chartPath: foo
-  valueFile: values.yaml
+# - name: cert-manager # Requires Vault
+#   valueFiles:
+#   - monitoring.yaml # Requires Prometheus
+# - name: external-dns # Requires Vault
+#   valueFiles:
+#   - values-home.yaml
+#   - monitoring.yaml # Requires Prometheus

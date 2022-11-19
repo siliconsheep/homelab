@@ -1,0 +1,13 @@
+external-dns:
+  txtOwnerId: home
+  extraVolumes:
+    - name: credentials
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: external-dns-home
+  extraVolumeMounts:
+    - name: credentials
+      mountPath: /.cf
+      readOnly: true

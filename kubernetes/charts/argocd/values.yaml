@@ -109,6 +109,27 @@ argo-cd:
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
+    initContainers:
+      - name: download-istioctl
+        image: alpine:3
+        command: [ sh, -c ]
+        env:
+          - name: ISTIO_VERSION
+            value: "1.16.0"
+        args:
+          - apk add curl &&
+            curl -L https://istio.io/downloadIstio | sh - &&
+            cp ${ISTIO_VERSION}/bin/istioctl /custom-tools/istioctl
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools
+    volumes:
+      - name: custom-tools
+        emptyDir: { }
+    volumeMounts:
+      - mountPath: /usr/local/bin/istioctl
+        name: custom-tools
+        subPath: istioctl
   
   applicationSet:
     enabled: true

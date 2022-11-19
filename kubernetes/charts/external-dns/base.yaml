@@ -1,0 +1,13 @@
+external-dns:
+  fullnameOverride: external-dns
+
+  image:
+    registry: docker.io
+    repository: bitnami/external-dns
+    tag: 0.12.2
+
+  provider: cloudflare
+  crd:
+    create: true
+  extraArgs:
+    - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)

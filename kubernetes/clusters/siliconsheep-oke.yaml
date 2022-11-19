@@ -1,4 +1,7 @@
-- name: bar
-  namespace: bar
-  chartPath: bar
-  valueFile: values.yaml
+- name: cert-manager
+# valueFiles:
+# - monitoring.yaml # Requires Prometheus
+- name: external-dns
+  valueFiles:
+  - values-oke.yaml
+# - monitoring.yaml # Requires Prometheus
