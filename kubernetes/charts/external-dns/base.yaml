@@ -8,5 +8,3 @@ external-dns:
   provider: cloudflare
   crd:
     create: true
-  extraArgs:
-    - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
