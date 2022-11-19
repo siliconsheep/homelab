@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ printf "wildcard-%s" (replace "." "-" .Values.global.domain) }}
+  name: {{ printf "wildcard-%s" (replace "." "-" .Values.domain) }}
 spec:
   dnsNames:
     - {{ printf "*.%s" .Values.domain | quote }}
@@ -9,5 +9,5 @@ spec:
     group: cert-manager.io
     kind: ClusterIssuer
     name: le-production
-  secretName: {{ printf "wildcard-%s" (replace "." "-" .Values.global.domain) }}
+  secretName: {{ printf "wildcard-%s" (replace "." "-" .Values.domain) }}
 

@@ -16,3 +16,6 @@
   - base.yaml # Requires Cert-manager
   - values-oke.yaml
 # - monitoring.yaml # Requires Prometheus
+- name: traefik-error-pages
+  valueFiles:
+  - base.yaml # Requires Traefik

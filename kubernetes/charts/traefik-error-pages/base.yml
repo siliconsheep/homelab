@@ -1,0 +1,17 @@
+global:
+  fullnameOverride: error-pages
+
+domain: siliconsheep.se
+
+image:
+  repository: tarampampam/error-pages
+  tag: 2.18.0
+
+env:
+  TEMPLATE_NAME: lost-in-space
+
+service:
+  main:
+    ports:
+      http:
+        port: 8080
