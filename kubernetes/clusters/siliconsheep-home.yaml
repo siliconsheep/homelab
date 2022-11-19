@@ -19,3 +19,4 @@
 - name: traefik-error-pages
   valueFiles:
   - base.yaml # Requires Traefik
+  - values-home.yaml
