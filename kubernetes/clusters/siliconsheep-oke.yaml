@@ -1,5 +1,5 @@
 - name: cert-manager
-# valueFiles:
+  valueFiles: []
 # - monitoring.yaml # Requires Prometheus
 - name: external-dns
   valueFiles:

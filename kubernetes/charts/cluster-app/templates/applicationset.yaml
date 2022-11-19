@@ -3,6 +3,7 @@ kind: ApplicationSet
 metadata:
   name: cluster-{{ .Values.clusterNormalized }}
 spec:
+  goTemplate: true
   generators:
     - git:
         repoURL: https://github.com/siliconsheep/homelab.git
@@ -22,13 +23,26 @@ spec:
         path: {{`'kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
         targetRevision: HEAD
         repoURL: https://github.com/siliconsheep/homelab.git
-        {{`'{{- if .valueFiles }}'`}}
+        # For now, something like below doesn't work, go templating
+        # in ApplicationSets is per (string) field :/
+        #
+        # {{`{{- if .valueFiles }}`}}
+        # helm:
+        #   valueFiles:
+        #   {{`{{- range .valueFiles }}`}}
+        #     - {{`{{ . }}`}}
+        #   {{`{{- end }}`}}
+        # {{`{{- end }}`}}
+        #
+        # So this (ugly) hack allows up to pick up to 5 value files
         helm:
+          ignoreMissingValueFiles: true
           valueFiles:
-          {{`'{{- range .valueFiles }}'`}}
-            - {{`'{{ . }}'`}}
-          {{`'{{- end }}'`}}
-        {{`'{{- end }}'`}}
+             - {{`'{{ if gt (len .valueFiles) 0 }}{{ index .valueFiles 0 }}{{ else }}../empty.yaml{{ end }}'`}}
+             - {{`'{{ if gt (len .valueFiles) 1 }}{{ index .valueFiles 1 }}{{ else }}../empty.yaml{{ end }}'`}}
+             - {{`'{{ if gt (len .valueFiles) 2 }}{{ index .valueFiles 2 }}{{ else }}../empty.yaml{{ end }}'`}}
+             - {{`'{{ if gt (len .valueFiles) 3 }}{{ index .valueFiles 3 }}{{ else }}../empty.yaml{{ end }}'`}}
+             - {{`'{{ if gt (len .valueFiles) 4 }}{{ index .valueFiles 4 }}{{ else }}../empty.yaml{{ end }}'`}}
       destination:
         namespace: {{`'{{or (index . "namespace") .name }}'`}}
         name: '{{ .Values.clusterNormalized }}'
