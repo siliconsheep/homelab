@@ -5,6 +5,9 @@ global:
 traefik:
   fullnameOverride: traefik
 
+  globalArguments:
+    - "--serverstransport.insecureskipverify=true"
+
   deployment:
     annotations:
       reloader.stakater.com/match: "true"
