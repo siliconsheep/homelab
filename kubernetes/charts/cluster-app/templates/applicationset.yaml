@@ -11,7 +11,7 @@ spec:
         files:
           - path: "kubernetes/clusters/{{ .Values.clusterNormalized }}.yaml"
   syncPolicy:
-    preserveResourcesOnDeletion: true
+    preserveResourcesOnDeletion: false
   template:
     metadata:
       name: '{{ printf "{{ .name }}-%s" .Values.argoAppSuffix }}'
