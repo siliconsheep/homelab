@@ -1,9 +1,0 @@
-dependencies:
-- name: traefik
-  repository: https://helm.traefik.io/traefik
-  version: 20.3.0
-- name: common
-  repository: https://library-charts.k8s-at-home.com
-  version: 4.5.2
-digest: sha256:3c3ad16fcee2e4cc2e21d84d3a5c4484d9c63ad589dd09af0c92c1b4c6adfa80
-generated: "2022-11-19T16:16:52.662223+01:00"

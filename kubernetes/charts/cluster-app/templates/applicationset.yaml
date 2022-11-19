@@ -14,7 +14,7 @@ spec:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: {{`'{{ .name }}'`}}
+      name: '{{ printf "{{ .name }}-%s" .Values.argoAppSuffix }}'
       annotations:
         argocd.argoproj.io/manifest-generate-paths: {{`'/kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
     spec:
@@ -34,15 +34,13 @@ spec:
         #   {{`{{- end }}`}}
         # {{`{{- end }}`}}
         #
-        # So this (ugly) hack allows up to pick up to 5 value files
+        # So this (ugly) hack allows up to pick up to 10 value files
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
-             - {{`'{{ if gt (len .valueFiles) 0 }}{{ index .valueFiles 0 }}{{ else }}../empty.yaml{{ end }}'`}}
-             - {{`'{{ if gt (len .valueFiles) 1 }}{{ index .valueFiles 1 }}{{ else }}../empty.yaml{{ end }}'`}}
-             - {{`'{{ if gt (len .valueFiles) 2 }}{{ index .valueFiles 2 }}{{ else }}../empty.yaml{{ end }}'`}}
-             - {{`'{{ if gt (len .valueFiles) 3 }}{{ index .valueFiles 3 }}{{ else }}../empty.yaml{{ end }}'`}}
-             - {{`'{{ if gt (len .valueFiles) 4 }}{{ index .valueFiles 4 }}{{ else }}../empty.yaml{{ end }}'`}}
+            {{- range until 10 }}
+            - '{{ printf "{{ if gt (len .valueFiles) %d }}{{ index .valueFiles %d }}{{ else }}../empty.yaml{{ end }}" . . }}'
+            {{- end }}
       destination:
         namespace: {{`'{{or (index . "namespace") .name }}'`}}
         name: '{{ .Values.clusterNormalized }}'
