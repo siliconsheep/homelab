@@ -7,3 +7,7 @@
   - base.yaml
   - values-oke.yaml
 # - monitoring.yaml # Requires Prometheus
+- name: metrics-server
+  valueFiles:
+  - base.yaml
+# - monitoring.yaml # Requires Prometheus
