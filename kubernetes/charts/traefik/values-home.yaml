@@ -2,6 +2,10 @@ global:
   cluster: home
 
 traefik:
+  globalArguments:
+    - "--serverstransport.insecureskipverify=true"
+    - "--providers.kubernetesingress.ingressclass=traefik"
+    - "--providers.kubernetesingress.ingressendpoint.hostname=home.traefik.siliconsheep.se"
   autoscaling:
     minReplicas: 2
     maxReplicas: 5

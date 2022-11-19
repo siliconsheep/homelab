@@ -2,6 +2,10 @@ global:
   cluster: oke
 
 traefik:
+  globalArguments:
+    - "--serverstransport.insecureskipverify=true"
+    - "--providers.kubernetesingress.ingressclass=traefik"
+    - "--providers.kubernetesingress.ingressendpoint.hostname=oke.traefik.siliconsheep.se"
   autoscaling:
     minReplicas: 1
     maxReplicas: 2

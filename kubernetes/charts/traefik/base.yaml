@@ -8,10 +8,6 @@ traefik:
   deployment:
     annotations:
       reloader.stakater.com/match: "true"
-  globalArguments:
-    - "--serverstransport.insecureskipverify=true"
-    - "--providers.kubernetesingress.ingressclass=traefik"
-    # - "--entrypoints.websecure.http.middlewares=ingress-error-pages@kubernetescrd"
 
   autoscaling:
     enabled: true
@@ -38,6 +34,11 @@ traefik:
     access:
       enabled: true
       format: json
+
+  providers:
+    kubernetesIngress:
+      publishedService:
+        enabled: true
 
   ports:
     web:
