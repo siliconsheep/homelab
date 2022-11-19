@@ -5,3 +5,5 @@ dependencies:
   - name: traefik
     version: 20.3.0
     repository: https://helm.traefik.io/traefik
+  - name: error-pages
+    condition: error-pages.enabled

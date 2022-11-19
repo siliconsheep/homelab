@@ -68,6 +68,7 @@ traefik:
             topologyKey: 'kubernetes.io/hostname'
 
 error-pages:
+  enabled: true
   fullnameOverride: error-pages
 
   image:
