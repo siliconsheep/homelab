@@ -11,3 +11,8 @@
   valueFiles:
   - base.yaml
 # - monitoring.yaml # Requires Prometheus
+- name: traefik
+  valueFiles:
+  - base.yaml # Requires Cert-manager
+  - values-oke.yaml
+# - monitoring.yaml # Requires Prometheus

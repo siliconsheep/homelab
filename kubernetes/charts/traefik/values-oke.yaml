@@ -1,0 +1,17 @@
+cluster: oke
+
+traefik:
+ autoscaling:
+    minReplicas: 1
+    maxReplicas: 2
+  
+  service:
+    annotations:
+      oci.oraclecloud.com/load-balancer-type: "nlb"
+  
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
+    limits:
+      cpu: "300m"

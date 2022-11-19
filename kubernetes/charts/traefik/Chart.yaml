@@ -1,0 +1,10 @@
+name: traefik
+apiVersion: v2
+version: 1.0.0
+dependencies:
+  - name: traefik
+    version: 20.3.0
+    repository: https://helm.traefik.io/traefik
+  - name: common
+    repository: https://library-charts.k8s-at-home.com
+    version: 4.5.2

@@ -1,0 +1,84 @@
+global:
+  domain: siliconsheep.se
+  cluster: ""
+
+traefik:
+  fullnameOverride: traefik
+
+  deployment:
+    annotations:
+      reloader.stakater.com/match: "true"
+  globalArguments:
+    - "--serverstransport.insecureskipverify=true"
+    - "--providers.kubernetesingress.ingressclass=traefik"
+    # - "--entrypoints.websecure.http.middlewares=ingress-error-pages@kubernetescrd"
+
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 4
+    metrics:
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 80
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 80
+
+  logs:
+    general:
+      format: json
+      level: ERROR
+    access:
+      enabled: true
+      format: json
+
+  ports:
+    web:
+      redirectTo: websecure
+    websecure:
+      tls:
+        enabled: true
+
+  service:
+    spec:
+      externalTrafficPolicy: Local
+
+  experimental:
+    plugins:
+      enabled: true
+  
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: 'app.kubernetes.io/name'
+                  operator: In
+                  values:
+                    - traefik
+            topologyKey: 'kubernetes.io/hostname'
+
+error-pages:
+  fullnameOverride: error-pages
+
+  image:
+    repository: tarampampam/error-pages
+    tag: 2.18.0
+
+  env:
+    TEMPLATE_NAME: lost-in-space
+
+  service:
+    main:
+      ports:
+        http:
+          port: 8080
