@@ -2,8 +2,7 @@ external-dns:
   fullnameOverride: external-dns
 
   image:
-    registry: eu.gcr.io
-    repository: k8s-artifacts-prod/external-dns/external-dns
+    repository: eu.gcr.io/k8s-artifacts-prod/external-dns/external-dns
     tag: v0.6.0
 
   provider: cloudflare
