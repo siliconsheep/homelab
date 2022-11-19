@@ -7,6 +7,7 @@ traefik:
 
   globalArguments:
     - "--serverstransport.insecureskipverify=true"
+    - "--entrypoints.websecure.http.middlewares=traefic-error-pages-error-pages@kubernetescrd"
 
   deployment:
     annotations:
