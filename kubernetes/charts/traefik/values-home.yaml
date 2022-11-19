@@ -1,4 +1,5 @@
-cluster: home
+global:
+  cluster: home
 
 traefik:
   autoscaling:
