@@ -1,7 +1,6 @@
 global:
   fullnameOverride: error-pages
-
-domain: siliconsheep.se
+  domain: siliconsheep.se
 
 image:
   repository: tarampampam/error-pages
