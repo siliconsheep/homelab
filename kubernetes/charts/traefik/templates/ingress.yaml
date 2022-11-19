@@ -5,7 +5,7 @@ metadata:
     # used only to automate certificate and dns. Point to metrics to ensure its not used
     traefik.ingress.kubernetes.io/router.entrypoints: metrics
     traefik.ingress.kubernetes.io/router.priority: "1"
-    cert-manager.io/cluster-issuer: le-production
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   name: {{ printf "%s-fakegen" .Values.traefik.fullnameOverride }}
 spec:
   rules:
