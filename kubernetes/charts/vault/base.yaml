@@ -1,9 +1,5 @@
 vault:
   server:
-    # image:
-    #   repository: "vault"
-    #   tag: "1.12.0"
-    #   pullPolicy: IfNotPresent
     ingress:
       enabled: true
       pathType: Prefix
@@ -18,28 +14,28 @@ vault:
         - hosts: [vault.siliconsheep.se]
           secretName: vault-siliconsheep-se
   
-  dataStorage:
-    enabled: false
+    dataStorage:
+      enabled: false
 
-  standalone:
-    enabled: false
-  
-  ha:
-    enabled: true
-    replicas: 3
-    config: |
-      storage "oci" {
-        namespace_name = "axgjp2y2qkbb"
-        bucket_name = "vault-backend"
-        ha_enabled = "true"
-        lock_bucket_name = "vault-backend-lock"
-      }
+    standalone:
+      enabled: false
+    
+    ha:
+      enabled: true
+      replicas: 3
+      config: |
+        storage "oci" {
+          namespace_name = "axgjp2y2qkbb"
+          bucket_name = "vault-backend"
+          ha_enabled = "true"
+          lock_bucket_name = "vault-backend-lock"
+        }
 
-      listener "tcp" {
-        tls_disable = 1
-        address = "[::]:8200"
-        cluster_address = "[::]:8201"
-      }
+        listener "tcp" {
+          tls_disable = 1
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+        }
 
   ui:
     enabled: true
