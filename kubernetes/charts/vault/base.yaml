@@ -19,13 +19,20 @@ vault:
           secretName: vault-siliconsheep-se
   
   dataStorage:
-    storageClass: oci
+    enabled: false
 
   standalone:
+    enabled: false
+  
+  ha:
+    enabled: true
+    replicas: 3
     config: |
       storage "oci" {
         namespace_name = "axgjp2y2qkbb"
         bucket_name = "vault-backend"
+        ha_enabled = "true"
+        lock_bucket_name = "vault-backend-lock"
       }
 
   ui:
