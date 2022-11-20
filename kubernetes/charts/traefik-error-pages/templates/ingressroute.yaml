@@ -1,17 +1,17 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: error-pages
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: HostRegexp(`{host:.+}`)
-      priority: 1
-      services:
-        - kind: Service
-          name: error-pages
-          port: 8080
-  tls:
-    secretName: {{ printf "wildcard-%s" (replace "." "-" .Values.global.domain) }}
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: error-pages
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - kind: Rule
+#       match: HostRegexp(`{host:.+}`)
+#       priority: 1
+#       services:
+#         - kind: Service
+#           name: error-pages
+#           port: 8080
+#   tls:
+#     secretName: {{ printf "wildcard-%s" (replace "." "-" .Values.global.domain) }}
