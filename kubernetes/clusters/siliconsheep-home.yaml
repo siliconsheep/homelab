@@ -20,3 +20,9 @@
 #   valueFiles:
 #   - base.yaml # Requires Traefik
 #   - values-home.yaml
+- name: secrets-store-csi-driver
+  valueFiles:
+  - base.yaml
+# - name: vault
+#   valueFiles:
+#   - base.yaml # Requires Traefik

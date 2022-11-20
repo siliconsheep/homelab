@@ -1,0 +1,7 @@
+name: vault
+apiVersion: v2
+version: 1.0.0
+dependencies:
+  - name: secrets-store-csi-driver
+    version: 1.2.4
+    repository: https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
