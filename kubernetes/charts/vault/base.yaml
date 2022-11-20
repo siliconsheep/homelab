@@ -35,6 +35,12 @@ vault:
         lock_bucket_name = "vault-backend-lock"
       }
 
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
   ui:
     enabled: true
   
