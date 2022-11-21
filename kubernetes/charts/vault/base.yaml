@@ -39,6 +39,8 @@ vault:
           cluster_address = "[::]:8201"
         }
 
+        service_registration "kubernetes" {}
+
   ui:
     enabled: true
   
