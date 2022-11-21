@@ -24,6 +24,8 @@ vault:
       enabled: true
       replicas: 3
       config: |
+        ui = true
+
         storage "oci" {
           namespace_name = "axgjp2y2qkbb"
           bucket_name = "vault-backend"
