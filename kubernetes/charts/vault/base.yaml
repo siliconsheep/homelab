@@ -13,6 +13,17 @@ vault:
       tls:
         - hosts: [vault.siliconsheep.se]
           secretName: vault-siliconsheep-se
+    
+    extraSecretEnvironmentVars:
+      - envName: VAULT_OCIKMS_SEAL_KEY_ID
+        secretName: vault-oci-kms
+        secretKey: kms_key_id
+      - envName: VAULT_OCIKMS_CRYPTO_ENDPOINT
+        secretName: vault-oci-kms
+        secretKey: crypto_endpoint
+      - envName: VAULT_OCIKMS_MANAGEMENT_ENDPOINT
+        secretName: vault-oci-kms
+        secretKey: management_endpoint
   
     dataStorage:
       enabled: false
@@ -32,6 +43,8 @@ vault:
           ha_enabled = "true"
           lock_bucket_name = "vault-backend-lock"
         }
+
+        seal "ocikms" {}
 
         listener "tcp" {
           tls_disable = 1
