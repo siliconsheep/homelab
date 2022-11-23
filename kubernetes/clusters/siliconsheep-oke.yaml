@@ -26,3 +26,8 @@
 - name: vault
   valueFiles:
   - base.yaml # Requires Traefik
+- name: longhorn
+  namespace: longhorn-system
+  valueFiles:
+  - base.yaml
+  - values-oke.yaml

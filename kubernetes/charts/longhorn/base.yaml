@@ -1,0 +1,13 @@
+longhorn:
+  defaultSettings:
+    nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+    defaultDataPath: /data
+    concurrentAutomaticEngineUpgradePerNodeLimit: 1
+    replicaReplenishmentWaitInterval: 900
+    allowVolumeCreationWithDegradedAvailability: false
+    priorityClass: system-node-critical
+
+  persistence:
+    defaultClass: true
+    defaultFsType: ext4
+    defaultDataLocality: best-effort

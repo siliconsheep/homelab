@@ -1,0 +1,3 @@
+longhorn:
+  persistence:
+    defaultClassReplicaCount: 2 # Only have 2 nodes to play with here :/
