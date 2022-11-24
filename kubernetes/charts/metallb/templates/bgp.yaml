@@ -1,15 +1,3 @@
-apiVersion: metallb.io/v1beta1
-kind: BFDProfile
-metadata:
-  name: {{ .Release.Name }}-bfd-profile
-  namespace: {{ .Release.namespace }}
-spec:
-  echoMode: true
-  echoInterval: 50
-  detectMultiplier: 4
-  receiveInterval: 300
-  transmitInterval: 300
----
 apiVersion: metallb.io/v1beta2
 kind: BGPPeer
 metadata:
