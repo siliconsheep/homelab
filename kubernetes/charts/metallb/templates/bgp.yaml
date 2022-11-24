@@ -4,8 +4,8 @@ metadata:
   name: {{ .Release.Name }}-bfd-profile
   namespace: {{ .Release.namespace }}
 spec:
-  receiveInterval: 380
-  transmitInterval: 270
+  receiveInterval: 300
+  transmitInterval: 300
 ---
 apiVersion: metallb.io/v1beta2
 kind: BGPPeer
