@@ -6,6 +6,7 @@ longhorn:
     replicaReplenishmentWaitInterval: 900
     allowVolumeCreationWithDegradedAvailability: false
     priorityClass: system-node-critical
+    createDefaultDiskLabeledNodes: true
 
   persistence:
     defaultClass: true
