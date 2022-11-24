@@ -32,3 +32,8 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
+- name: metallb
+  namespace: metallb-system
+  valueFiles:
+  - base.yaml
+  # - monitoring.yaml # Requires Prometheus
