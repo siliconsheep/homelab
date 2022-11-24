@@ -1,6 +1,12 @@
 metrics-server:
   fullnameOverride: metrics-server
 
+  serviceAccount:
+    create: true
+  
+  rbac:
+    create: true
+
   apiService:
     create: true
 

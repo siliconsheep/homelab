@@ -15,11 +15,13 @@
   - base.yaml
 # - monitoring.yaml # Requires Prometheus
 - name: traefik
+  namespace: ingress
   valueFiles:
   - base.yaml # Requires Cert-manager
   - values-oke.yaml
 # - monitoring.yaml # Requires Prometheus
 - name: traefik-error-pages
+  namespace: ingress
   valueFiles:
   - base.yaml # Requires Traefik
   - values-oke.yaml
