@@ -1,13 +1,16 @@
 - name: cert-manager
+  namespace: networking
   valueFiles:
   - base.yaml
 # - monitoring.yaml # Requires Prometheus
 - name: external-dns
+  namespace: networking
   valueFiles:
   - base.yaml
   - values-oke.yaml
 # - monitoring.yaml # Requires Prometheus
 - name: metrics-server
+  namespace: monitoring
   valueFiles:
   - base.yaml
 # - monitoring.yaml # Requires Prometheus
@@ -21,6 +24,7 @@
   - base.yaml # Requires Traefik
   - values-oke.yaml
 - name: secrets-store-csi-driver
+  namespace: kube-system
   valueFiles:
   - base.yaml
 - name: vault

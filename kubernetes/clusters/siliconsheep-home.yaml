@@ -21,6 +21,7 @@
 #   - base.yaml # Requires Traefik
 #   - values-home.yaml
 - name: secrets-store-csi-driver
+  namespace: kube-system
   valueFiles:
   - base.yaml
 # - name: vault
