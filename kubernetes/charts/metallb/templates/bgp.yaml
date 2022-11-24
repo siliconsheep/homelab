@@ -4,6 +4,8 @@ metadata:
   name: {{ .Release.Name }}-bfd-profile
   namespace: {{ .Release.namespace }}
 spec:
+  echoMode: true
+  minimumTtl: 253
   receiveInterval: 300
   transmitInterval: 300
 ---
