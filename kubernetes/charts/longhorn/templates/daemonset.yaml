@@ -32,7 +32,8 @@ spec:
                   operator: DoesNotExist
       containers:
         - name: longhorn-disk-config
-          image: bitnami/kubectl:{{ .Capabilities.KubeVersion.Major }}.{{ .Capabilities.KubeVersion.Minor }}
+          image: ghcr.io/siliconsheep/kubectl:v1.24.1 # TODO build our own kubectl image with support for ARM64
+          # image: bitnami/kubectl:{{ .Capabilities.KubeVersion.Major }}.{{ .Capabilities.KubeVersion.Minor }}
           command: ["sh", "-c"]
           args: ["kubectl annotate --overwrite node ${NODE_NAME} node.longhorn.io/default-disks-config=${DISK_CONFIG} && kubectl label nodes ${NODE_NAME} node.longhorn.io/create-default-disk='config'" ]
           env:
