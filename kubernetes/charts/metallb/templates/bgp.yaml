@@ -15,4 +15,4 @@ metadata:
   namespace: {{ .Release.namespace }}
 spec:
   ipAddressPools:
-  - {{ .Release.Name }}-peer
+  - {{ .Release.Name }}-default-pool
