@@ -1,12 +1,12 @@
 {{/*
-Copied from the vault charts's _helpers.tpl, updated to reflect the subchart Values
+Inspired from the vault charts's _helpers.tpl, updated to reflect the subchart Values
 */}}
 
 {{- define "vault.fullname" -}}
-{{- if .Values.vault.fullnameOverride -}}
+{{- if ((.Values.vault).fullnameOverride) -}}
 {{- .Values.vault.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- $name := default .Chart.Name .Values.vault.nameOverride -}}
+{{- $name := default .Chart.Name ((.Values.vault).nameOverride) -}}
 {{- if contains $name .Release.Name -}}
 {{- .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -20,13 +20,13 @@ Copied from the vault charts's _helpers.tpl, updated to reflect the subchart Val
 {{- end -}}
 
 {{- define "vault.name" -}}
-{{- default .Chart.Name .Values.vault.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default .Chart.Name ((.Values.vault).nameOverride) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "vault.serviceAccount.name" -}}
-{{- if .Values.vault.server.serviceAccount.create -}}
-    {{ default (include "vault.fullname" .) .Values.vault.server.serviceAccount.name }}
+{{- if ((((.Values.vault).server).serviceAccount).create) -}}
+{{ default (include "vault.fullname" .) (.Values.vault.server.serviceAccount.name) }}
 {{- else -}}
-    {{ default "default" .Values.vault.server.serviceAccount.name }}
+{{ default "default" ((((.Values.vault).server).serviceAccount).name) }}
 {{- end -}}
 {{- end -}}
