@@ -2,7 +2,7 @@
 Inspired from the vault charts's _helpers.tpl, updated to reflect the subchart Values
 */}}
 
-{{- define "vault.fullname" -}}
+{{- define "vault-secret.fullname" -}}
 {{- if ((.Values.vault).fullnameOverride) -}}
 {{- .Values.vault.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -15,15 +15,15 @@ Inspired from the vault charts's _helpers.tpl, updated to reflect the subchart V
 {{- end -}}
 {{- end -}}
 
-{{- define "vault.chart" -}}
+{{- define "vault-secret.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "vault.name" -}}
+{{- define "vault-secret.name" -}}
 {{- default .Chart.Name ((.Values.vault).nameOverride) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "vault.serviceAccount.name" -}}
+{{- define "vault-secret.serviceAccount.name" -}}
 {{- if ((((.Values.vault).server).serviceAccount).create) -}}
 {{ default (include "vault.fullname" .) (.Values.vault.server.serviceAccount.name) }}
 {{- else -}}
