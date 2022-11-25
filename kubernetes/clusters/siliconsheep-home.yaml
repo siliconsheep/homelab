@@ -13,7 +13,7 @@
 #   - monitoring.yaml # Requires Prometheus
 # - name: traefik
 #   valueFiles:
-#   - base.yaml # Requires Cert-manager
+#   - base.yaml # Requires MetalLB
 #   - values-home.yaml
 #   - monitoring.yaml # Requires Prometheus
 # - name: traefik-error-pages
@@ -37,3 +37,7 @@
   valueFiles:
   - base.yaml
   # - monitoring.yaml # Requires Prometheus
+- name: vault
+  valueFiles:
+  - base.yaml
+  - values-home.yaml
