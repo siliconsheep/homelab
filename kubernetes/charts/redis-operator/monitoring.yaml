@@ -1,0 +1,4 @@
+redis-operator:
+  monitoring:
+    enabled: true
+    serviceMonitor: true

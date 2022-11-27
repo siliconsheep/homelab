@@ -1,0 +1,8 @@
+cluster: ""
+role: default
+vaultAddress: https://vault.siliconsheep.se
+defaultSecretMountPath: secret
+defaultObjectPath: ""
+secretObjects: false
+extraSecretObjects: []
+objects: []
