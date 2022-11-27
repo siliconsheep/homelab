@@ -43,4 +43,5 @@
   - base.yaml
 - name: authentik
   namespace: auth
-  valueFiles: []
+  valueFiles:
+  - base.yaml

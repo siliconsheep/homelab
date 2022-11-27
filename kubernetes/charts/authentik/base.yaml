@@ -1,6 +1,7 @@
-authentik:
-  redis:
-    image:
-      repository: redis
-      tag: 7.0.5
-      pullPolicy: Always
+redis:
+  image:
+    repository: redis
+    tag: 7.0.5
+    pullPolicy: Always
+  storageClassName: longhorn
+  storageSize: 1Gi

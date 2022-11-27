@@ -39,7 +39,7 @@ spec:
       containers:
       - name: redis-server
         image: {{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag | default "latest" }}
-        imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
         args: ["--appendonly", "yes"]
         ports:
           - name: redis-server

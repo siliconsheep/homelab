@@ -1,0 +1,95 @@
+global:
+  cluster: do
+
+addons:
+  spc:
+    enabled: true
+    defaultObjectPath: k8s/cajun-pro/authentik
+    secretObjects: true
+    objects:
+      - name: AUTHENTIK_EMAIL__FROM
+      - name: AUTHENTIK_EMAIL__PASSWORD
+      - name: AUTHENTIK_EMAIL__USERNAME
+      - name: AUTHENTIK_POSTGRESQL__S3_BACKUP__ACCESS_KEY
+      - name: AUTHENTIK_POSTGRESQL__S3_BACKUP__SECRET_KEY
+      - name: AUTHENTIK_POSTGRESQL__S3_BACKUP__BUCKET
+      - name: AUTHENTIK_POSTGRESQL__S3_BACKUP__HOST
+      - name: AUTHENTIK_POSTGRESQL__S3_BACKUP__REGION
+      - name: AUTHENTIK_SECRET_KEY
+      - name: AUTHENTIK_POSTGRESQL__HOST
+      - name: AUTHENTIK_POSTGRESQL__USER
+      - name: AUTHENTIK_POSTGRESQL__PASSWORD
+      - name: AUTHENTIK_POSTGRESQL__PORT
+
+authentik:
+  fullnameOverride: authentik
+
+  image:
+    repository: ghcr.io/goauthentik/server
+    tag: 2022.10.1
+    # name: docker.beryju.org/authentik/server
+    # tag: gh-next
+    # name: jenslanghammer/authentik-test
+    # tag: v2
+    pullPolicy: Always
+
+  authentik:
+    log_level: debug
+    email:
+      host: smtp.gmail.com
+      port: 587
+      use_ssl: false
+      use_tls: true
+      timeout: 30
+    outposts:
+      # docker_image_base: jenslanghammer/ak-outpost-proxy-test:latest
+      docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
+    error_reporting:
+      enabled: true
+    postgresql:
+      name: authentik
+      host: ''
+      port: ''
+    redis:
+      host: $(REDIS_AUTHENTIK_SERVICE_HOST)
+
+  envFrom:
+    - secretRef:
+        name: authentik
+
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.priority: "10"
+      cert-manager.io/cluster-issuer: le-production
+    hosts:
+      - host: auth.cajun.pro
+        paths:
+          - path: "/"
+            pathType: Prefix
+    tls:
+      - hosts: [auth.cajun.pro]
+        secretName: auth-cajun-pro
+
+  volumeMounts:
+    - name: secrets
+      mountPath: /mnt/secrets
+      readOnly: true
+
+  volumes:
+    - name: secrets
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: authentik
+
+  livenessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
+
+  readinessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
