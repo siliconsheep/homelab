@@ -59,19 +59,17 @@ argo-cd:
       scopes: '[email, group]'
 
     ingress:
-      enabled: false
-    # ingress:
-    #   enabled: true
-    #   ingressClassName: traefik
-    #   annotations:
-    #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    #     traefik.ingress.kubernetes.io/router.priority: "10"
-    #     cert-manager.io/cluster-issuer: le-production
-    #   hosts:
-    #     - argocd.siliconsheep.se
-    #   tls:
-    #     - secretName: argocd-siliconsheep-se
-    #       hosts: [argocd.siliconsheep.se]
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - argocd.siliconsheep.se
+      tls:
+        - secretName: argocd-siliconsheep-se
+          hosts: [argocd.siliconsheep.se]
     
     metrics:
       enabled: true
@@ -101,7 +99,7 @@ argo-cd:
     resources:
       requests:
         cpu: 100m
-        memory: 100Mi
+        memory: 200Mi
     metrics:
       enabled: true
       serviceMonitor:
@@ -109,33 +107,33 @@ argo-cd:
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
-    initContainers:
-      - name: download-istioctl
-        image: alpine:3
-        command: [ sh, -c ]
-        env:
-          - name: ISTIO_VERSION
-            value: "1.16.0"
-        args:
-          - apk add curl &&
-            curl -L https://istio.io/downloadIstio | sh - &&
-            cp ${ISTIO_VERSION}/bin/istioctl /custom-tools/istioctl
-        volumeMounts:
-          - mountPath: /custom-tools
-            name: custom-tools
-    volumes:
-      - name: custom-tools
-        emptyDir: { }
-    volumeMounts:
-      - mountPath: /usr/local/bin/istioctl
-        name: custom-tools
-        subPath: istioctl
+    # initContainers:
+    #   - name: download-istioctl
+    #     image: alpine:3
+    #     command: [ sh, -c ]
+    #     env:
+    #       - name: ISTIO_VERSION
+    #         value: "1.16.0"
+    #     args:
+    #       - apk add curl &&
+    #         curl -L https://istio.io/downloadIstio | sh - &&
+    #         cp ${ISTIO_VERSION}/bin/istioctl /custom-tools/istioctl
+    #     volumeMounts:
+    #       - mountPath: /custom-tools
+    #         name: custom-tools
+    # volumes:
+    #   - name: custom-tools
+    #     emptyDir: { }
+    # volumeMounts:
+    #   - mountPath: /usr/local/bin/istioctl
+    #     name: custom-tools
+    #     subPath: istioctl
   
   applicationSet:
     enabled: true
     fullnameOverride: applicationset
     args:
-      policy: create-update
+      policy: sync
   
   configs:
     cm:
@@ -143,23 +141,74 @@ argo-cd:
       url: https://argocd.siliconsheep.se
       resource.compareoptions: |
         ignoreAggregatedRoles: true
-      resource.customizations: |
-        admissionregistration.k8s.io/MutatingWebhookConfiguration:
-          ignoreDifferences: |
-            jsonPointers:
-              - /webhooks/0/clientConfig/caBundle
-        apiregistration.k8s.io/APIService:
-          ignoreDifferences: |
-            jsonPointers:
-              - /spec/caBundle
-              - /metadata/annotations
-        Service:
-          health.lua: |
-            hs = {}
-            hs.status = "Healthy"
-            return hs
-        networking.k8s.io/Ingress:
-          health.lua: |
-            hs = {}
-            hs.status = "Healthy"
-            return hs
+      resource.customizations.health.certmanager.k8s.io-Certificate: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+              if condition.type == "Ready" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for certificate"
+        return hs
+      resource.customizations.health.cert-manager.io_Certificate: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+              if condition.type == "Ready" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for certificate"
+        return hs
+      resource.customizations.health.argoproj.io_Application: |
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+        if obj.status ~= nil then
+          if obj.status.health ~= nil then
+            hs.status = obj.status.health.status
+            if obj.status.health.message ~= nil then
+              hs.message = obj.status.health.message
+            end
+          end
+        end
+        return hs
+      resource.customizations.health.Service: |
+        hs = {}
+        hs.status = "Healthy"
+        return hs
+      resource.customizations.health.networking.k8s.io_Ingress: |
+        hs = {}
+        hs.status = "Healthy"
+        return hs
+      resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
+        jqPathExpressions:
+        - '.webhooks[]?.clientConfig.caBundle'
+        - '.webhooks[]?.failurePolicy'
+      resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
+        jqPathExpressions:
+        - '.webhooks[]?.clientConfig.caBundle'
+        - '.webhooks[]?.failurePolicy'

@@ -4,6 +4,8 @@ argo-cd:
       serviceMonitor:
         enabled: false
   server:
+    ingress:
+      enabled: false
     metrics:
       serviceMonitor:
         enabled: false

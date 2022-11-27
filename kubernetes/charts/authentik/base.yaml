@@ -1,0 +1,6 @@
+authentik:
+  redis:
+    image:
+      repository: redis
+      tag: 7.0.5
+      pullPolicy: Always

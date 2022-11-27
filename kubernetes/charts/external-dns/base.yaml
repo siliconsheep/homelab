@@ -7,3 +7,10 @@ external-dns:
   provider: cloudflare
   crd:
     create: true
+  
+  resources:
+    requests:
+      cpu: 25m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
