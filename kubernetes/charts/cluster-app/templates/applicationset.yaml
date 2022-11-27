@@ -56,3 +56,4 @@ spec:
             maxDuration: 16m
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply={{`{{or (index . "serverSideApply") "false" }}`}}

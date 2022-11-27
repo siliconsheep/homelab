@@ -39,6 +39,7 @@
   - values-oke.yaml
 - name: redis-operator
   namespace: database
+  serverSideApply: true
   valueFiles:
   - base.yaml
 # - monitoring.yaml # Requires Prometheus
