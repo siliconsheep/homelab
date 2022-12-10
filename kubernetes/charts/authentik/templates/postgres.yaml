@@ -1,0 +1,34 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Release.Name }}-postgres
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}-postgres
+    app.kubernetes.io/instance: {{ .Release.Name }}-postgres
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  description: "Postgres database for Authentik"
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.0
+  instances: 1
+  startDelay: 300
+  stopDelay: 300
+  primaryUpdateStrategy: unsupervised
+
+  bootstrap:
+    initdb:
+      database: authentik
+      owner: authentik
+      secret:
+        name: authentik
+
+  storage:
+    storageClass: longhorn
+    size: 2Gi
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi

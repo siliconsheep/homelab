@@ -5,6 +5,6 @@ version: 1.0.0
 #   - name: authentik
 #     version: 2022.9.0
 #     repository: https://charts.goauthentik.io
-#   - name: vault-secret
-#     version: 1.0.0
-#     repository: file://../partial/vault-secret-provider
+  - name: vault-secret
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider

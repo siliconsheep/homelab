@@ -5,3 +5,14 @@ redis:
     pullPolicy: Always
   storageClassName: longhorn
   storageSize: 1Gi
+
+vault-secret:
+  cluster: oke
+  roleName: authentik
+  objects:
+  - path: auth/authentik
+    name: postgres_user
+  - path: auth/authentik
+    name: postgres_password
+  secretObjects: true
+  secretName: authentik
