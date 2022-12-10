@@ -20,11 +20,11 @@ spec:
       database: authentik
       owner: authentik
       secret:
-        name: authentik
+        name: {{ .Values.postgres.secretName }}
 
   storage:
-    storageClass: longhorn
-    size: 2Gi
+    storageClass: {{ .Values.postgres.storageClassName }}
+    size: {{ .Values.postgres.storageSize }}
 
   resources:
     requests:

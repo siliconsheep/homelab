@@ -6,13 +6,102 @@ redis:
   storageClassName: longhorn
   storageSize: 1Gi
 
+postgres:
+  storageClassName: longhorn
+  storageSize: 2Gi
+  secretName: authentik-oke-postgres
+
 vault-secret-provider:
   cluster: oke
   roleName: authentik
+  defaultObjectPath: auth/authentik
   objects:
-  - path: auth/authentik
-    name: postgres_user
-  - path: auth/authentik
-    name: postgres_password
+  - name: AUTHENTIK_EMAIL__USERNAME
+    secretKey: username
+    path: oracle/smtp
+  - name: AUTHENTIK_EMAIL__PASSWORD
+    secretKey: password
+    path: oracle/smtp
+  - name: AUTHENTIK_EMAIL__FROM
+    secretKey: from
+    path: oracle/smtp 
+  - name: AUTHENTIK_POSTGRESQL__USER
+  - name: AUTHENTIK_POSTGRESQL__PASSWORD
+  - name: AUTHENTIK_SECRET_KEY
   secretObjects: true
-  secretName: authentik
+  secretName: authentik-oke
+  extraSecretObjects:
+  - type: Opaque
+    secretName: authentik-oke-postgres
+    data:
+    - key: AUTHENTIK_POSTGRESQL__USER
+      objectName: username
+    - key: AUTHENTIK_POSTGRESQL__PASSWORD
+      objectName: password
+
+authentik:
+  fullnameOverride: authentik
+
+  image:
+    repository: ghcr.io/goauthentik/server
+    tag: 2022.10.1
+    pullPolicy: Always
+
+  authentik:
+    log_level: info
+    email:
+      host: smtp.email.eu-stockholm-1.oci.oraclecloud.com
+      port: 587
+      use_ssl: false
+      use_tls: true
+      timeout: 30
+    outposts:
+      docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
+    error_reporting:
+      enabled: true
+    postgresql:
+      name: authentik
+      host: authentik-oke-postgres-rw
+    redis:
+      host: authentik-oke-redis
+
+  envFrom:
+    - secretRef:
+        name: authentik-oke
+
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.priority: "10"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: auth.siliconsheep.se
+        paths:
+          - path: "/"
+            pathType: Prefix
+    tls:
+      - hosts: [auth.siliconsheep.se]
+        secretName: auth-siliconsheep-se
+
+  volumeMounts:
+    - name: secrets
+      mountPath: /mnt/secrets
+      readOnly: true
+
+  volumes:
+    - name: secrets
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: authentik-oke
+
+  livenessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
+
+  readinessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
