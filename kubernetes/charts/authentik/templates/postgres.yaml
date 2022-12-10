@@ -22,6 +22,10 @@ spec:
       secret:
         name: {{ .Values.postgres.secretName }}
 
+  postgresql:
+    pg_hba:
+      - host all all all md5
+
   storage:
     storageClass: {{ .Values.postgres.storageClassName }}
     size: {{ .Values.postgres.storageSize }}
