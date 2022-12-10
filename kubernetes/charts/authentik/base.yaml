@@ -6,7 +6,7 @@ redis:
   storageClassName: longhorn
   storageSize: 1Gi
 
-vault-secret:
+vault-secret-provider:
   cluster: oke
   roleName: authentik
   objects:
