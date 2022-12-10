@@ -18,14 +18,14 @@ vault-secret-provider:
   roleName: authentik
   defaultObjectPath: auth/authentik
   objects:
-  - name: AUTHENTIK_EMAIL__USERNAME
-    key: username
+  - name: username
+    key: AUTHENTIK_EMAIL__USERNAME
     path: oracle/smtp
-  - name: AUTHENTIK_EMAIL__PASSWORD
-    key: password
+  - name: password
+    key: AUTHENTIK_EMAIL__PASSWORD
     path: oracle/smtp
-  - name: AUTHENTIK_EMAIL__FROM
-    key: from
+  - name: from
+    key: AUTHENTIK_EMAIL__FROM
     path: oracle/smtp 
   - name: AUTHENTIK_POSTGRESQL__USER
   - name: AUTHENTIK_POSTGRESQL__PASSWORD
