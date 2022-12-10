@@ -15,8 +15,6 @@ traefik:
 
   autoscaling:
     enabled: true
-    minReplicas: 1
-    maxReplicas: 4
     metrics:
       - type: Resource
         resource:

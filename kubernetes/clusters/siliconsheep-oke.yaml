@@ -45,3 +45,8 @@
   namespace: auth
   valueFiles:
   - base.yaml
+- name: prometheus
+  namespace: monitoring
+  valueFiles:
+  - base.yaml
+  - values-oke.yaml

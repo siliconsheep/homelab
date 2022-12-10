@@ -1,0 +1,19 @@
+kube-prometheus-stack:
+  fullnameOverride: kube-prometheus-stack
+  
+  alertmanager:
+    fullnameOverride: alertmanager
+    enabled: true
+  
+  prometheusOperator:
+    fullnameOverride: prometheus-operator
+    admissionWebhooks:
+      failurePolicy: Ignore
+  prometheus:
+    fullnameOverride: prometheus
+  kube-state-metrics:
+    fullnameOverride: kube-state-metrics
+  prometheus-node-exporter:
+    fullnameOverride: node-exporter
+  grafana:
+    fullnameOverride: grafana

@@ -1,0 +1,123 @@
+kube-prometheus-stack:
+  alertmanager:
+    ingress:
+      enabled: true
+      pathType: Prefix
+      ingressClassName: traefik
+      paths:
+        - /
+      hosts:
+        - dc.alertmanager.k8s.cajun.pro
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: ingress-authentik-outpost@kubernetescrd
+      tls:
+        - secretName: dc-alertmanager-k8s-cajun-pro
+          hosts:
+            - dc.alertmanager.k8s.cajun.pro
+
+  kubeScheduler:
+    service:
+      port: 10259
+      targetPort: 10259
+    serviceMonitor:
+      https: true
+      insecureSkipVerify: true
+  kubeControllerManager:
+    service:
+      port: 10257
+      targetPort: 10257
+    serviceMonitor:
+      https: true
+      insecureSkipVerify: true
+  kubeEtcd:
+    service:
+      port: 2381
+      targetPort: 2381
+  prometheusOperator:
+    admissionWebhooks:
+      failurePolicy: Ignore
+  prometheus:
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
+    ingress:
+      enabled: true
+      pathType: Prefix
+      ingressClassName: traefik
+      hosts:
+        - dc.prometheus.k8s.cajun.pro
+      paths:
+        - /
+      tls:
+        - hosts: [dc.prometheus.k8s.cajun.pro]
+          secretName: dc-prometheus-k8s-cajun-pro
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: ingress-authentik-outpost@kubernetescrd
+    prometheusSpec:
+      ruleSelectorNilUsesHelmValues: false
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelectorNilUsesHelmValues: false
+  prometheus-node-exporter:
+    securityContext:
+      runAsUser: 0
+      runAsNonRoot: false
+  grafana:
+    enabled: true
+    image:
+      repository: grafana/grafana
+      tag: 7.5.3
+      pullPolicy: IfNotPresent
+    testFramework:
+      enabled: false
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      pathType: Prefix
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - grafana.cajun.pro
+      tls:
+        - hosts:
+            - grafana.cajun.pro
+          secretName: grafana-cajun-pro
+    persistence:
+      enabled: false
+    plugins:
+      - grafana-piechart-panel
+    grafana.ini:
+      server:
+        root_url: https://grafana.cajun.pro
+      auth.google:
+        enabled: true
+        scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+        auth_url: https://accounts.google.com/o/oauth2/auth
+        token_url: https://accounts.google.com/o/oauth2/token
+        allowed_domains: cajun.pro
+      users:
+        auto_assign_org_role: Admin
+      auth:
+        disable_login_form: true
+        disable_signout_menu: true
+    envFromSecret: grafana-env
+    extraVolumeMounts:
+      - name: secrets-fakemount
+        mountPath: /mnt/secrets-store
+        readOnly: true
+    extraContainerVolumes:
+      - name: secrets-fakemount
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: grafana-env
+
+

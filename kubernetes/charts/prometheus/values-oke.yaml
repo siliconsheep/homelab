@@ -1,0 +1,40 @@
+kube-prometheus-stack:
+  alertmanager:
+    ingress:
+      enabled: true
+      pathType: Prefix
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: auth-authentik-outpost@kubernetescrd
+      paths:
+        - /
+      hosts:
+        - oke.alertmanager.siliconsheep.se
+      tls:
+        - secretName: oke-alertmanager-siliconsheep-se
+          hosts:
+            - oke.alertmanager.siliconsheep.se
+
+  prometheus:
+    ingress:
+      enabled: true
+      pathType: Prefix
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: auth-authentik-outpost@kubernetescrd
+      hosts:
+        - oke.prometheus.siliconsheep.se
+      paths:
+        - /
+      tls:
+        - hosts: [oke.prometheus.siliconsheep.se]
+          secretName: oke-prometheus-siliconsheep-se
+
+   grafana:
+    enabled: false

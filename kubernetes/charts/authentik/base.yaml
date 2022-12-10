@@ -78,6 +78,10 @@ authentik:
         paths:
           - path: "/"
             pathType: Prefix
+      - host: "*.siliconsheep.se"
+        paths:
+          - path: "/outpost.goauthentik.io/"
+            pathType: Prefix
     tls:
       - hosts: [auth.siliconsheep.se]
         secretName: auth-siliconsheep-se
