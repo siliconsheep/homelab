@@ -23,6 +23,8 @@ spec:
         name: {{ .Values.postgres.secretName }}
 
   postgresql:
+    parameters:
+      password_encryption: md5
     pg_hba:
       - host all all all md5
 
