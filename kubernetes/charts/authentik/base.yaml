@@ -1,4 +1,5 @@
 redis:
+  fullnameOverride: authentik-redis
   image:
     repository: redis
     tag: 7.0.5
@@ -7,9 +8,10 @@ redis:
   storageSize: 1Gi
 
 postgres:
+  fullnameOverride: authentik-postgres
   storageClassName: longhorn
   storageSize: 2Gi
-  secretName: authentik-oke-postgres
+  secretName: authentik-postgres
 
 vault-secret-provider:
   cluster: oke
@@ -29,10 +31,10 @@ vault-secret-provider:
   - name: AUTHENTIK_POSTGRESQL__PASSWORD
   - name: AUTHENTIK_SECRET_KEY
   secretObjects: true
-  secretName: authentik-oke
+  secretName: authentik
   extraSecretObjects:
   - type: Opaque
-    secretName: authentik-oke-postgres
+    secretName: authentik-postgres
     data:
     - key: AUTHENTIK_POSTGRESQL__USER
       objectName: username
@@ -61,13 +63,13 @@ authentik:
       enabled: true
     postgresql:
       name: authentik
-      host: authentik-oke-postgres-rw
+      host: authentik-postgres-rw
     redis:
-      host: authentik-oke-redis
+      host: authentik-redis
 
   envFrom:
     - secretRef:
-        name: authentik-oke
+        name: authentik
 
   ingress:
     enabled: true
@@ -96,7 +98,7 @@ authentik:
         driver: secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
-          secretProviderClass: authentik-oke
+          secretProviderClass: authentik
 
   livenessProbe:
     initialDelaySeconds: 15

@@ -1,11 +1,11 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: {{ .Release.Name }}-postgres
+  name: {{ template "authentik.fullname" . }}-postgres
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-postgres
-    app.kubernetes.io/instance: {{ .Release.Name }}-postgres
+    app.kubernetes.io/name: {{ template "authentik.fullname" . }}-postgres
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   description: "Postgres database for Authentik"

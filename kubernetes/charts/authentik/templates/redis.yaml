@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-redis
+  name: {{ template "authentik.fullname" . }}-redis
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-redis
-    app.kubernetes.io/instance: {{ .Release.Name }}-redis
+    app.kubernetes.io/name: {{ template "authentik.fullname" . }}-redis
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   accessModes:
@@ -18,24 +18,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-redis
+  name: {{ template "authentik.fullname" . }}-redis
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-redis
-    app.kubernetes.io/instance: {{ .Release.Name }}-redis
+    app.kubernetes.io/name: {{ template "authentik.fullname" . }}-redis
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Release.Name }}-redis
-      app.kubernetes.io/instance: {{ .Release.Name }}-redis
+      app.kubernetes.io/name: {{ template "authentik.fullname" . }}-redis
+      app.kubernetes.io/instance: {{ .Release.Name }}
       component: redis
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ .Release.Name }}-redis
-        app.kubernetes.io/instance: {{ .Release.Name }}-redis
+        app.kubernetes.io/name: {{ template "authentik.fullname" . }}-redis
+        app.kubernetes.io/instance: {{ .Release.Name }}
         component: redis
     spec:
       containers:
@@ -44,7 +44,7 @@ spec:
         imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
         args: ["--appendonly", "yes"]
         ports:
-          - name: redis-server
+          - name: redis
             containerPort: 6379
         volumeMounts:
           - name: lv-storage
@@ -60,20 +60,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-redis
+  name: {{ template "authentik.fullname" . }}-redis
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-redis
-    app.kubernetes.io/instance: {{ .Release.Name }}-redis
+    app.kubernetes.io/name: {{ template "authentik.fullname" . }}-redis
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   selector:
-    app.kubernetes.io/name: {{ .Release.Name }}-redis
-    app.kubernetes.io/instance: {{ .Release.Name }}-redis
+    app.kubernetes.io/name: {{ template "authentik.fullname" . }}-redis
+    app.kubernetes.io/instance: {{ .Release.Name }}
     component: redis
   type: ClusterIP
   ports:
-    - name: redis-port
+    - name: redis
       protocol: TCP
       port: 6379
       targetPort: 6379
