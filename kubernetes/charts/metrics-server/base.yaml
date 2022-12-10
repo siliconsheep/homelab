@@ -13,3 +13,10 @@ metrics-server:
   extraArgs:
     kubelet-preferred-address-types: InternalIP
     kubelet-insecure-tls: true
+
+  resources:
+    requests:
+      cpu: 35m
+      memory: 64M
+    limits:
+      memory: 64M
