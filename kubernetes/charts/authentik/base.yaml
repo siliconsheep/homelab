@@ -36,10 +36,10 @@ vault-secret-provider:
   - type: Opaque
     secretName: authentik-postgres
     data:
-    - key: AUTHENTIK_POSTGRESQL__USER
-      objectName: username
-    - key: AUTHENTIK_POSTGRESQL__PASSWORD
-      objectName: password
+    - objectName: AUTHENTIK_POSTGRESQL__USER
+      key: username
+    - objectName: AUTHENTIK_POSTGRESQL__PASSWORD
+      key: password
 
 authentik:
   fullnameOverride: authentik
