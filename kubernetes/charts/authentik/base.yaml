@@ -98,7 +98,7 @@ authentik:
         driver: secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
-          secretProviderClass: authentik
+          secretProviderClass: authentik-oke
 
   livenessProbe:
     initialDelaySeconds: 15
