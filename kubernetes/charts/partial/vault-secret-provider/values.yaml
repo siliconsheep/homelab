@@ -1,5 +1,5 @@
 cluster: ""
-role: default
+roleName: default
 vaultAddress: https://vault.siliconsheep.se
 defaultSecretMountPath: secret
 defaultObjectPath: ""
