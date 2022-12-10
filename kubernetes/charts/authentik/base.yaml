@@ -44,11 +44,6 @@ vault-secret-provider:
 authentik:
   fullnameOverride: authentik
 
-  image:
-    repository: ghcr.io/goauthentik/server
-    tag: 2022.10.1
-    pullPolicy: Always
-
   authentik:
     log_level: info
     email:
