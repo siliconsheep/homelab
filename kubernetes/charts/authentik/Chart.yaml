@@ -3,7 +3,7 @@ apiVersion: v2
 version: 1.0.0
 dependencies:
   - name: authentik
-    version: 2022.9.0
+    version: 2022.11.3
     repository: https://charts.goauthentik.io
   - name: vault-secret-provider
     version: 1.0.0
