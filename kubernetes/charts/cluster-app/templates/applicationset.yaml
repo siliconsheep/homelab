@@ -49,11 +49,16 @@ spec:
           prune: true
           selfHeal: true
         retry:
-          limit: 10
+          limit: 3
           backoff:
             duration: 1m
             factor: 2
-            maxDuration: 16m
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply={{`{{or (index . "serverSideApply") "false" }}`}}
+        ignoreDifferences:
+          - group: monitoring.coreos.com
+            kind: ServiceMonitor
+            name: kube-prometheus-stack-kubelet
+            jqPathExpressions:
+            - .spec.endpoints[]?.relabelings[]?.action
