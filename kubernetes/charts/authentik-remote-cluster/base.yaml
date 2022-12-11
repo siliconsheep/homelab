@@ -1,0 +1,2 @@
+authentik-remote-cluster:
+  fullnameOverride: authentik

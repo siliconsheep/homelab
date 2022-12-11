@@ -1,0 +1,7 @@
+name: authentik-remote-cluster
+apiVersion: v2
+version: 1.0.0
+dependencies:
+  - name: authentik-remote-cluster
+    version: 1.0.3
+    repository: https://charts.goauthentik.io

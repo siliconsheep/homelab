@@ -41,3 +41,6 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
+- name: authentik-remote-cluster
+  valueFiles:
+  - base.yaml
