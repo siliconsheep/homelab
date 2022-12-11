@@ -41,8 +41,10 @@ argo-cd:
     
     resources:
       requests:
-        cpu: 250m
-        memory: 1Gi
+        cpu: 150m
+        memory: 512Mi
+      limits:
+        memory: 512Mi
   
   dex:
     enabled: false
@@ -77,16 +79,18 @@ argo-cd:
         enabled: true
     resources:
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 50m
+        memory: 150Mi
+      limits:
+        memory: 150Mi
   
   repoServer:
     autoscaling:
       enabled: true
       minReplicas: 1
-      maxReplicas: 5
-      targetCPUUtilizationPercentage: 75
-      targetMemoryUtilizationPercentage: 75
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -99,7 +103,9 @@ argo-cd:
     resources:
       requests:
         cpu: 100m
-        memory: 200Mi
+        memory: 250Mi
+      limits:
+        memory: 250Mi
     metrics:
       enabled: true
       serviceMonitor:
@@ -107,27 +113,6 @@ argo-cd:
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
-    # initContainers:
-    #   - name: download-istioctl
-    #     image: alpine:3
-    #     command: [ sh, -c ]
-    #     env:
-    #       - name: ISTIO_VERSION
-    #         value: "1.16.0"
-    #     args:
-    #       - apk add curl &&
-    #         curl -L https://istio.io/downloadIstio | sh - &&
-    #         cp ${ISTIO_VERSION}/bin/istioctl /custom-tools/istioctl
-    #     volumeMounts:
-    #       - mountPath: /custom-tools
-    #         name: custom-tools
-    # volumes:
-    #   - name: custom-tools
-    #     emptyDir: { }
-    # volumeMounts:
-    #   - mountPath: /usr/local/bin/istioctl
-    #     name: custom-tools
-    #     subPath: istioctl
   
   applicationSet:
     enabled: true

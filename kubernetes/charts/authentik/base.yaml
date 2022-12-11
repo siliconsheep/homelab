@@ -62,6 +62,16 @@ authentik:
     redis:
       host: authentik-redis
 
+  replicas: 2
+
+  resources:
+    server:
+      requests:
+        cpu: 50m
+        memory: 512M
+      limits:
+        memory: 512M
+
   envFrom:
     - secretRef:
         name: authentik
@@ -77,10 +87,6 @@ authentik:
       - host: auth.siliconsheep.se
         paths:
           - path: "/"
-            pathType: Prefix
-      - host: "*.siliconsheep.se"
-        paths:
-          - path: "/outpost.goauthentik.io/"
             pathType: Prefix
     tls:
       - hosts: [auth.siliconsheep.se]
