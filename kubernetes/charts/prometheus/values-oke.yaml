@@ -33,8 +33,9 @@ kube-prometheus-stack:
       paths:
         - /
       tls:
-        - hosts: [oke.prometheus.siliconsheep.se]
-          secretName: oke-prometheus-siliconsheep-se
+        - secretName: oke-prometheus-siliconsheep-se
+          hosts:
+            - oke.prometheus.siliconsheep.se
 
-   grafana:
-    enabled: false
+    grafana:
+      enabled: false
