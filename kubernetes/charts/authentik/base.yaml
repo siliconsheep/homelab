@@ -45,7 +45,7 @@ authentik:
   fullnameOverride: authentik
 
   authentik:
-    log_level: info
+    log_level: debug
     email:
       host: smtp.email.eu-stockholm-1.oci.oraclecloud.com
       port: 587
