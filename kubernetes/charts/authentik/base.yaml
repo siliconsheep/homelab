@@ -30,14 +30,14 @@ vault-secret-provider:
   - name: AUTHENTIK_POSTGRESQL__USER
   - name: AUTHENTIK_POSTGRESQL__PASSWORD
   - name: AUTHENTIK_SECRET_KEY
-  - name: auth-siliconsheep-se.crt
+  - name: certs/auth-siliconsheep-se.crt
     key: certificate
     rawPath: pki/issue/authentik
     args:
       common_name: "auth.siliconsheep.se"
       exclude_cn_from_sans: true
     method: "PUT"
-  - name: auth-siliconsheep-se.key
+  - name: certs/auth-siliconsheep-se.key
     key: private_key
     rawPath: pki/issue/authentik
     args:
@@ -109,16 +109,9 @@ authentik:
 
   volumeMounts:
     - name: secrets
-      mountPath: /mnt/secrets
+      mountpath: /certs
       readOnly: true
-    - name: secrets
-      mountpath: /certs/auth-siliconsheep-se.crt
-      readOnly: true
-      subPath: auth-siliconsheep-se.crt
-    - name: secrets
-      mountpath: /certs/auth-siliconsheep-se.key
-      readOnly: true
-      subPath: auth-siliconsheep-se.key
+      subPath: certs
 
   volumes:
     - name: secrets
