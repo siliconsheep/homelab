@@ -155,7 +155,7 @@ argo-cd:
       dex.config: |
         connectors:
         - config:
-            issuer: https://auth.siliconsheep.se/application/o/$oauth-config:application_slug/
+            issuer: https://auth.siliconsheep.se/application/o/argocd/
             clientID: $oauth-config:client_id
             clientSecret: $oauth-config:client_secret
             insecureEnableGroups: true
