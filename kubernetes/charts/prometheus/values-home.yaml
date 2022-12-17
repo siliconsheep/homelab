@@ -4,10 +4,10 @@ vault-secret-provider:
   roleName: grafana
   defaultObjectPath: auth/oauth-credentials/grafana
   objects:
-    - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
-      key: client_id
-    - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
-      key: client_secret
+    - name: client_id
+      secretName: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+    - name: client_secret
+      secretName: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
   secretObjects: true
   secretName: grafana-oauth
 
