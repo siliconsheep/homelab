@@ -1,22 +1,33 @@
+vault-secret-provider:
+  enabled: true
+  cluster: home
+  roleName: grafana
+  defaultObjectPath: auth/oauth-credentials/grafana
+  objects:
+    - name: client_id
+    - name: client_secret
+  secretObjects: true
+  secretName: grafana-oauth
+
 kube-prometheus-stack:
   alertmanager:
     ingress:
       enabled: true
       pathType: Prefix
       ingressClassName: traefik
-      paths:
-        - /
-      hosts:
-        - dc.alertmanager.k8s.cajun.pro
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         traefik.ingress.kubernetes.io/router.priority: "10"
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.middlewares: ingress-authentik-outpost@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-home@kubernetescrd
+      paths:
+        - /
+      hosts:
+        - home.alertmanager.siliconsheep.se
       tls:
-        - secretName: dc-alertmanager-k8s-cajun-pro
+        - secretName: home-alertmanager-siliconsheep-se
           hosts:
-            - dc.alertmanager.k8s.cajun.pro
+            - home.alertmanager.siliconsheep.se
 
   kubeScheduler:
     service:
@@ -48,17 +59,17 @@ kube-prometheus-stack:
       pathType: Prefix
       ingressClassName: traefik
       hosts:
-        - dc.prometheus.k8s.cajun.pro
+        - home.prometheus.siliconsheep.se
       paths:
         - /
       tls:
-        - hosts: [dc.prometheus.k8s.cajun.pro]
-          secretName: dc-prometheus-k8s-cajun-pro
+        - hosts: [home.prometheus.siliconsheep.se]
+          secretName: home-prometheus-siliconsheep-se
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         traefik.ingress.kubernetes.io/router.priority: "10"
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.middlewares: ingress-authentik-outpost@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-home@kubernetescrd
     prometheusSpec:
       ruleSelectorNilUsesHelmValues: false
       serviceMonitorSelectorNilUsesHelmValues: false
@@ -69,10 +80,6 @@ kube-prometheus-stack:
       runAsNonRoot: false
   grafana:
     enabled: true
-    image:
-      repository: grafana/grafana
-      tag: 7.5.3
-      pullPolicy: IfNotPresent
     testFramework:
       enabled: false
     serviceMonitor:
@@ -84,33 +91,33 @@ kube-prometheus-stack:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-        - grafana.cajun.pro
+        - grafana.siliconsheep.se
       tls:
         - hosts:
-            - grafana.cajun.pro
-          secretName: grafana-cajun-pro
+            - grafana.siliconsheep.se
+          secretName: grafana-siliconsheep-se
     persistence:
       enabled: false
     plugins:
       - grafana-piechart-panel
     grafana.ini:
       server:
-        root_url: https://grafana.cajun.pro
-      auth.google:
+        root_url: https://grafana.siliconsheep.se
+      auth.generic_oauth:
+        name: authentik
         enabled: true
-        scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
-        auth_url: https://accounts.google.com/o/oauth2/auth
-        token_url: https://accounts.google.com/o/oauth2/token
-        allowed_domains: cajun.pro
-      users:
-        auto_assign_org_role: Admin
+        scopes: openid email profile
+        auth_url: https://auth.siliconsheep.se/application/o/authorize/
+        token_url: https://auth.siliconsheep.se/application/o/token/
+        api_url: https://auth.siliconsheep.se/application/o/userinfo/
+        role_attribute_path: contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'
       auth:
-        disable_login_form: true
-        disable_signout_menu: true
-    envFromSecret: grafana-env
+        oauth_auto_login: true
+        signout_redirect_url: https://auth.siliconsheep.se/application/o/grafana/end-session/
+    envFromSecret: grafana-oauth
     extraVolumeMounts:
       - name: secrets-fakemount
-        mountPath: /mnt/secrets-store
+        mountPath: /mnt/secrets-fakemount
         readOnly: true
     extraContainerVolumes:
       - name: secrets-fakemount
@@ -118,6 +125,6 @@ kube-prometheus-stack:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: grafana-env
+            secretProviderClass: prometheus-home
 
 

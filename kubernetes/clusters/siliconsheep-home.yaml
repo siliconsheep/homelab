@@ -1,23 +1,28 @@
 - name: cert-manager # Requires Vault
+  namespace: networking 
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
   - values-home.yaml # Requires Vault / Secrets CSI driver
 - name: external-dns # Requires Vault
+  namespace: networking
   valueFiles:
   - base.yaml
   - values-home.yaml
   - monitoring.yaml # Requires Prometheus
 - name: metrics-server
+  namespace: monitoring
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
 - name: traefik
+  namespace: ingress
   valueFiles:
   - base.yaml # Requires MetalLB
   - values-home.yaml
   - monitoring.yaml # Requires Prometheus
 - name: traefik-error-pages
+  namespace: ingress
   valueFiles:
   - base.yaml # Requires Traefik
   - values-home.yaml
@@ -43,3 +48,9 @@
   namespace: auth
   valueFiles:
   - base.yaml
+- name: prometheus
+  namespace: monitoring
+  serverSideApply: true
+  valueFiles:
+  - base.yaml
+  - values-home.yaml

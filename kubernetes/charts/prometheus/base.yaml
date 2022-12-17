@@ -1,3 +1,6 @@
+vault-secret-provider:
+  enabled: false
+
 kube-prometheus-stack:
   fullnameOverride: kube-prometheus-stack
   
