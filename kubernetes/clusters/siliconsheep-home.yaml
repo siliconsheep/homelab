@@ -39,7 +39,6 @@
   namespace: metallb-system
   valueFiles:
   - base.yaml
-  - monitoring.yaml # Requires Prometheus
 - name: vault
   valueFiles:
   - base.yaml
