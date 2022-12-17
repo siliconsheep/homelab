@@ -1,32 +1,30 @@
-# - name: cert-manager # Requires Vault
-#   valueFiles:
-#   - base.yaml
-#   - monitoring.yaml # Requires Prometheus
-# - name: external-dns # Requires Vault
-#   valueFiles:
-#   - base.yaml
-#   - values-home.yaml
-#   - monitoring.yaml # Requires Prometheus
-# - name: metrics-server
-#   valueFiles:
-#   - base.yaml
-#   - monitoring.yaml # Requires Prometheus
-# - name: traefik
-#   valueFiles:
-#   - base.yaml # Requires MetalLB
-#   - values-home.yaml
-#   - monitoring.yaml # Requires Prometheus
-# - name: traefik-error-pages
-#   valueFiles:
-#   - base.yaml # Requires Traefik
-#   - values-home.yaml
+- name: cert-manager # Requires Vault
+  valueFiles:
+  - base.yaml
+  - monitoring.yaml # Requires Prometheus
+  - values-home.yaml # Requires Vault / Secrets CSI driver
+- name: external-dns # Requires Vault
+  valueFiles:
+  - base.yaml
+  - values-home.yaml
+  - monitoring.yaml # Requires Prometheus
+- name: metrics-server
+  valueFiles:
+  - base.yaml
+  - monitoring.yaml # Requires Prometheus
+- name: traefik
+  valueFiles:
+  - base.yaml # Requires MetalLB
+  - values-home.yaml
+  - monitoring.yaml # Requires Prometheus
+- name: traefik-error-pages
+  valueFiles:
+  - base.yaml # Requires Traefik
+  - values-home.yaml
 - name: secrets-store-csi-driver
   namespace: kube-system
   valueFiles:
   - base.yaml
-# - name: vault
-#   valueFiles:
-#   - base.yaml # Requires Traefik
 - name: longhorn
   namespace: longhorn-system
   valueFiles:
@@ -36,7 +34,7 @@
   namespace: metallb-system
   valueFiles:
   - base.yaml
-  # - monitoring.yaml # Requires Prometheus
+  - monitoring.yaml # Requires Prometheus
 - name: vault
   valueFiles:
   - base.yaml

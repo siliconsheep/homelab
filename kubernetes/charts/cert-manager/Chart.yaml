@@ -5,3 +5,7 @@ dependencies:
   - name: cert-manager
     version: v1.9.1
     repository: https://charts.jetstack.io
+  - name: vault-secret-provider
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider
+    condition: vault-secret-provider.enabled

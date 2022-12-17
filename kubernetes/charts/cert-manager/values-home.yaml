@@ -1,0 +1,23 @@
+vault-secret-provider:
+  enabled: true
+  cluster: home
+  roleName: cert-manager
+  defaultObjectPath: infra/cloudflare
+  objects:  
+    - name: api-token
+  secretObjects: true
+  secretName: cloudflare-api-token
+
+cert-manager:
+  volumeMounts:
+    - name: secrets-fakemount
+      mountPath: /mnt/secrets-fakemount
+      readOnly: true
+
+  volumes:
+    - name: secrets-fakemount
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: cert-manager-home

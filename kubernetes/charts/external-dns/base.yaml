@@ -1,3 +1,6 @@
+vault-secret-provider:
+  enabled: false
+
 external-dns:
   fullnameOverride: external-dns
 

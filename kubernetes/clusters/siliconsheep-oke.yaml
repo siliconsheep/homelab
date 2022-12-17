@@ -2,24 +2,24 @@
   namespace: networking
   valueFiles:
   - base.yaml
-# - monitoring.yaml # Requires Prometheus
+  - monitoring.yaml # Requires Prometheus
 - name: external-dns
   namespace: networking
   valueFiles:
   - base.yaml
   - values-oke.yaml
-# - monitoring.yaml # Requires Prometheus
+  - monitoring.yaml # Requires Prometheus
 - name: metrics-server
   namespace: monitoring
   valueFiles:
   - base.yaml
-# - monitoring.yaml # Requires Prometheus
+  - monitoring.yaml # Requires Prometheus
 - name: traefik
   namespace: ingress
   valueFiles:
   - base.yaml # Requires Cert-manager
   - values-oke.yaml
-# - monitoring.yaml # Requires Prometheus
+  - monitoring.yaml # Requires Prometheus
 - name: traefik-error-pages
   namespace: ingress
   valueFiles:

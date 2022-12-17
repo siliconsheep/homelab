@@ -1,3 +1,4 @@
+enabled: true
 cluster: ""
 roleName: default
 vaultAddress: https://vault.siliconsheep.se

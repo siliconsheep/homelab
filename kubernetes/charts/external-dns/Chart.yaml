@@ -5,3 +5,7 @@ dependencies:
   - name: external-dns
     version: 1.11.0
     repository: https://kubernetes-sigs.github.io/external-dns
+  - name: vault-secret-provider
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider
+    condition: vault-secret-provider.enabled

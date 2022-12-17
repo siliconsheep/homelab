@@ -1,15 +1,25 @@
+vault-secret-provider:
+  enabled: true
+  cluster: home
+  roleName: external-dns
+  defaultObjectPath: infra/cloudflare
+  objects:  
+    - name: api-token
+  secretObjects: true
+  secretName: cloudflare-api-token
+
 external-dns:
   txtOwnerId: home
   extraVolumes:
-    - name: credentials
+    - name: secrets-fakemount
       csi:
         driver: secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
           secretProviderClass: external-dns-home
   extraVolumeMounts:
-    - name: credentials
-      mountPath: /.cf
+    - name: secrets-fakemount
+      mountPath: /mnt/secrets-fakemount
       readOnly: true
   extraArgs:
     - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
