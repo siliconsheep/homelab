@@ -4,8 +4,10 @@ vault-secret-provider:
   roleName: grafana
   defaultObjectPath: auth/oauth-credentials/grafana
   objects:
-    - name: client_id
-    - name: client_secret
+    - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+      key: client_id
+    - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+      key: client_secret
   secretObjects: true
   secretName: grafana-oauth
 
@@ -115,12 +117,10 @@ kube-prometheus-stack:
         oauth_auto_login: true
         signout_redirect_url: https://auth.siliconsheep.se/application/o/grafana/end-session/
     envFromSecret: grafana-oauth
-    extraVolumeMounts:
+    extraSecretMounts:
       - name: secrets-fakemount
         mountPath: /mnt/secrets-fakemount
         readOnly: true
-    extraContainerVolumes:
-      - name: secrets-fakemount
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
