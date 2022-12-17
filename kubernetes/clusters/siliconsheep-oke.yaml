@@ -51,3 +51,10 @@
   valueFiles:
   - base.yaml
   - values-oke.yaml
+- name: argocd
+  valueFiles:
+  - base.yaml
+- name: argocd-appset
+  namespace: argocd
+  valueFiles:
+  - base.yaml

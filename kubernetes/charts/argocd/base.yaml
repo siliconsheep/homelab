@@ -1,3 +1,15 @@
+vault-secret-provider:
+  enabled: true
+  cluster: oke
+  roleName: argocd
+  defaultObjectPath: auth/oauth-credentials/argo
+  objects:  
+    - name: application_slug
+    - name: client_id
+    - name: client_secret
+  secretObjects: true
+  secretName: oauth-config
+
 argo-cd:
   fullnameOverride: argocd
 
@@ -47,7 +59,8 @@ argo-cd:
         memory: 512Mi
   
   dex:
-    enabled: false
+    enabled: true
+    fullnameOverride: dex
 
   server:
     extraArgs:
@@ -83,6 +96,19 @@ argo-cd:
         memory: 150Mi
       limits:
         memory: 150Mi
+    
+    volumeMounts:
+      - name: secrets-fakemount
+        mountPath: /mnt/secrets-fakemount
+        readOnly: true
+
+    volumes:
+      - name: secrets-fakemount
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: argocd-oke
   
   repoServer:
     autoscaling:
@@ -124,6 +150,21 @@ argo-cd:
     cm:
       admin.enabled: "true"
       url: https://argocd.siliconsheep.se
+      dex.config: |
+        connectors:
+        - config:
+            issuer: https://auth.siliconsheep.se/application/o/$oauth-config:applicationSlug/
+            clientID: $oauth-config:clientID
+            clientSecret: $oauth-config:clientSecret
+            insecureEnableGroups: true
+            scopes:
+              - openid
+              - profile
+              - email
+              - groups
+          name: authentik
+          type: oidc
+          id: authentik
       resource.compareoptions: |
         ignoreAggregatedRoles: true
       resource.customizations.health.certmanager.k8s.io-Certificate: |

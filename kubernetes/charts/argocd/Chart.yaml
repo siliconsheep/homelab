@@ -5,3 +5,7 @@ dependencies:
   - name: argo-cd
     version: 5.13.8
     repository: https://argoproj.github.io/argo-helm
+  - name: vault-secret-provider
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider
+    condition: vault-secret-provider.enabled
