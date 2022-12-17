@@ -13,6 +13,10 @@ traefik:
   autoscaling:
     minReplicas: 2
     maxReplicas: 5
+
+  service:
+    spec:
+      loadBalancerIP: "172.27.120.1"
   
   resources:
     requests:
