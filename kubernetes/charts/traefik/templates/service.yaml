@@ -1,0 +1,9 @@
+{{- if eq .Values.global.cluster "home" }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: home-siliconsheep-se
+spec:
+  type: ExternalName
+  externalName: home.siliconsheep.se
+{{- end }}

@@ -2,8 +2,15 @@ global:
   cluster: home
 
 traefik:
-  additionalArguments:
-    - "--providers.kubernetesingress.ingressendpoint.hostname=home.siliconsheep.se"
+  # additionalArguments:
+  #   - "--providers.kubernetesingress.ingressendpoint.hostname=home.siliconsheep.se"
+
+  providers:
+    kubernetesIngress:
+      publishedService:
+        enabled: true
+        pathOverride: "ingress/home-siliconsheep-se"
+
   autoscaling:
     minReplicas: 2
     maxReplicas: 5
