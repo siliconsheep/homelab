@@ -56,9 +56,9 @@ argo-cd:
     resources:
       requests:
         cpu: 150m
-        memory: 512Mi
+        memory: 1Gi
       limits:
-        memory: 512Mi
+        memory: 1Gi
   
   dex:
     enabled: true
