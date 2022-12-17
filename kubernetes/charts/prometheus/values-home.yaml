@@ -100,8 +100,6 @@ kube-prometheus-stack:
           secretName: grafana-siliconsheep-se
     persistence:
       enabled: false
-    plugins:
-      - grafana-piechart-panel
     grafana.ini:
       server:
         root_url: https://grafana.siliconsheep.se
