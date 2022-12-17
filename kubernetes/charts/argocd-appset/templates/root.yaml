@@ -16,7 +16,7 @@ spec:
               operator: Exists
 
   syncPolicy:
-    preserveResourcesOnDeletion: false
+    preserveResourcesOnDeletion: true
   template:
     metadata:
       name: {{`'cluster-{{ normalize .name }}-app'`}}

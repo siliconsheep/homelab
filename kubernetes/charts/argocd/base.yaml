@@ -2,7 +2,7 @@ vault-secret-provider:
   enabled: true
   cluster: oke
   roleName: argocd
-  defaultObjectPath: auth/oauth-credentials/argo
+  defaultObjectPath: auth/oauth-credentials/argocd
   objects:  
     - name: application_slug
     - name: client_id
@@ -153,9 +153,9 @@ argo-cd:
       dex.config: |
         connectors:
         - config:
-            issuer: https://auth.siliconsheep.se/application/o/$oauth-config:applicationSlug/
-            clientID: $oauth-config:clientID
-            clientSecret: $oauth-config:clientSecret
+            issuer: https://auth.siliconsheep.se/application/o/$oauth-config:application_slug/
+            clientID: $oauth-config:client_id
+            clientSecret: $oauth-config:client_secret
             insecureEnableGroups: true
             scopes:
               - openid
