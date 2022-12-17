@@ -9,6 +9,8 @@ vault-secret-provider:
     - name: client_secret
   secretObjects: true
   secretName: oauth-config
+  secretLabels:
+    - app.kubernetes.io/part-of: argocd
 
 argo-cd:
   fullnameOverride: argocd
