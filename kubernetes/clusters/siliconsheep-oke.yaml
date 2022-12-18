@@ -58,3 +58,11 @@
   namespace: argocd
   valueFiles:
   - base.yaml
+- name: vpa
+  namespace: monitoring
+  valueFiles:
+  - base.yaml
+- name: goldilocks
+  namespace: monitoring
+  valueFiles:
+  - base.yaml

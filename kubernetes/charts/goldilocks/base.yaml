@@ -1,0 +1,33 @@
+goldilocks:
+  controller:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64M
+      limits:
+        memory: 250M
+  dashboard:
+    replicaCount: 1
+    ingress:
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-home@kubernetescrd
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      enabled: true
+      ingressClassName: "traefik"
+      hosts:
+        - host: goldilocks.siliconsheep.se
+          paths:
+            - path: /
+              type: Prefix
+      tls:
+        - secretName: goldilocks-siliconsheep-se
+          hosts:
+            - goldilocks.siliconsheep.se
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 100M
