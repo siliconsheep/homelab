@@ -12,7 +12,7 @@ goldilocks:
       annotations:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.priority: "10"
-        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-home@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-oke@kubernetescrd
         cert-manager.io/cluster-issuer: letsencrypt-prod
       enabled: true
       ingressClassName: "traefik"
