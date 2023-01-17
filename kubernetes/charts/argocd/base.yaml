@@ -134,6 +134,13 @@ argo-cd:
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
+    volumes:
+      - name: infra-vars
+        configMap:
+          name: infra-vars
+    volumeMounts:
+      - name: infra-vars
+        mountPath: /infra-vars
   
   applicationSet:
     enabled: true
