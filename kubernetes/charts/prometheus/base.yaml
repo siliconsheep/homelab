@@ -3,11 +3,9 @@ vault-secret-provider:
 
 kube-prometheus-stack:
   fullnameOverride: kube-prometheus-stack
-  
   alertmanager:
     fullnameOverride: alertmanager
     enabled: true
-  
   prometheusOperator:
     fullnameOverride: prometheus-operator
     admissionWebhooks:

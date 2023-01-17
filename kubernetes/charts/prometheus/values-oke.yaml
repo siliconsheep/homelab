@@ -19,6 +19,8 @@ kube-prometheus-stack:
             - oke.alertmanager.siliconsheep.se
 
   prometheus:
+    service:
+      type: LoadBalancer
     ingress:
       enabled: true
       pathType: Prefix
