@@ -51,7 +51,7 @@
   valueFiles:
   - base.yaml
   - values-oke.yaml
-  - /infra-vars/values-prometheus.yaml
+  - "/infra-vars/values-prometheus.yaml"
 - name: argocd
   valueFiles:
   - base.yaml
