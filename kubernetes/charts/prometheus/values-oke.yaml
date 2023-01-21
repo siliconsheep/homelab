@@ -76,11 +76,12 @@ kube-prometheus-stack:
           targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kube-state-metrics:
-    serviceMonitor:
-      relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"
+    prometheus:
+      monitor:
+        relabelings:
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-oke"
 
   prometheusOperator:
     serviceMonitor:
@@ -120,11 +121,12 @@ kube-prometheus-stack:
             - oke.prometheus.siliconsheep.se
   
   prometheus-node-exporter:
-    serviceMonitor:
-      relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"
+    prometheus:
+      monitor:
+        relabelings:
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-oke"
 
   grafana:
     enabled: false

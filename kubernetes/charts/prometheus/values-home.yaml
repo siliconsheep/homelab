@@ -101,11 +101,12 @@ kube-prometheus-stack:
           targetLabel: "cluster"
           replacement: "siliconsheep-home"
   kube-state-metrics:
-    serviceMonitor:
-      relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-home"
+    prometheus:
+      monitor:
+        relabelings:
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-home"
   
   prometheusOperator:
     admissionWebhooks:
@@ -156,15 +157,18 @@ kube-prometheus-stack:
           static_configs:
             - targets:
               - '172.28.0.133:9090'
+  
   prometheus-node-exporter:
+    prometheus:
+      monitor:
+        relabelings:
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-home"
     securityContext:
       runAsUser: 0
       runAsNonRoot: false
-    serviceMonitor:
-      relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-home"
+      
   grafana:
     enabled: true
     testFramework:
