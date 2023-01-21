@@ -13,6 +13,10 @@ vault-secret-provider:
 
 kube-prometheus-stack:
   alertmanager:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
     ingress:
       enabled: true
       pathType: Prefix
@@ -30,7 +34,30 @@ kube-prometheus-stack:
         - secretName: home-alertmanager-siliconsheep-se
           hosts:
             - home.alertmanager.siliconsheep.se
-
+  coreDns:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+  kubeApiServer:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+  kubelet:
+    serviceMonitor:
+      cAdvisorRelabelings:
+        - action: replace
+          sourceLabels: [__metrics_path__]
+          targetLabel: metrics_path
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+      probesRelabelings:
+        - action: replace
+          sourceLabels: [__metrics_path__]
+          targetLabel: metrics_path
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
   kubeScheduler:
     service:
       port: 10259
@@ -38,6 +65,9 @@ kube-prometheus-stack:
     serviceMonitor:
       https: true
       insecureSkipVerify: true
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
   kubeControllerManager:
     service:
       port: 10257
@@ -45,17 +75,44 @@ kube-prometheus-stack:
     serviceMonitor:
       https: true
       insecureSkipVerify: true
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
   kubeEtcd:
     service:
       port: 2381
       targetPort: 2381
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+  kubeProxy:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+  kube-state-metrics:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+  
   prometheusOperator:
     admissionWebhooks:
       failurePolicy: Ignore
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
+  
   prometheus:
     podDisruptionBudget:
       enabled: true
       minAvailable: 1
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
     ingress:
       enabled: true
       pathType: Prefix
@@ -91,12 +148,19 @@ kube-prometheus-stack:
     securityContext:
       runAsUser: 0
       runAsNonRoot: false
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-home"
   grafana:
     enabled: true
     testFramework:
       enabled: false
     serviceMonitor:
       enabled: true
+      relabelings:
+        - target_label: "cluster"
+          replacement: "siliconsheep-home"
     ingress:
       enabled: true
       pathType: Prefix

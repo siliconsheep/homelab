@@ -1,5 +1,9 @@
 kube-prometheus-stack:
   alertmanager:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
     ingress:
       enabled: true
       pathType: Prefix
@@ -17,12 +21,72 @@ kube-prometheus-stack:
         - secretName: oke-alertmanager-siliconsheep-se
           hosts:
             - oke.alertmanager.siliconsheep.se
+  
+  coreDns:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kubeApiServer:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kubelet:
+    serviceMonitor:
+      cAdvisorRelabelings:
+        - action: replace
+          sourceLabels: [__metrics_path__]
+          targetLabel: metrics_path
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+      probesRelabelings:
+        - action: replace
+          sourceLabels: [__metrics_path__]
+          targetLabel: metrics_path
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kubeScheduler:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kubeControllerManager:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kubeEtcd:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kubeProxy:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+  kube-state-metrics:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
+
+  prometheusOperator:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
 
   prometheus:
     prometheusSpec:
       ruleSelectorNilUsesHelmValues: false
       serviceMonitorSelectorNilUsesHelmValues: false
       podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
     service:
       type: LoadBalancer
     ingress:
@@ -42,6 +106,12 @@ kube-prometheus-stack:
         - secretName: oke-prometheus-siliconsheep-se
           hosts:
             - oke.prometheus.siliconsheep.se
+  
+  prometheus-node-exporter:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
 
   grafana:
     enabled: false
