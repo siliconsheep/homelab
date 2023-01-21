@@ -19,6 +19,10 @@ kube-prometheus-stack:
             - oke.alertmanager.siliconsheep.se
 
   prometheus:
+    prometheusSpec:
+      ruleSelectorNilUsesHelmValues: false
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelectorNilUsesHelmValues: false
     service:
       type: LoadBalancer
     ingress:
