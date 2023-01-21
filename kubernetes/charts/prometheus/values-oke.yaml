@@ -2,7 +2,8 @@ kube-prometheus-stack:
   alertmanager:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
     ingress:
       enabled: true
@@ -25,12 +26,14 @@ kube-prometheus-stack:
   coreDns:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kubeApiServer:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kubelet:
     serviceMonitor:
@@ -38,44 +41,52 @@ kube-prometheus-stack:
         - action: replace
           sourceLabels: [__metrics_path__]
           targetLabel: metrics_path
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
       probesRelabelings:
         - action: replace
           sourceLabels: [__metrics_path__]
           targetLabel: metrics_path
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kubeScheduler:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kubeControllerManager:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kubeEtcd:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kubeProxy:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
   kube-state-metrics:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
 
   prometheusOperator:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
 
   prometheus:
@@ -85,7 +96,8 @@ kube-prometheus-stack:
       podMonitorSelectorNilUsesHelmValues: false
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
     service:
       type: LoadBalancer
@@ -110,7 +122,8 @@ kube-prometheus-stack:
   prometheus-node-exporter:
     serviceMonitor:
       relabelings:
-        - targetLabel: "cluster"
+        - action: replace
+          targetLabel: "cluster"
           replacement: "siliconsheep-oke"
 
   grafana:
