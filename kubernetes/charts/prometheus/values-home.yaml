@@ -159,7 +159,7 @@ kube-prometheus-stack:
     serviceMonitor:
       enabled: true
       relabelings:
-        - target_label: "cluster"
+        - targetLabel: "cluster"
           replacement: "siliconsheep-home"
     ingress:
       enabled: true
