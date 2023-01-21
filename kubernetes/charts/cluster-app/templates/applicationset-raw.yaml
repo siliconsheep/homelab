@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-{{ .Values.clusterNormalized }}-raw
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/siliconsheep/homelab.git
+        revision: HEAD
+        files:
+          - path: "kubernetes/clusters/{{ .Values.clusterNormalized }}.yaml"
+      selector:
+        matchExpressions:
+          - key: rawHelm
+            operator: In
+            values:
+              - "true"
+              - "yes"
+              - "1"
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  template:
+    metadata:
+      name: '{{ printf "{{ .name }}-%s" .Values.argoAppSuffix }}'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: {{`'/kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
+    spec:
+      project: default
+      source:
+        path: {{`'kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
+        targetRevision: HEAD
+        repoURL: https://github.com/siliconsheep/homelab.git
+        plugin:
+          name: helm-raw
+          env:
+            - name: helm_args
+              value: {{`'{{- range .valueFiles }}-f {{ . }} {{ end }}{{ default "" .helmArgs }}'`}}
+      destination:
+        namespace: {{`'{{or (index . "namespace") .name }}'`}}
+        name: '{{ .Values.clusterNormalized }}'
+      syncPolicy:
+        # automated:
+        #   prune: true
+        #   selfHeal: true
+        retry:
+          limit: 3
+          backoff:
+            duration: 1m
+            factor: 2
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply={{`{{or (index . "serverSideApply") "false" }}`}}
+      ignoreDifferences:
+        - group: monitoring.coreos.com
+          kind: ServiceMonitor
+          name: kube-prometheus-stack-kubelet
+          jqPathExpressions:
+          - .spec.endpoints[]?.relabelings[]?.action
