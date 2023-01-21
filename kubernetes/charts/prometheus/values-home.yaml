@@ -76,6 +76,17 @@ kube-prometheus-stack:
       ruleSelectorNilUsesHelmValues: false
       serviceMonitorSelectorNilUsesHelmValues: false
       podMonitorSelectorNilUsesHelmValues: false
+      additionalScrapeConfigs:
+        - job_name: 'federate'
+          scrape_interval: 15s
+          honor_labels: true
+          metrics_path: '/federate'
+          params:
+            'match[]':
+              - '{job=~".*"}'
+          static_configs:
+            - targets:
+              - '172.28.0.133:9090'
   prometheus-node-exporter:
     securityContext:
       runAsUser: 0
