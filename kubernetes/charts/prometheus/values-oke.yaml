@@ -21,7 +21,6 @@ kube-prometheus-stack:
   prometheus:
     service:
       type: LoadBalancer
-      loadBalancerIP: 172.28.0.250
     ingress:
       enabled: true
       pathType: Prefix
