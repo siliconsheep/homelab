@@ -10,8 +10,16 @@ spec:
         revision: HEAD
         files:
           - path: "kubernetes/clusters/{{ .Values.clusterNormalized }}.yaml"
+      selector:
+        matchExpressions:
+          - key: rawHelm
+            operator: NotIn
+            values:
+              - "true"
+              - "yes"
+              - 1
   syncPolicy:
-    preserveResourcesOnDeletion: false
+    preserveResourcesOnDeletion: true
   template:
     metadata:
       name: '{{ printf "{{ .name }}-%s" .Values.argoAppSuffix }}'
@@ -45,9 +53,9 @@ spec:
         namespace: {{`'{{or (index . "namespace") .name }}'`}}
         name: '{{ .Values.clusterNormalized }}'
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+        # automated:
+        #   prune: true
+        #   selfHeal: true
         retry:
           limit: 3
           backoff:
