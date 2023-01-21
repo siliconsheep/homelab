@@ -17,11 +17,7 @@ spec:
             values:
               - "true"
               - "yes"
-<<<<<<< HEAD
-              - 1
-=======
               - "1"
->>>>>>> ad049bd (fix: matchExpressions must be strings)
   syncPolicy:
     preserveResourcesOnDeletion: true
   template:
