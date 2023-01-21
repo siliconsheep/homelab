@@ -40,9 +40,9 @@ spec:
         namespace: {{`'{{or (index . "namespace") .name }}'`}}
         name: '{{ .Values.clusterNormalized }}'
       syncPolicy:
-        # automated:
-        #   prune: true
-        #   selfHeal: true
+        automated:
+          prune: true
+          selfHeal: true
         retry:
           limit: 3
           backoff:
