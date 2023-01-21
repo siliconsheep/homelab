@@ -1,8 +1,0 @@
-external-dns:
-  metrics:
-    serviceMonitor:
-      enabled: true
-      relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"

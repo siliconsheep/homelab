@@ -9,7 +9,6 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
-  - monitoring-home.yaml # Requires Prometheus
 - name: metrics-server
   namespace: monitoring
   valueFiles:

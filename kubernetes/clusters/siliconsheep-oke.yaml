@@ -8,7 +8,6 @@
   valueFiles:
   - base.yaml
   - values-oke.yaml
-  - monitoring-oke.yaml # Requires Prometheus
 - name: metrics-server
   namespace: monitoring
   valueFiles:
