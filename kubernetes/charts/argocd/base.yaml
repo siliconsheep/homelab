@@ -25,6 +25,10 @@ argo-cd:
       enabled: true
       serviceMonitor:
         enabled: true
+        relabelings:
+        - action: replace
+          targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
       rules:
         enabled: false
         spec:
@@ -85,6 +89,10 @@ argo-cd:
       enabled: true
       serviceMonitor:
         enabled: true
+        relabelings:
+        - action: replace
+          targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
     resources:
       requests:
         cpu: 50m
@@ -131,6 +139,10 @@ argo-cd:
       enabled: true
       serviceMonitor:
         enabled: true
+        relabelings:
+        - action: replace
+          targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
@@ -147,6 +159,14 @@ argo-cd:
     fullnameOverride: applicationset
     args:
       policy: sync
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        relabelings:
+        - action: replace
+          targetLabel: "cluster"
+          replacement: "siliconsheep-oke"
   
   configs:
     rbac:

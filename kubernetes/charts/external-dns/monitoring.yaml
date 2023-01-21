@@ -1,4 +1,0 @@
-external-dns:
-  metrics:
-    serviceMonitor:
-      enabled: true

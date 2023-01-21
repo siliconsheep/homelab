@@ -39,3 +39,7 @@ terraform.rc
 
 # Tools workspace
 workspace/*
+
+# Helm
+Chart.lock
+**/charts/*.tgz
