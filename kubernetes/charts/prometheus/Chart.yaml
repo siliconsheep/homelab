@@ -1,6 +1,6 @@
 name: prometheus
 apiVersion: v2
-version: 1.0.0
+version: 1.0.1
 dependencies:
   - name: kube-prometheus-stack
     version: 44.2.1
