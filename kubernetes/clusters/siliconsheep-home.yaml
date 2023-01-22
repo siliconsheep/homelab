@@ -49,6 +49,7 @@
 - name: prometheus
   namespace: monitoring
   serverSideApply: true
+  rawHelm: "yes"
   valueFiles:
   - base.yaml
   - values-home.yaml
