@@ -52,3 +52,4 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
+  - test.yaml
