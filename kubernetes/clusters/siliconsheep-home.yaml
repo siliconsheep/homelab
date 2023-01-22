@@ -53,3 +53,7 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
+- name: sabnzbd
+  namespace: media
+  valueFiles:
+  - base.yaml

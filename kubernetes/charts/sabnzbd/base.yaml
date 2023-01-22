@@ -1,0 +1,66 @@
+global:
+  fullnameOverride: sabnzbd
+
+app-template:
+  image:
+    repository: ghcr.io/onedr0p/sabnzbd
+    tag: 3.7.1@sha256:e1a805ab246712b2c9a834b88ffefd77aba89b2ffcfdf1a9535333fcb4a60f91
+  env:
+    TZ: "Europe/Stockholm"
+    HOST_WHITELIST_ENTRIES: >-
+      sabnzbd,
+      sabnzbd.media,
+      sabnzbd.media.svc,
+      sabnzbd.media.svc.cluster,
+      sabnzbd.media.svc.cluster.local,
+      sabnzbd.siliconsheep.se
+  service:
+    main:
+      ports:
+        http:
+          port: 8080
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-oke@kubernetescrd
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: "sabnzbd.siliconsheep.se"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: sabnzbd-siliconsheep-se
+          hosts:
+            - "sabnzbd.siliconsheep.se"
+  securityContext:
+    seLinuxOptions:
+      level: s0
+  podSecurityContext:
+    runAsUser: 568
+    runAsGroup: 568
+    fsGroup: 568
+    fsGroupChangePolicy: "OnRootMismatch"
+  persistence:
+    config:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    media:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteMany
+      size: 100Gi
+      mountPath: /media
+  resources:
+    requests:
+      memory: 500Mi
+      cpu: 300m
+    limits:
+      memory: 1500Mi
+      cpu: 1000m
