@@ -57,3 +57,7 @@
   namespace: media
   valueFiles:
   - base.yaml
+- name: sonarr
+  namespace: media
+  valueFiles:
+  - base.yaml

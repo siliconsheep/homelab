@@ -1,0 +1,91 @@
+global:
+  fullnameOverride: sonarr
+
+app-template:
+  image:
+    repository: ghcr.io/onedr0p/sonarr-develop
+    tag: 4.0.0.359@sha256:c9260f98f6a1284ccc24ccc85b1ca01ed0042cafed1af573426da0c0912cb861
+  env:
+    TZ: "Europe/Stockholm"
+    SONARR__INSTANCE_NAME: Sonarr
+    SONARR__PORT: 8989
+    SONARR__APPLICATION_URL: "https://sonarr.siliconsheep.se"
+    SONARR__LOG_LEVEL: info
+  service:
+    main:
+      ports:
+        http:
+          port: 8989
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-home@kubernetescrd
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: "sonarr.siliconsheep.se"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: sonarr-siliconsheep-se
+          hosts:
+            - "sonarr.siliconsheep.se"
+    api:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      hosts:
+        - host: "sonarr.siliconsheep.se"
+          paths:
+            - path: /api
+              pathType: Prefix
+      tls:
+        - secretName: sonarr-siliconsheep-se
+          hosts:
+            - "sonarr.siliconsheep.se"
+  probes:
+    liveness:
+      enabled: true
+      custom: true
+      spec:
+        exec:
+          command:
+            - /usr/bin/env
+            - bash
+            - -c
+            - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
+              read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+        failureThreshold: 5
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+  persistence:
+    config:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    media:
+      enabled: true
+      existingClaim: sabnzbd-media
+      accessMode: ReadWriteMany
+      mountPath: /media
+  podSecurityContext:
+    runAsUser: 568
+    runAsGroup: 568
+    fsGroup: 568
+    fsGroupChangePolicy: "OnRootMismatch"
+    supplementalGroups:
+      - 65539
+  resources:
+    requests:
+      cpu: 50m
+      memory: 512M
+    limits:
+      memory: 1024M
