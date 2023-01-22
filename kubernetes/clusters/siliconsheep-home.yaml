@@ -48,8 +48,7 @@
   - base.yaml
 - name: prometheus
   namespace: monitoring
-  serverSideApply: true
+  # serverSideApply: true
   valueFiles:
   - base.yaml
   - values-home.yaml
-  - test.yaml
