@@ -73,8 +73,9 @@ app-template:
       size: 1Gi
     media:
       enabled: true
-      existingClaim: sabnzbd-media
-      accessMode: ReadWriteMany
+      type: nfs
+      server: "nas.siliconsheep.se"
+      path: /media/
       mountPath: /media
   podSecurityContext:
     runAsUser: 568
@@ -82,7 +83,7 @@ app-template:
     fsGroup: 568
     fsGroupChangePolicy: "OnRootMismatch"
     supplementalGroups:
-      - 65539
+      - 100
   resources:
     requests:
       cpu: 50m
