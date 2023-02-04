@@ -61,3 +61,11 @@
   namespace: media
   valueFiles:
   - base.yaml
+- name: node-feature-discovery
+  namespace: kube-system
+  valueFiles:
+  - base.yaml
+- name: intel-gpu-plugin
+  namespace: kube-system
+  valueFiles:
+  - base.yaml
