@@ -69,3 +69,7 @@
   namespace: kube-system
   valueFiles:
   - base.yaml
+- name: plex
+  namespace: media
+  valueFiles:
+  - base.yaml
