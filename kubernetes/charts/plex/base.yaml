@@ -94,6 +94,16 @@ app-template:
     limits:
       gpu.intel.com/i915: 1
       memory: 4Gi
+
+  service:
+    main:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      loadBalancerIP: "172.27.120.2"
+      ports:
+        http:
+          port: 32400
+
   ingress:
     main:
       enabled: true
