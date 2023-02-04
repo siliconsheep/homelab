@@ -75,7 +75,7 @@ app-template:
       enabled: true
       type: nfs
       server: "nas.siliconsheep.se"
-      path: /media/
+      path: /volume1/media/
       mountPath: /media
   podSecurityContext:
     runAsUser: 568
