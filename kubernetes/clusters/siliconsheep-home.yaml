@@ -61,6 +61,10 @@
   namespace: media
   valueFiles:
   - base.yaml
+- name: radarr
+  namespace: media
+  valueFiles:
+  - base.yaml
 - name: node-feature-discovery
   namespace: kube-system
   valueFiles:

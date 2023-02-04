@@ -1,0 +1,78 @@
+global:
+  fullnameOverride: radarr
+
+app-template:
+  image:
+    repository: ghcr.io/onedr0p/radarr-develop
+    tag: 4.4.0.6882@sha256:2aff920f979d0137c8e2e7de497c90bbe5ca079c3c1aff44872c8e867acc81e5
+  env:
+    TZ: "Europe/Stockholm"
+    RADARR__INSTANCE_NAME: Radarr
+    RADARR__PORT: 7878
+    RADARR__APPLICATION_URL: "https://radarr.siliconsheep.se"
+    SONARR__LOG_LEVEL: info
+  service:
+    main:
+      ports:
+        http:
+          port: 7878
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-home@kubernetescrd
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: "radarr.siliconsheep.se"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: radarr-siliconsheep-se
+          hosts:
+            - "radarr.siliconsheep.se"
+  probes:
+    liveness:
+      enabled: true
+      custom: true
+      spec:
+        exec:
+          command:
+            - /usr/bin/env
+            - bash
+            - -c
+            - curl --fail localhost:7878/api/v3/system/status?apiKey=`IFS=\> && while
+              read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+        failureThreshold: 5
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 10
+  persistence:
+    config:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    media:
+      enabled: true
+      type: nfs
+      server: "nas.siliconsheep.se"
+      path: /volume1/media/
+      mountPath: /media
+  podSecurityContext:
+    runAsUser: 568
+    runAsGroup: 568
+    fsGroup: 568
+    fsGroupChangePolicy: "OnRootMismatch"
+    supplementalGroups:
+      - 100
+  resources:
+    requests:
+      cpu: 50m
+      memory: 512M
+    limits:
+      memory: 1024M
