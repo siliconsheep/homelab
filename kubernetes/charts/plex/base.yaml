@@ -16,7 +16,7 @@ app-template:
     PLEX_PREFERENCE_2: "FriendlyName=SiliconSheep"
     PLEX_PREFERENCE_3: "HardwareAcceleratedCodecs=1"
     PLEX_PREFERENCE_4: "autoEmptyTrash=1"
-    PLEX_PREFERENCE_5: "ManualPortMappingPort=443"
+    PLEX_PREFERENCE_5: "ManualPortMappingPort=32400"
     PLEX_PREFERENCE_6: "ScheduledLibraryUpdateInterval=86400"
     PLEX_PREFERENCE_7: "TranscoderCanOnlyRemuxVideo=0"
     PLEX_PREFERENCE_8: "HardwareAcceleratedEncoders=1"
