@@ -45,7 +45,7 @@ app-template:
       enabled: true
       storageClass: longhorn
       accessMode: ReadWriteOnce
-      size: 2Gi
+      size: 20Gi
     transcode:
       enabled: true
       type: emptyDir
