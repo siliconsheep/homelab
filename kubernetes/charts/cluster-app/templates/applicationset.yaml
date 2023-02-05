@@ -54,8 +54,8 @@ spec:
         name: '{{ .Values.clusterNormalized }}'
       syncPolicy:
         automated:
-          prune: false
-          selfHeal: false
+          prune: true
+          selfHeal: true
         retry:
           limit: 3
           backoff:
