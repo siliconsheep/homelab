@@ -12,7 +12,7 @@
   "rebaseWhen": "conflicted",
   "commitBodyTable": true,
   "includePaths": [
-    "kubernetes"
+    "kubernetes/**"
   ],
   "fetchReleaseNotes": true,
   "labels": ["renovate"],
