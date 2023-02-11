@@ -25,7 +25,7 @@
       "commitMessageTopic": "Docker image {{depName}}",
       "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
       "matchUpdateTypes": ["major", "minor", "patch"],
-      "enabled": true,
+      "enabled": true
     },
     {
       "matchDatasources": ["docker"],
