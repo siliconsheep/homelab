@@ -11,7 +11,9 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "commitBodyTable": true,
-  "ignorePaths": [".archived/**"],
+  "includePaths": [
+    "kubernetes"
+  ],
   "fetchReleaseNotes": true,
   "labels": ["renovate"],
   "helm-values": {
