@@ -16,9 +16,9 @@
   "labels": ["renovate"],
   "helm-values": {
     "fileMatch": [
-      "kubernetes\/charts\/[^/]+\/values.ya?ml",
-      "kubernetes\/charts\/[^/]+\/values-.+\.ya?ml",
-      "kubernetes\/charts\/[^/]+\/base.ya?ml"
+      "^kubernetes\\/charts\\/[^/]+\\/values-[^/]+\\.ya?ml$",
+      "^kubernetes\\/charts\\/[^/]+\\/values\\.ya?ml$",
+      "^kubernetes\\/charts\\/[^/]+\\/base\\.ya?ml$"
     ]
   },
   "packageRules": [
