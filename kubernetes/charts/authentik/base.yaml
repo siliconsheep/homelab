@@ -5,7 +5,7 @@ redis:
     tag: 7.0.8
     pullPolicy: Always
   storageClassName: longhorn
-  storageSize: 1Gi
+  storageSize: 5Gi
 
 postgres:
   fullnameOverride: authentik-postgres
