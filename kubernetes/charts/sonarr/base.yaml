@@ -4,7 +4,7 @@ global:
 app-template:
   image:
     repository: ghcr.io/onedr0p/sonarr-develop
-    tag: 4.0.0.422@sha256:3fd5605b8339b6deca439a09bfbd506f346dc735742e2300a1ea1f5d45ca867c
+    tag: 4.0.0.425@sha256:2cb38576ff8e92a39716956cce2c0e89ed901840a93992fadb28272e888e213d
   env:
     TZ: "Europe/Stockholm"
     SONARR__INSTANCE_NAME: Sonarr
