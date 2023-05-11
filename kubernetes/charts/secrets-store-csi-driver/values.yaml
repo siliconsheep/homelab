@@ -8,7 +8,7 @@ secrets-store-csi-driver:
 
     registrarImage:
       repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
-      tag: v2.7.0
+      tag: v2.8.0
 
     livenessProbeImage:
       repository: registry.k8s.io/sig-storage/livenessprobe
