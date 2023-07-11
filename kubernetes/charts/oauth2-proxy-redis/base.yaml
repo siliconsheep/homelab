@@ -12,6 +12,9 @@ app-template:
 
   controller:
     strategy: RollingUpdate
+  
+  serviceAccount:
+    create: true
 
   image:
     repository: public.ecr.aws/docker/library/redis
