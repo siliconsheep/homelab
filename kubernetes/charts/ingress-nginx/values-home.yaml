@@ -1,0 +1,15 @@
+ingress-nginx:
+  controller:
+    autoscaling:
+      minReplicas: 2
+      maxReplicas: 5
+
+    service:
+      loadBalancerIP: "172.27.120.2" #TODO: set to 172.27.120.1
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 128Mi

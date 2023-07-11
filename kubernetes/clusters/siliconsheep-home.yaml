@@ -25,6 +25,12 @@
   valueFiles:
   - base.yaml # Requires Traefik
   - values-home.yaml
+- name: ingress-nginx
+  namespace: ingress
+  valueFiles:
+  - base.yaml # Requires MetalLB
+  - values-home.yaml
+  - monitoring.yaml # Requires Prometheus
 - name: secrets-store-csi-driver
   namespace: kube-system
   valueFiles:
