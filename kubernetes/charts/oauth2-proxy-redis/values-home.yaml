@@ -1,0 +1,9 @@
+vault-secret-provider:
+  cluster: home
+
+persistence:
+  secrets-fakemount:
+    volumeSpec:
+      csi:
+        volumeAttributes:
+          secretProviderClass: oauth2-proxy-home

@@ -1,0 +1,57 @@
+vault-secret-provider:
+  enabled: true
+  roleName: oauth2-proxy
+  defaultObjectPath: auth/oauth2-proxy
+  objects:  
+    - name: api-token
+  secretObjects: true
+  secretName: redis-password
+
+app-template:
+  fullnameOverride: oauth2-proxy-redis
+
+  controller:
+    strategy: RollingUpdate
+
+  image:
+    repository: public.ecr.aws/docker/library/redis
+    tag: 7.0.12@sha256:08a82d4bf8a8b4dd94e8f5408cdbad9dd184c1cf311d34176cd3e9972c43f872
+
+  podAnnotations:
+    secret.reloader.stakater.com/reload: redis-password
+
+  command: ["redis-server", "--requirepass", "$(REDIS_PASSWORD)"]
+
+  env:
+    REDIS_REPLICATION_MODE: master
+
+  envFrom:
+    - secretRef:
+        name: redis-password
+
+  service:
+    main:
+      ports:
+        http:
+          enabled: false
+        redis:
+          enabled: true
+          port: 6379
+
+  persistence:
+    secrets-fakemount:
+      enabled: true
+      type: custom
+      mountPath: /mnt/secrets-fakemount
+      readOnly: true
+      volumeSpec:
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+
+  resources:
+    requests:
+      cpu: 15m
+      memory: 64M
+    limits:
+      memory: 128M
