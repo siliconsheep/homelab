@@ -5,7 +5,7 @@ vault-secret-provider:
   objects:  
     - name: redis-password
   secretObjects: true
-  secretName: redis-password
+  secretName: oauth2-proxy-secrets
 
 app-template:
   fullnameOverride: oauth2-proxy-redis
@@ -21,7 +21,7 @@ app-template:
     tag: 7.0.12@sha256:08a82d4bf8a8b4dd94e8f5408cdbad9dd184c1cf311d34176cd3e9972c43f872
 
   podAnnotations:
-    secret.reloader.stakater.com/reload: redis-password
+    secret.reloader.stakater.com/reload: oauth2-proxy-secrets
 
   command: ["redis-server", "--requirepass", "$(REDIS_PASSWORD)"]
 
@@ -30,7 +30,8 @@ app-template:
 
   envFrom:
     - secretRef:
-        name: redis-password
+        name: oauth2-proxy-secrets
+        key: redis-password
 
   service:
     main:
