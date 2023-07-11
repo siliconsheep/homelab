@@ -6,4 +6,4 @@ persistence:
     volumeSpec:
       csi:
         volumeAttributes:
-          secretProviderClass: oauth2-proxy-home
+          secretProviderClass: oauth2-proxy-redis-home
