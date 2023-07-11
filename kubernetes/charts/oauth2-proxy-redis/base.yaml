@@ -4,6 +4,7 @@ vault-secret-provider:
   defaultObjectPath: auth/oauth2-proxy
   objects:  
     - name: redis-password
+      key: REDIS_PASSWORD 
   secretObjects: true
   secretName: oauth2-proxy-secrets
 
@@ -31,7 +32,6 @@ app-template:
   envFrom:
     - secretRef:
         name: oauth2-proxy-secrets
-        key: redis-password
 
   service:
     main:
