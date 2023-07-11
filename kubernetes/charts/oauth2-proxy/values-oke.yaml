@@ -1,0 +1,10 @@
+vault-secret-provider:
+  cluster: oke
+
+app-template:
+  persistence:
+    secrets-fakemount:
+      volumeSpec:
+        csi:
+          volumeAttributes:
+            secretProviderClass: oauth2-proxy-oke

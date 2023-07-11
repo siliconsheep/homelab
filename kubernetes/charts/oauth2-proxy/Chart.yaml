@@ -1,0 +1,11 @@
+name: oauth2-proxy-redis
+apiVersion: v2
+version: 1.0.0
+dependencies:
+  - name: app-template
+    version: 1.5.1
+    repository: https://bjw-s.github.io/helm-charts/
+  - name: vault-secret-provider
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider
+    condition: vault-secret-provider.enabled

@@ -52,6 +52,11 @@
   namespace: auth
   valueFiles:
   - base.yaml
+- name: oauth2-proxy
+  namespace: auth
+  valueFiles:
+  - base.yaml
+  - values-home.yaml
 - name: oauth2-proxy-redis
   namespace: auth
   valueFiles:
