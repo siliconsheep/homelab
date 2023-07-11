@@ -3,7 +3,7 @@ vault-secret-provider:
   roleName: oauth2-proxy
   defaultObjectPath: auth/oauth2-proxy
   objects:  
-    - name: api-token
+    - name: redis-password
   secretObjects: true
   secretName: redis-password
 
