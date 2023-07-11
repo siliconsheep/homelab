@@ -14,13 +14,12 @@ ingress-nginx:
       enabled: true
       type: LoadBalancer
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: "ingress.siliconsheep.se"
-        external-dns.alpha.kubernetes.io/target: "home.siliconsheep.se"
         reloader.stakater.com/match: "true"
       externalTrafficPolicy: Local
 
     publishService:
       enabled: true
+      pathOverride: "ingress/ingress-expose"
 
     ingressClassResource:
       default: false #TODO: true
