@@ -16,7 +16,7 @@ traefik:
 
   service:
     spec:
-      loadBalancerIP: "172.27.120.1"
+      loadBalancerIP: "172.27.120.2"
   
   resources:
     requests:
@@ -24,3 +24,7 @@ traefik:
       memory: "50Mi"
     limits:
       cpu: "400m"
+  
+  ingressClass:
+    enabled: true
+    isDefaultClass: false

@@ -5,7 +5,7 @@ ingress-nginx:
       maxReplicas: 5
 
     service:
-      loadBalancerIP: "172.27.120.2" #TODO: set to 172.27.120.1
+      loadBalancerIP: "172.27.120.1"
 
     resources:
       requests:

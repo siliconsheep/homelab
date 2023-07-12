@@ -87,14 +87,16 @@ app-template:
     main:
       enabled: true
       ingressClassName: "nginx"
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - host: "auth2.siliconsheep.se" # TODO: Change to auth.siliconsheep.se
           paths:
             - path: /oauth2
               pathType: Prefix
       tls:
-        - hosts:
-            - "auth2.siliconsheep.se" # TODO: Change to auth.siliconsheep.se
+        - hosts: [auth2.siliconsheep.se]
+          secretName: auth2-siliconsheep-se
 
   persistence:
     secrets-fakemount:

@@ -22,7 +22,7 @@ ingress-nginx:
       pathOverride: "ingress/ingress-expose"
 
     ingressClassResource:
-      default: false #TODO: true
+      default: true
 
     config:
       client-header-timeout: 120
