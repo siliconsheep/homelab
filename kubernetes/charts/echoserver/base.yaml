@@ -1,0 +1,39 @@
+app-template:
+  image:
+    repository: ghcr.io/mendhak/http-https-echo
+    tag: "30"
+
+  env:
+    HTTP_PORT: 8080
+    LOG_WITHOUT_NEWLINE: "true"
+    LOG_IGNORE_PATH: "/healthz"
+
+  service:
+    main:
+      ports:
+        http:
+          port: 8080
+
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "nginx"
+      annotations:
+        nginx.ingress.kubernetes.io/auth-url: https://auth2.siliconsheep.se/oauth2/auth
+        nginx.ingress.kubernetes.io/auth-signin: https://auth2.siliconsheep.se/oauth2/start?rd=$scheme://$best_http_host$request_uri
+        nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: "echo.siliconsheep.se"
+          paths:
+            - path: /
+      tls:
+        - hosts: [echo.siliconsheep.se]
+          secretName: echo-siliconsheep-se
+
+  resources:
+    requests:
+      cpu: 5m
+      memory: 30M
+    limits:
+      memory: 30M
