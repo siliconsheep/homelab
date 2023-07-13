@@ -56,7 +56,9 @@ app-template:
         secretKeyRef:
           name: oauth2-proxy-secrets
           key: client-secret
-    OAUTH2_PROXY_OIDC_GROUPS_CLAIM: https://siliconsheep.se/groups
+    # TODO: chage to https://siliconsheep.se/groups once
+    # https://github.com/oauth2-proxy/oauth2-proxy/issues/1730 is fixed
+    OAUTH2_PROXY_OIDC_GROUPS_CLAIM: https://siliconsheep/groups
     OAUTH2_PROXY_SESSION_STORE_TYPE: redis
     OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://oauth2-proxy-redis:6379
     OAUTH2_PROXY_REDIS_PASSWORD:
