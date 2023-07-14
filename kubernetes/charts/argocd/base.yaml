@@ -5,8 +5,8 @@ vault-secret-provider:
   defaultObjectPath: auth/oauth-credentials/argocd
   objects:  
     - name: domain
-    - name: client_id
-    - name: client_secret
+    - name: client-id
+    - name: client-secret
   secretObjects: true
   secretName: oauth-config
   secretLabels:
@@ -187,8 +187,8 @@ argo-cd:
         connectors:
         - config:
             issuer: $oauth-config:domain
-            clientID: $oauth-config:client_id
-            clientSecret: $oauth-config:client_secret
+            clientID: $oauth-config:client-id
+            clientSecret: $oauth-config:client-secret
             insecureEnableGroups: true
             getUserInfo: true
             scopes:
