@@ -212,7 +212,7 @@ kube-prometheus-stack:
         name: Auth0
         enabled: true
         allow_sign_up: true
-        groups_attribute_path: "https://siliconsheep/groups"[*]
+        groups_attribute_path: "https://siliconsheep/groups"
         role_attribute_path: contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'
       auth:
         oauth_auto_login: true
