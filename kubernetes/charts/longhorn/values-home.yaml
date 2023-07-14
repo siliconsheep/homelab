@@ -10,7 +10,7 @@ diskConfig:
 longhorn:
   persistence:
     defaultClassReplicaCount: 2 # Only have 2 nodes to play with here :/
-  
+
   ingress:
     enabled: true
     ingressClassName: "nginx"
@@ -19,10 +19,6 @@ longhorn:
       nginx.ingress.kubernetes.io/auth-signin: https://auth2.siliconsheep.se/oauth2/start?rd=$scheme://$best_http_host$request_uri
       nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    hosts:
-      - host: "longhorn.siliconsheep.se"
-        paths:
-          - path: /
-    tls:
-      - hosts: [longhorn.siliconsheep.se]
-        secretName: longhorn-siliconsheep-se
+    host: "longhorn.siliconsheep.se"
+    tls: true
+    tlsSecret: longhorn-siliconsheep-se
