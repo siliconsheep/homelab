@@ -5,9 +5,12 @@ vault-secret-provider:
   objects:  
     - name: redis-password
     - name: cookie-secret
-    - name: oidc-issuer-url
+    - name: domain
+      path: auth/oauth-credentials/oauth2-proxy
     - name: client-id
+      path: auth/oauth-credentials/oauth2-proxy
     - name: client-secret
+      path: auth/oauth-credentials/oauth2-proxy
   secretObjects: true
   secretName: oauth2-proxy-secrets
 
@@ -45,7 +48,7 @@ app-template:
       valueFrom:
         secretKeyRef:
           name: oauth2-proxy-secrets
-          key: oidc-issuer-url
+          key: domain
     OAUTH2_PROXY_CLIENT_ID:
       valueFrom:
         secretKeyRef:
