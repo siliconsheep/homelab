@@ -4,7 +4,7 @@ vault-secret-provider:
   roleName: argocd
   defaultObjectPath: auth/oauth-credentials/argocd
   objects:  
-    - name: application_slug
+    - name: domain
     - name: client_id
     - name: client_secret
   secretObjects: true
@@ -178,7 +178,7 @@ argo-cd:
           p, role:org-admin, repositories, *, *, allow
           p, role:org-admin, logs, get, *, allow
           p, role:org-admin, exec, create, */*, allow
-          g, ArgoCD Admins, role:org-admin
+          g, argocd-admins, role:org-admin
         scopes: '[email, groups]'
     cm:
       admin.enabled: "true"
@@ -186,18 +186,21 @@ argo-cd:
       dex.config: |
         connectors:
         - config:
-            issuer: https://auth.siliconsheep.se/application/o/argocd/
+            issuer: $oauth-config:domain
             clientID: $oauth-config:client_id
             clientSecret: $oauth-config:client_secret
             insecureEnableGroups: true
+            getUserInfo: true
             scopes:
               - openid
               - profile
               - email
-              - groups
-          name: authentik
+              - https://siliconsheep/groups
+            claimMapping:
+              groups: https://siliconsheep/groups
+          name: auth0
           type: oidc
-          id: authentik
+          id: auth0
       resource.compareoptions: |
         ignoreAggregatedRoles: true
       resource.customizations.health.certmanager.k8s.io-Certificate: |
