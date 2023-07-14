@@ -14,17 +14,6 @@
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
-# - name: traefik
-#   namespace: ingress
-#   valueFiles:
-#   - base.yaml # Requires MetalLB
-#   - values-home.yaml
-#   - monitoring.yaml # Requires Prometheus
-# - name: traefik-error-pages
-#   namespace: ingress
-#   valueFiles:
-#   - base.yaml # Requires Traefik
-#   - values-home.yaml
 - name: ingress-nginx
   namespace: ingress
   valueFiles:
@@ -48,10 +37,6 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
-# - name: authentik-remote-cluster
-#   namespace: auth
-#   valueFiles:
-#   - base.yaml
 - name: oauth2-proxy
   namespace: auth
   valueFiles:

@@ -1,3 +1,6 @@
+global:
+  cluster: home
+
 ingress-nginx:
   controller:
     autoscaling:
@@ -6,6 +9,9 @@ ingress-nginx:
 
     service:
       loadBalancerIP: "172.27.120.1"
+    
+    publishService:
+      pathOverride: "ingress/ingress-expose"
 
     resources:
       requests:

@@ -1,3 +1,6 @@
+global:
+  cluster: oke
+
 ingress-nginx:
   controller:
     autoscaling:
@@ -7,6 +10,10 @@ ingress-nginx:
     service:
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"
+    
+    # TODO: remove once Traefik is gone
+    ingressClassResource:
+      default: false
   
     resources:
       requests:

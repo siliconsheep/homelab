@@ -19,7 +19,6 @@ ingress-nginx:
 
     publishService:
       enabled: true
-      pathOverride: "ingress/ingress-expose"
 
     ingressClassResource:
       default: true

@@ -13,6 +13,12 @@
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
+- name: ingress-nginx
+  namespace: ingress
+  valueFiles:
+  - base.yaml
+  - values-oke.yaml
+  - monitoring.yaml # Requires Prometheus
 - name: traefik
   namespace: ingress
   valueFiles:
