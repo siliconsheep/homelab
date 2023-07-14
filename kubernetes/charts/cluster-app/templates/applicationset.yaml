@@ -19,7 +19,7 @@ spec:
               - "yes"
               - "1"
   syncPolicy:
-    preserveResourcesOnDeletion: true
+    preserveResourcesOnDeletion: false
   template:
     metadata:
       name: '{{ printf "{{ .name }}-%s" .Values.argoAppSuffix }}'
