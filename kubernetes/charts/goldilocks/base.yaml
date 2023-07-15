@@ -10,12 +10,12 @@ goldilocks:
     replicaCount: 1
     ingress:
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.priority: "10"
-        traefik.ingress.kubernetes.io/router.middlewares: auth-ak-outpost-oke@kubernetescrd
+        nginx.ingress.kubernetes.io/auth-url: https://auth2.siliconsheep.se/oauth2/auth?allowed_groups=admins
+        nginx.ingress.kubernetes.io/auth-signin: https://auth2.siliconsheep.se/oauth2/start?rd=$scheme://$best_http_host$request_uri
+        nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       enabled: true
-      ingressClassName: "traefik"
+      ingressClassName: nginx
       hosts:
         - host: goldilocks.siliconsheep.se
           paths:
