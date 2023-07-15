@@ -73,3 +73,8 @@
   namespace: monitoring
   valueFiles:
   - base.yaml
+- name: echoserver
+  namespace: default
+  valueFiles:
+  - base.yaml
+  - values-oke.yaml

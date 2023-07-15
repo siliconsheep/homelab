@@ -1,0 +1,10 @@
+app-template:
+  ingress:
+    main:
+      hosts:
+        - host: "oke.echo.siliconsheep.se"
+          paths:
+            - path: /
+      tls:
+        - hosts: [oke.echo.siliconsheep.se]
+          secretName: oke-echo-siliconsheep-se

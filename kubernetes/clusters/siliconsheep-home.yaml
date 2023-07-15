@@ -82,3 +82,4 @@
   namespace: default
   valueFiles:
   - base.yaml
+  - values-home.yaml
