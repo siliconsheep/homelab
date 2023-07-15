@@ -19,17 +19,6 @@
   - base.yaml
   - values-oke.yaml
   - monitoring.yaml # Requires Prometheus
-# - name: traefik
-#   namespace: ingress
-#   valueFiles:
-#   - base.yaml # Requires Cert-manager
-#   - values-oke.yaml
-#   - monitoring.yaml # Requires Prometheus
-# - name: traefik-error-pages
-#   namespace: ingress
-#   valueFiles:
-#   - base.yaml # Requires Traefik
-#   - values-oke.yaml
 - name: secrets-store-csi-driver
   namespace: kube-system
   valueFiles:
@@ -37,19 +26,6 @@
 - name: vault
   valueFiles:
   - base.yaml # Requires Traefik
-- name: longhorn
-  namespace: longhorn-system
-  valueFiles:
-  - base.yaml
-  - values-oke.yaml
-- name: cloudnative-pg
-  namespace: database
-  valueFiles:
-  - base.yaml
-# - name: authentik
-#   namespace: auth
-#   valueFiles:
-#   - base.yaml
 - name: prometheus
   namespace: monitoring
   serverSideApply: true
