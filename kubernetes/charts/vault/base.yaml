@@ -3,9 +3,8 @@ vault:
     ingress:
       enabled: true
       pathType: Prefix
+      ingressClassName: nginx
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.priority: "10"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - host: vault.siliconsheep.se
