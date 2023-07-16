@@ -2,6 +2,17 @@ vault-secret-provider:
   cluster: oke
 
 app-template:
+  ingress:
+    main:
+      hosts:
+        - host: "auth.siliconsheep.se"
+          paths:
+            - path: /oauth2
+              pathType: Prefix
+      tls:
+        - hosts: [auth.siliconsheep.se]
+          secretName: auth-siliconsheep-se
+
   persistence:
     secrets-fakemount:
       volumeSpec:

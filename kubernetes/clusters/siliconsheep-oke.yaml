@@ -26,6 +26,16 @@
 - name: vault
   valueFiles:
   - base.yaml # Requires Traefik
+- name: oauth2-proxy
+  namespace: auth
+  valueFiles:
+  - base.yaml
+  - values-oke.yaml
+- name: oauth2-proxy-redis
+  namespace: auth
+  valueFiles:
+  - base.yaml
+  - values-oke.yaml
 - name: prometheus
   namespace: monitoring
   serverSideApply: true
