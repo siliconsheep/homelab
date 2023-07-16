@@ -105,7 +105,7 @@ kube-prometheus-stack:
     ingress:
       enabled: true
       pathType: Prefix
-      ingressClassName: traefik
+      ingressClassName: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/auth-url: https://auth2.siliconsheep.se/oauth2/auth?allowed_groups=admins
