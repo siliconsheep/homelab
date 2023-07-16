@@ -6,4 +6,4 @@ persistence:
     volumeSpec:
       csi:
         volumeAttributes:
-          secretProviderClass: oauth2-proxy-oke
+          secretProviderClass: oauth2-proxy-redis-oke
