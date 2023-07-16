@@ -6,7 +6,7 @@ vault-secret-provider:
     - name: REDIS_PASSWORD
       key: redis-password
   secretObjects: true
-  secretName: oauth2-proxy-secrets
+  secretName: oauth2-proxy-secrets-redis
 
 app-template:
   fullnameOverride: oauth2-proxy-redis
@@ -31,7 +31,7 @@ app-template:
 
   envFrom:
     - secretRef:
-        name: oauth2-proxy-secrets
+        name: oauth2-proxy-secrets-redis
 
   service:
     main:
