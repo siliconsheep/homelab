@@ -29,6 +29,7 @@ cluster-autoscaler:
     scale-down-unneeded-time: 10m
     unremovable-node-recheck-timeout: 5m
     skip-nodes-with-local-storage: "false"
+    skip-nodes-with-system-pods: "false"
 
   # Set in infra-vars.yaml
   # autoscalingGroups:
