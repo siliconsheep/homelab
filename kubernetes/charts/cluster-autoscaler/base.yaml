@@ -1,0 +1,48 @@
+cluster-autoscaler:
+  cloudProvider: oci-oke
+
+  additionalLabels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+
+  replicaCount: 2
+
+  image:
+    repository: fra.ocir.io/oracle/oci-cluster-autoscaler
+    tag: 1.26.2-7
+    pullPolicy: IfNotPresent
+
+  balancingIgnoreLabels:
+    - displayName
+    - hostname
+    - internal_addr
+    - oci.oraclecloud.com/fault-domain
+
+
+  extraArgs:
+    v: 4
+    stderrthreshold: info
+    logtostderr: "true"
+    expander: priority
+    max-node-provision-time: 25m
+    scale-down-delay-after-add: 10m
+    scale-down-unneeded-time: 10m
+    unremovable-node-recheck-timeout: 5m
+
+  # Set in infra-vars.yaml
+  # autoscalingGroups:
+  #   - name: ocid1.nodepool.xxxxxxxx
+  #     minSize: 1
+  #     maxSize: 2
+
+  extraEnv:
+    OKE_USE_INSTANCE_PRINCIPAL: "true"
+    OCI_SDK_APPEND_USER_AGENT: "oci-oke-cluster-autoscaler"
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 100m
+      memory: 300Mi

@@ -1,0 +1,7 @@
+name: cluster-autoscaler
+apiVersion: v2
+version: 1.0.0
+dependencies:
+  - name: cluster-autoscaler
+    version: 9.29.1-siliconsheep
+    repository: oci://ghcr.io/siliconsheep/helm-charts

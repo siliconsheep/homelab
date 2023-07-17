@@ -64,3 +64,9 @@
   valueFiles:
   - base.yaml
   - values-oke.yaml
+- name: cluster-autoscaler
+  namespace: kube-system
+  rawHelm: "yes"
+  valueFiles:
+  - base.yaml
+  - "/infra-vars/values-cluster-autoscaler.yaml"
