@@ -1,5 +1,19 @@
 vault-secret-provider:
   cluster: oke
+  enabled: true
+  roleName: oauth2-proxy
+  defaultObjectPath: auth/oauth2-proxy
+  objects:  
+    - name: redis-password
+    - name: cookie-secret
+    - name: domain
+      path: auth/oauth-credentials/dhome-oci
+    - name: client-id
+      path: auth/oauth-credentials/dhome-oci
+    - name: client-secret
+      path: auth/oauth-credentials/dhome-oci
+  secretObjects: true
+  secretName: oauth2-proxy-secrets
 
 app-template:
   ingress:
