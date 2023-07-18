@@ -1,7 +1,7 @@
 vault-secret-provider:
   cluster: oke
   enabled: true
-  roleName: oauth2-proxy-oke
+  roleName: oauth2-proxy
   defaultObjectPath: auth/oauth2-proxy
   objects:  
     - name: redis-password
