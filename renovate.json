@@ -38,7 +38,7 @@
     },
     {
       "matchDatasources": ["docker"],
-      "automergeType": "true",
+      "automergeType": "pr",
       "requiredStatusChecks": null,
       "addLabels": [
         "container"
@@ -74,6 +74,12 @@
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["patch"],
       "labels": ["renovate/helm-chart", "dependency/patch"]
+    },
+    {
+      "description": "Auto merge approved registrues",
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "matchPackagePatterns": ["ghcr.io/bjw-s", "ghcr.io/onedr0p"]
     }
   ]
 }
