@@ -76,7 +76,7 @@
       "labels": ["renovate/helm-chart", "dependency/patch"]
     },
     {
-      "description": "Auto merge approved registrues",
+      "description": "Auto merge container update from approved registries",
       "matchDatasources": ["docker"],
       "automerge": true,
       "ignoreTests": true,
