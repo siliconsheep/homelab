@@ -79,6 +79,7 @@
       "description": "Auto merge approved registrues",
       "matchDatasources": ["docker"],
       "automerge": true,
+      "ignoreTests": true,
       "matchPackagePatterns": ["ghcr.io/bjw-s", "ghcr.io/onedr0p"]
     }
   ]
