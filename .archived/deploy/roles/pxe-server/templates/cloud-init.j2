@@ -1,0 +1,126 @@
+#cloud-config
+autoinstall:
+  apt:
+    geoip: true
+    preserve_sources_list: false
+    primary:
+    - arches: [amd64, i386]
+      uri: http://se.archive.ubuntu.com/ubuntu
+    - arches: [default]
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  user-data:
+    hostname: {{ item }}
+    timezone: {{ timezone }}
+    users:
+      - name: dieter
+        groups: cdrom, adm, sudo, dip, plugdev, lxd
+        shell: /usr/bin/bash
+        ssh_import_id:
+          - gh:siliconsheep
+        sudo: ALL=(ALL) NOPASSWD:ALL
+  keyboard: {layout: se, toggle: null, variant: ''}
+  locale: C
+  network:
+    ethernets:
+      eth0:
+        match:
+          macaddress: {{ hostvars[item]['mac'] }}
+        wakeonlan: true
+        addresses:
+          - {{ hostvars[item]['ansible_host'] }}
+        nameservers:
+          search: siliconsheep.se
+          addresses: [172.27.10.254]
+        routes:
+          - to: default
+            via: 172.27.10.254
+        critical: true
+    version: 2
+  # late-commands:
+  ssh:
+    allow-pw: false
+    install-server: true
+  storage:
+    grub:
+      reorder_uefi: false
+    config:
+      - id: primary-ssd
+        type: disk
+        match:
+          ssd: yes
+          size: smallest
+        ptable: gpt
+        preserve: false
+        name: ''
+        grub_device: false
+      - id: partition-0
+        type: partition
+        device: primary-ssd
+        size: 536870912
+        wipe: superblock
+        flag: boot
+        number: 1
+        preserve: false
+        grub_device: true
+        - id: format-2
+        type: format
+        fstype: fat32
+        volume: partition-0
+        preserve: false
+      - id: partition-1
+        type: partition
+        device: primary-ssd
+        size: 1073741824
+        wipe: superblock
+        flag: linux
+        number: 2
+        preserve: false
+        grub_device: false
+      - id: format-0
+        type: format
+        fstype: ext4
+        volume: partition-1
+        preserve: false
+      - id: partition-2
+        type: partition
+        device: primary-ssd
+        size: -1
+        flag: linux
+        number: 3
+        preserve: false
+        grub_device: false
+      - id: lvm-volgroup-vg-0
+        type: lvm_volgroup
+        name: vg-0
+        devices: [partition-2]
+        preserve: false
+      - id: lvm-partition-lv-root
+        type: lvm_partition
+        name: lv-root
+        volgroup: lvm-volgroup-vg-0
+        size: 20GB
+        preserve: false
+      - id: lvm-partition-lv-data
+        type: lvm_partition
+        name: lv-data
+        volgroup: lvm-volgroup-vg-0
+        size: -1
+        preserve: false
+      - id: format-1
+        type: format,
+        fstype: ext4
+        volume: lvm-partition-lv-root
+        preserve: false 
+      - id: mount-2
+        type: mount
+        device: format-1
+        path: /
+     - id: mount-1
+        type: mount
+        device: format-0
+        path: /boot  
+      - id: mount-3
+        type: mount
+        device: format-2
+        path: /boot/efi
+  version: 1

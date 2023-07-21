@@ -1,0 +1,104 @@
+- name: Download ISO
+  get_url:
+    url: "{{ iso_url }}"
+    dest: "{{ role_path }}/files/data/iso/{{ iso_url | basename }}"
+    checksum: "{{ iso_checksum }}"
+  register: iso
+
+- name: Extract the ISO
+  command:
+    cmd: "xorriso -osirrox on -indev {{ iso.dest }} -extract / {{ role_path }}/files/data/os"
+    creates: "{{ role_path }}/files/data/os/casper/initrd"
+
+- name: Delete any pre-existing pxe-config directories
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/{{ item }}"
+    state: absent
+  with_items:
+    - dhcp
+    - tftp
+    - http
+
+- name: Create pxe-config directories
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/{{ item }}"
+    state: directory
+  with_items:
+    - dhcp
+    - tftp
+    - http
+
+# http://ftp.acc.umu.se/ubuntu/pool/main/g/grub2/
+
+- name: Download UEFI boot files
+  get_url:
+    url: "http://ftp.acc.umu.se/ubuntu/pool/main/{{ item }}"
+    dest: "/tmp/{{ item | basename }}"
+  with_items:
+    - g/grub2/grub-common_2.06-2ubuntu3_amd64.deb
+    - g/grub2-signed/grub-efi-amd64-signed_1.176+2.06-2ubuntu3_amd64.deb
+    - s/shim-signed/shim-signed_1.51+15.4-0ubuntu9_amd64.deb
+
+
+- name: Copy UEFI boot files
+  shell:
+    cmd: dpkg-deb --fsys-tarfile {{ item["tarfile"] }}*deb  | tar x {{ item["filename"] }} -O > {{ role_path }}/files/data/pxe-config/tftp/{{ item["output"] }}
+    chdir: /tmp
+  with_items:
+    - tarfile: shim-signed
+      filename: ./usr/lib/shim/shimx64.efi.signed
+      output: bootx64.efi
+    - tarfile: grub-efi-amd64-signed
+      filename: ./usr/lib/grub/x86_64-efi-signed/grubnetx64.efi.signed
+      output: grubx64.efi
+    - tarfile: grub-common
+      filename: ./usr/share/grub/unicode.pf2
+      output: unicode.pf2
+
+- name: Copy files for PXE boot
+  copy:
+    src: "{{ role_path }}/files/data/os/{{ item }}"
+    dest: "{{ role_path }}/files/data/pxe-config/tftp/{{ item | basename | lower }}"
+    remote_src: true
+  with_items:
+  - casper/initrd
+  - casper/vmlinuz
+
+- name: Create tftp grub directory
+  file:
+    path: "{{ role_path }}/files/data/pxe-config/tftp/grub"
+    state: directory
+
+- name: Render DHCP config
+  template:
+    src: dhcpd.conf.j2
+    dest: "{{ role_path }}/files/data/pxe-config/dhcp/dhcpd.conf"
+
+- name: Render base GRUB config
+  template:
+    src: grub-base.cfg.j2
+    dest: "{{ role_path }}/files/data/pxe-config/tftp/grub/grub.cfg"
+
+- name: Render machine-specific config
+  include_tasks: machine-config.yml
+  loop: "{{ groups['k3s_nodes'] }}"
+
+
+# - name: Render machine specific GRUB CONFIG
+#  template:
+#    src: grub-machine.cfg.j2
+#    dest: "{{ role_path }}/files/data/pxe-config/tftp/{{ hostvars[item]['mac'] }}.conf"
+#  loop: "{{ groups['k3s_nodes'] }}"
+
+# - name: Render machine specific cloud-init files
+#  template:
+#    src: cloud-init.j2
+#    dest: "{{ role_path }}/files/data/pxe-config/http/{{ hostvars[item]['mac'] }}.conf"
+#  loop: "{{ groups['k3s_nodes'] }}"
+
+# - name: Start ephemeral PXE server
+#  docker_compose:
+#    project_src: "{{ role_path }}/files"
+#    state: present
+#    restarted: yes
+#    build: yes

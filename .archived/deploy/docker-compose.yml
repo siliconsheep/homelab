@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  dhcp:
+    build:
+      context: ./docker
+      dockerfile: dhcp.Dockerfile
+    volumes:
+      - ./roles/pxe-server/files/data/pxe-config/dhcp/dhcpd.conf:/etc/dhcp/dhcpd.conf:ro
+    network_mode: host
+  tftp:
+    build:
+      context: ./docker
+      dockerfile: tftp.Dockerfile
+    network_mode: host
+    volumes:
+      - ./roles/pxe-server/files/data/pxe-config/tftp:/var/lib/tftpboot:ro
+  http:
+    build:
+      context: ./docker
+      dockerfile: http.Dockerfile
+    network_mode: host
+    volumes:
+      - ./roles/pxe-server/files/data/iso:/usr/share/nginx/html/iso:ro
+      - ./roles/pxe-server/files/data/pxe-config/http:/usr/share/nginx/html/files:ro
+    environment:
+      NGINX_PORT: 80
