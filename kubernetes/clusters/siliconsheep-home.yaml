@@ -83,9 +83,9 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
-# - name: snapshot-controller
-#   valueFiles:
-#   - base.yaml
+- name: snapshot-controller
+  valueFiles:
+  - base.yaml
   namespace: kube-system
 - name: velero
   namespace: velero
