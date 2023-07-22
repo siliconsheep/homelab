@@ -5,3 +5,7 @@ dependencies:
   - name: longhorn
     version: 1.5.1
     repository: https://charts.longhorn.io
+  - name: vault-secret-provider
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider
+    condition: vault-secret-provider.enabled

@@ -1,3 +1,20 @@
+vault-secret-provider:
+  cluster: home
+  enabled: true
+  roleName: longhorn
+  defaultObjectPath: infra/scaleway
+  objects:  
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: AWS_REGION
+    key: aws-region
+  - name: AWS_ENDPOINTS
+    key: aws-endpoints
+  secretObjects: true
+  secretName: scw-credentials
+
 diskConfig:
   - name: nvme-disk
     path: /data
@@ -8,6 +25,10 @@ diskConfig:
       - fast
 
 longhorn:
+  defaultSettings:
+    backupTarget: s3://siliconsheep-velero-backups@fr-par/longhorn
+    backupTargetCredentialSecret: scw-credentials
+
   persistence:
     defaultClassReplicaCount: 2 # Only have 2 nodes to play with here :/
 

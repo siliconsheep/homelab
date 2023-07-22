@@ -1,3 +1,7 @@
+vault-secret-provider:
+  cluster: oke
+  enabled: false
+
 diskConfig:
   - name: iscsi-disk
     path: /data
