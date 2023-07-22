@@ -42,6 +42,10 @@ velero:
       provider: aws
       config:
         region: fr-par
+    
+    features: EnableCSI
+    
+  snapshotsEnabled: true
 
   credentials:
     existingSecret: velero-secret
