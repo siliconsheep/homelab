@@ -79,10 +79,14 @@
   valueFiles:
   - base.yaml
 - name: echoserver
-  namespace: {{ .Release.namespace }}
+  namespace: default
   valueFiles:
   - base.yaml
   - values-home.yaml
+- name: external-snapshotter-crds
+  namespace: kube-system
+- name: csi-snapshotter
+  namespace: kube-system
 - name: velero
   namespace: velero
   valueFiles:
