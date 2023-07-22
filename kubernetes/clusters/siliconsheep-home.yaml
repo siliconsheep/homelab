@@ -86,7 +86,7 @@
 - name: external-snapshotter-crds
   namespace: kube-system
   valueFiles: []
-- name: csi-snapshotter
+- name: snapshot-controller
   valueFiles: []
   namespace: kube-system
 - name: velero
