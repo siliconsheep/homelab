@@ -40,8 +40,6 @@ velero:
         config:
           region: fr-par
 
-    # Enable CSI snapshot support
-    features: EnableCSI
   credentials:
     existingSecret: velero-secret
 
