@@ -83,3 +83,8 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
+- name: velero
+  namespace: velero
+  valueFiles:
+  - base.yaml
+  - monitoring.yaml

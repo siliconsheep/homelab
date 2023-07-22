@@ -1,0 +1,11 @@
+apiVersion: v2
+name: velero
+version: 1.0.0
+dependencies:
+  - name: velero
+    version: 4.1.3
+    repository: https://vmware-tanzu.github.io/helm-charts
+  - name: vault-secret-provider
+    version: 1.0.0
+    repository: file://../partial/vault-secret-provider
+    condition: vault-secret-provider.enabled

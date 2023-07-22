@@ -1,0 +1,54 @@
+vault-secret-provider:
+  cluster: home
+  enabled: true
+  roleName: velero
+  defaultObjectPath: infra/scaleway
+  objects:  
+     name: cloud
+      key: s3-credentials
+  secretObjects: true
+  secretName: velero-secret
+
+velero:
+  # AWS backend and CSI plugins configuration
+  initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:v1.7.0
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+    - name: velero-plugin-for-csi
+      image: velero/velero-plugin-for-csi:v0.5.0
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+
+  # Velero Configuration
+  configuration:
+    backupStorageLocation:
+      provider: aws
+      bucket: siliconsheep-velero-backups
+      config:
+        region: fr-par
+        s3Url: https://s3.fr-par.scw.cloud
+
+    volumeSnapshotLocation:
+      - name: default
+        provider: aws
+        config:
+          region: fr-par
+
+    # Enable CSI snapshot support
+    features: EnableCSI
+  credentials:
+    existingSecret: velero-secret
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1024Mi
