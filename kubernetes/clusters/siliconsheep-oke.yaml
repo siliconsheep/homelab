@@ -60,7 +60,7 @@
   valueFiles:
   - base.yaml
 - name: echoserver
-  namespace: {{ .Release.namespace }}
+  namespace: default
   valueFiles:
   - base.yaml
   - values-oke.yaml
