@@ -4,8 +4,8 @@ vault-secret-provider:
   roleName: velero
   defaultObjectPath: infra/scaleway
   objects:  
-     name: cloud
-      key: s3-credentials
+    name: cloud
+    key: s3-credentials
   secretObjects: true
   secretName: velero-secret
 
