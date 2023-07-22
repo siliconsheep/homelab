@@ -43,6 +43,19 @@ velero:
 
   credentials:
     existingSecret: velero-secret
+  
+  extraVolumeMounts:
+  - name: secrets-fakemount
+    mountPath: /mnt/secrets-fakemount
+    readOnly: true
+
+  extraVolumes:
+  - name: secrets-fakemount
+    csi:
+      driver: secrets-store.csi.k8s.io
+      readOnly: true
+      volumeAttributes:
+        secretProviderClass: velero-home
 
   resources:
     requests:
