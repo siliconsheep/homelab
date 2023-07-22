@@ -83,11 +83,9 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
-- name: external-snapshotter-crds
-  namespace: kube-system
-  valueFiles: []
-- name: snapshot-controller
-  valueFiles: []
+# - name: snapshot-controller
+#   valueFiles:
+#   - base.yaml
   namespace: kube-system
 - name: velero
   namespace: velero

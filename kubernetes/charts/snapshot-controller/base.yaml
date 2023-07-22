@@ -1,0 +1,11 @@
+snapshot-controller:
+  volumeSnapshotClasses:
+  - name: longhorn-snapshot-vsc
+    labels:
+        velero.io/csi-volumesnapshot-class: "true"
+    driver: driver.longhorn.io
+    deletionPolicy: Delete
+    parameters:
+      type: bak
+serviceMonitor:
+  create: true
