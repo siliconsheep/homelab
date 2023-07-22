@@ -28,6 +28,7 @@ velero:
   # Velero Configuration
   configuration:
     backupStorageLocation:
+    - name: scaleway-primary  
       provider: aws
       bucket: siliconsheep-velero-backups
       config:
@@ -35,10 +36,10 @@ velero:
         s3Url: https://s3.fr-par.scw.cloud
 
     volumeSnapshotLocation:
-      - name: default
-        provider: aws
-        config:
-          region: fr-par
+    - name: scaleway-primary  
+      provider: aws
+      config:
+        region: fr-par
 
   credentials:
     existingSecret: velero-secret
