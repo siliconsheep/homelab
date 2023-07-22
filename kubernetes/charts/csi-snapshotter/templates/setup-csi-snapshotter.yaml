@@ -15,7 +15,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: csi-snapshotter # from rbac.yaml
-    namespace: {{ .Release.namespace }}
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: external-provisioner-runner # from rbac-external-provisioner.yaml
@@ -26,11 +26,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-snapshotter-provisioner-role-cfg
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: csi-snapshotter # from rbac.yaml
-    namespace: {{ .Release.namespace }}
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
   name: external-provisioner-cfg # from rbac-external-provisioner.yaml

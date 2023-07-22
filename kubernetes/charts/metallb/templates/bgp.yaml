@@ -2,7 +2,7 @@ apiVersion: metallb.io/v1beta2
 kind: BGPPeer
 metadata:
   name: {{ .Release.Name }}-bgp-peer
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   myASN: 64513
   peerASN: 64512
@@ -12,7 +12,7 @@ apiVersion: metallb.io/v1beta1
 kind: BGPAdvertisement
 metadata:
   name: {{ .Release.Name }}-bgp-advertisement
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   ipAddressPools:
   - {{ .Release.Name }}-default-pool
