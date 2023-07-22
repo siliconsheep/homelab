@@ -26,7 +26,7 @@ diskConfig:
 
 longhorn:
   defaultSettings:
-    backupTarget: s3://siliconsheep-longhorn@fr-par
+    backupTarget: s3://siliconsheep-longhorn@fr-par/
     backupTargetCredentialSecret: scw-credentials
 
   persistence:
