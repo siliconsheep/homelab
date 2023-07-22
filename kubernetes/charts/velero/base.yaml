@@ -33,6 +33,7 @@ velero:
       bucket: siliconsheep-velero-backups
       config:
         region: fr-par
+        s3ForcePathStyle: true
         s3Url: https://s3.fr-par.scw.cloud
 
     volumeSnapshotLocation:
