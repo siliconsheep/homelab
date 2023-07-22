@@ -1,0 +1,4 @@
+apiVersion: v2
+name: external-snapshotter
+appVersion: v6.2.1
+version: 1.0.0

@@ -79,7 +79,7 @@
   valueFiles:
   - base.yaml
 - name: echoserver
-  namespace: default
+  namespace: {{ .Release.namespace }}
   valueFiles:
   - base.yaml
   - values-home.yaml
