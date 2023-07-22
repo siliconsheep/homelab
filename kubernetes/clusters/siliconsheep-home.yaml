@@ -85,7 +85,9 @@
   - values-home.yaml
 - name: external-snapshotter-crds
   namespace: kube-system
+  valueFiles: []
 - name: csi-snapshotter
+  valueFiles: []
   namespace: kube-system
 - name: velero
   namespace: velero
