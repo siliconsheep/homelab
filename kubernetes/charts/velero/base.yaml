@@ -30,6 +30,7 @@ velero:
     backupStorageLocation:
     - name: scaleway-primary  
       provider: aws
+      default: true
       bucket: siliconsheep-velero-backups
       config:
         region: fr-par
