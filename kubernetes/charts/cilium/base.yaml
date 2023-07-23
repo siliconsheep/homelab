@@ -53,6 +53,7 @@ cilium:
             hosts:
               - hubble.siliconsheep.se
   
+  ipam:
     mode: kubernetes
   
   ipv4NativeRoutingCIDR: 10.127.0.0/16
