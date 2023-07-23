@@ -14,7 +14,7 @@ spec:
     - localASN: 64513
       neighbors:
         - peerASN: 64512
-          peerAddress: 172.27.20.1
+          peerAddress: 172.27.20.1/32
       serviceSelector:
         matchLabels:
           bgp.siliconsheep.se/announce: "true"
