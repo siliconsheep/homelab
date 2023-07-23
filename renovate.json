@@ -81,6 +81,11 @@
       "automerge": true,
       "ignoreTests": true,
       "matchPackagePatterns": ["ghcr.io/bjw-s", "ghcr.io/onedr0p"]
+    },
+    {
+      "datasources": ["docker"],
+      "versioning": "loose",
+      "packageNames": ["ghcr.io/onedr0p/plex"]
     }
   ]
 }
