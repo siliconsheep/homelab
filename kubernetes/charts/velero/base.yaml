@@ -37,11 +37,11 @@ velero:
         s3ForcePathStyle: true
         s3Url: https://s3.fr-par.scw.cloud
 
-    volumeSnapshotLocation:
-    - name: scaleway-primary  
-      provider: aws
-      config:
-        region: fr-par
+    # volumeSnapshotLocation:
+    # - name: scaleway-primary  
+    #   provider: aws
+    #   config:
+    #     region: fr-par
     
     features: EnableCSI
     
