@@ -4,7 +4,7 @@ global:
 app-template:
   image:
     repository: ghcr.io/onedr0p/plex
-    tag: 1.30.2.6563-3d4dc0cce@sha256:d0d3e5e75f5ed86843d123cd84bb1f54a0593ec26c908410548862607af880bf
+    tag: 1.32.5.7328-2632c9d3a@sha256:cdcf7d87f96a810d8af75ad58e1f0b0bdcc761de9b829f2473f7a17e7c67c241
   env:
     TZ: "Europe/Stockholm"
     # cat /config/Library/Application\ Support/Plex\ Media\ Server/Preferences.xml | tr " " "\n" | \
