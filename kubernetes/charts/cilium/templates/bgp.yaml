@@ -3,6 +3,9 @@ apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPPeeringPolicy
 metadata:
   name: cilium-bgp-policy-home
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+
 spec:
   nodeSelector:
     matchLabels:

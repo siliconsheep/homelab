@@ -3,6 +3,8 @@ apiVersion: cilium.io/v2alpha1
 kind: CiliumLoadBalancerIPPool
 metadata:
   name: cilium-lb-ippool
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   cidrs:
     - cidr: 172.27.120.0/24
