@@ -6,6 +6,6 @@ snapshot-controller:
     driver: driver.longhorn.io
     deletionPolicy: Delete
     parameters:
-      type: bak
+      type: snap
 serviceMonitor:
   create: true
