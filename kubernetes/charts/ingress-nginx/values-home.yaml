@@ -8,7 +8,11 @@ ingress-nginx:
       maxReplicas: 5
 
     service:
-      loadBalancerIP: "172.27.120.1"
+      labels:
+        bgp.siliconsheep.se/announce: "true"
+      annotations:
+        reloader.stakater.com/match: "true"
+        io.cilium/lb-ipam-ips: "172.27.120.1"
     
     publishService:
       pathOverride: "ingress/ingress-expose"

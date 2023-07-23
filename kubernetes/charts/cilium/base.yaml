@@ -1,0 +1,95 @@
+cilium:
+  autoDirectNodeRoutes: true
+  
+  bpf:
+    masquerade: true
+  
+  cni:
+    uninstall: false
+  
+  endpointRoutes:
+    enabled: true
+  
+  hubble:
+    enabled: true
+    metrics:
+      enabled:
+        - dns:query
+        - drop
+        - tcp
+        - flow
+        - port-distribution
+        - icmp
+        - http
+      serviceMonitor:
+        enabled: true
+      dashboards:
+        enabled: true
+        annotations:
+          grafana_folder: Cilium
+    
+    relay:
+      enabled: true
+      rollOutPods: true
+      prometheus:
+        serviceMonitor:
+          enabled: true
+    
+    ui:
+      enabled: true
+      rollOutPods: true
+      ingress:
+        enabled: true
+        className: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/auth-url: https://auth2.siliconsheep.se/oauth2/auth?allowed_groups=admins
+          nginx.ingress.kubernetes.io/auth-signin: https://auth2.siliconsheep.se/oauth2/start?rd=$scheme://$best_http_host$request_uri
+          nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - hubble.siliconsheep.se
+        tls:
+          - secretName: hubble-siliconsheep-se
+            hosts:
+              - hubble.siliconsheep.se
+  
+    mode: kubernetes
+  
+  ipv4NativeRoutingCIDR: 10.127.0.0/16
+  k8sServiceHost: 172.27.20.100
+  k8sServicePort: 6443
+  kubeProxyReplacement: strict
+  kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+  loadBalancer:
+    algorithm: maglev
+    mode: dsr
+  
+  localRedirectPolicy: true
+  
+  operator:
+    rollOutPods: true
+    prometheus:
+      enabled: true
+      # serviceMonitor:
+      #   enabled: true
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_folder: Cilium
+  
+  prometheus:
+    enabled: true
+    # serviceMonitor:
+    #   enabled: true
+  
+  dashboards:
+    enabled: true
+    annotations:
+      grafana_folder: Cilium
+  
+  rollOutCiliumPods: true
+  tunnel: disabled
+
+  securityContext:
+    privileged: true

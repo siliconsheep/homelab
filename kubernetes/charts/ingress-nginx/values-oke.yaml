@@ -9,11 +9,11 @@ ingress-nginx:
 
     service:
       annotations:
+        reloader.stakater.com/match: "true"
         oci.oraclecloud.com/load-balancer-type: "nlb"
     
-    # TODO: remove once Traefik is gone
     ingressClassResource:
-      default: false
+      default: true
   
     resources:
       requests:

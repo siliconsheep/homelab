@@ -1,0 +1,11 @@
+cilium:
+  bgpControlPlane:
+    enabled: true
+  
+  cluster:
+    name: siliconsheep-home
+    id: 1
+  
+  containerRuntime:
+    integration: containerd
+    socketPath: /var/run/k3s/containerd/containerd.sock

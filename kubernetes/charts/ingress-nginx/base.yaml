@@ -13,8 +13,6 @@ ingress-nginx:
     service:
       enabled: true
       type: LoadBalancer
-      annotations:
-        reloader.stakater.com/match: "true"
       externalTrafficPolicy: Local
 
     publishService:

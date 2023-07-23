@@ -29,10 +29,15 @@
   valueFiles:
   - base.yaml
   - values-home.yaml
-- name: metallb
-  namespace: metallb-system
+# - name: metallb
+#   namespace: metallb-system
+#   valueFiles:
+#   - base.yaml
+- name: cilium
+  namespace: kube-system
   valueFiles:
   - base.yaml
+  - values-home.yaml
 - name: vault
   valueFiles:
   - base.yaml
