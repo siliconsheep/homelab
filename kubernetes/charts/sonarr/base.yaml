@@ -3,7 +3,7 @@ global:
 
 app-template:
   controller:
-    replicas: 0
+    replicas: 1
   image:
     repository: ghcr.io/onedr0p/sonarr-develop
     tag: 4.0.0.577@sha256:753e931408dbfaa629f6c1983124feced727228f6efb1b2bd37d7c11caa68147
@@ -66,11 +66,11 @@ app-template:
         successThreshold: 1
         timeoutSeconds: 10
   persistence:
-    # config:
-    #   enabled: true
-    #   storageClass: longhorn
-    #   accessMode: ReadWriteOnce
-    #   size: 1Gi
+    config:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 1Gi
     media:
       enabled: true
       type: nfs
