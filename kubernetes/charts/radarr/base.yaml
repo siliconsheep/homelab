@@ -2,6 +2,8 @@ global:
   fullnameOverride: radarr
 
 app-template:
+  controller:
+    replicas: 0
   image:
     repository: ghcr.io/onedr0p/radarr-develop
     tag: 4.7.2.7686@sha256:4d60d9dd92593fa2c8bf404d06548b1877ed86d63fa622e5e706c07b7a382e4a
@@ -52,11 +54,11 @@ app-template:
         successThreshold: 1
         timeoutSeconds: 10
   persistence:
-    config:
-      enabled: true
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
-      size: 1Gi
+    # config:
+    #   enabled: true
+    #   storageClass: longhorn
+    #   accessMode: ReadWriteOnce
+    #   size: 1Gi
     media:
       enabled: true
       type: nfs

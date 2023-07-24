@@ -2,6 +2,8 @@ global:
   fullnameOverride: sabnzbd
 
 app-template:
+  controller:
+    replicas: 0
   image:
     repository: ghcr.io/onedr0p/sabnzbd
     tag: 4.0.3@sha256:aff676e3c234f7a4493c75813e296c347c02b6e5374acd1858f8244ea44f2b4a
@@ -42,11 +44,11 @@ app-template:
     supplementalGroups:
       - 100
   persistence:
-    config:
-      enabled: true
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
-      size: 1Gi
+    # config:
+    #   enabled: true
+    #   storageClass: longhorn
+    #   accessMode: ReadWriteOnce
+    #   size: 1Gi
     media:
       enabled: true
       type: nfs
