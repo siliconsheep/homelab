@@ -2,6 +2,8 @@ global:
   fullnameOverride: sonarr
 
 app-template:
+  controller:
+    replicas: 0
   image:
     repository: ghcr.io/onedr0p/sonarr-develop
     tag: 4.0.0.577@sha256:753e931408dbfaa629f6c1983124feced727228f6efb1b2bd37d7c11caa68147
