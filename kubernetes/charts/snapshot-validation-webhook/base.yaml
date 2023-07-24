@@ -1,0 +1,5 @@
+snapshot-validation-webhook:
+  tls:
+    certManagerIssuerRef:
+      name: selfsigned
+      kind: ClusterIssuer
