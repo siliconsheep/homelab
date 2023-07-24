@@ -93,7 +93,8 @@
   - base.yaml
   namespace: kube-system
 - name: snapshot-validation-webhook
-  valueFiles: []
+  valueFiles:
+  - base.yaml
   namespace: kube-system
 - name: velero
   namespace: velero
