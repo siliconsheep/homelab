@@ -1,59 +1,67 @@
 - name: cert-manager # Requires Vault
-  namespace: networking 
+  namespace: networking
+  project: core
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
   - values-home.yaml # Requires Vault / Secrets CSI driver
 - name: external-dns # Requires Vault
   namespace: networking
+  project: core
   valueFiles:
   - base.yaml
   - values-home.yaml
 - name: metrics-server
   namespace: monitoring
+  project: core
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
 - name: ingress-nginx
   namespace: ingress
+  project: core
   valueFiles:
   - base.yaml # Requires MetalLB
   - values-home.yaml
   - monitoring.yaml # Requires Prometheus
 - name: secrets-store-csi-driver
   namespace: kube-system
+  project: core
   valueFiles:
   - base.yaml
 - name: longhorn
   namespace: longhorn-system
+  project: core
   valueFiles:
   - base.yaml
   - values-home.yaml
-# - name: metallb
-#   namespace: metallb-system
-#   valueFiles:
-#   - base.yaml
 - name: cilium
   namespace: kube-system
+  project: core
   valueFiles:
   - base.yaml
   - values-home.yaml
 - name: vault
+  namespace: vault
+  project: core
   valueFiles:
   - base.yaml
   - values-home.yaml
 - name: oauth2-proxy
   namespace: auth
+  project: apps
   valueFiles:
   - base.yaml
   - values-home.yaml
 - name: oauth2-proxy-redis
   namespace: auth
+  project: apps
   valueFiles:
   - base.yaml
   - values-home.yaml
 - name: prometheus
   namespace: monitoring
+  project: core
   serverSideApply: true
   rawHelm: "yes"
   valueFiles:
@@ -61,43 +69,53 @@
   - values-home.yaml
 - name: sabnzbd
   namespace: media
+  project: apps
   valueFiles:
   - base.yaml
 - name: sonarr
   namespace: media
+  project: apps
   valueFiles:
   - base.yaml
 - name: radarr
   namespace: media
+  project: apps
   valueFiles:
   - base.yaml
 - name: node-feature-discovery
   namespace: kube-system
+  project: apps
   valueFiles:
   - base.yaml
 - name: intel-gpu-plugin
   namespace: kube-system
+  project: apps
   valueFiles:
   - base.yaml
 - name: plex
   namespace: media
+  project: apps
   valueFiles:
   - base.yaml
 - name: echoserver
   namespace: default
+  project: apps
   valueFiles:
   - base.yaml
   - values-home.yaml
 - name: snapshot-controller
+  namespace: kube-system
+  project: core
   valueFiles:
   - base.yaml
-  namespace: kube-system
 - name: snapshot-validation-webhook
+  namespace: kube-system
+  project: core
   valueFiles:
   - base.yaml
-  namespace: kube-system
 - name: velero
   namespace: velero
+  project: core
   valueFiles:
   - base.yaml
   - monitoring.yaml

@@ -1,26 +1,31 @@
 - name: cert-manager
   namespace: networking
+  project: core
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
 - name: external-dns
   namespace: networking
+  project: core
   valueFiles:
   - base.yaml
   - values-oke.yaml
 - name: metrics-server
   namespace: monitoring
+  project: core
   valueFiles:
   - base.yaml
   - monitoring.yaml # Requires Prometheus
 - name: ingress-nginx
   namespace: ingress
+  project: core
   valueFiles:
   - base.yaml
   - values-oke.yaml
   - monitoring.yaml # Requires Prometheus
 - name: secrets-store-csi-driver
   namespace: kube-system
+  project: core
   valueFiles:
   - base.yaml
 - name: vault
@@ -28,16 +33,19 @@
   - base.yaml # Requires Traefik
 - name: oauth2-proxy
   namespace: auth
+  project: apps
   valueFiles:
   - base.yaml
   - values-oke.yaml
 - name: oauth2-proxy-redis
   namespace: auth
+  project: apps
   valueFiles:
   - base.yaml
   - values-oke.yaml
 - name: prometheus
   namespace: monitoring
+  project: core
   serverSideApply: true
   rawHelm: "yes"
   valueFiles:
@@ -45,27 +53,34 @@
   - values-oke.yaml
   - "/infra-vars/values-prometheus.yaml"
 - name: argocd
+  namespace: argocd
+  project: core
   valueFiles:
   - base.yaml
 - name: argocd-appset
   namespace: argocd
+  project: core
   valueFiles:
   - base.yaml
 - name: vpa
   namespace: monitoring
+  project: core
   valueFiles:
   - base.yaml
 - name: goldilocks
   namespace: monitoring
+  project: apps
   valueFiles:
   - base.yaml
 - name: echoserver
   namespace: default
+  project: apps
   valueFiles:
   - base.yaml
   - values-oke.yaml
 - name: cluster-autoscaler
   namespace: kube-system
+  project: core
   rawHelm: "yes"
   valueFiles:
   - base.yaml

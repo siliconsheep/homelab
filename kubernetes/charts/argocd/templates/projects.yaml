@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: Applications
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+  - https://github.com/siliconsheep/homelab
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: core
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: Core components
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+  - https://github.com/siliconsheep/homelab
