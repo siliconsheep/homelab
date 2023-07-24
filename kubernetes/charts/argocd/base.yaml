@@ -172,10 +172,10 @@ argo-cd:
         policy.default: role:readonly
         policy.csv: |
           p, role:org-admin, applications, *, */*, allow
-          p, role:org-admin, clusters, get, *, allow
+          p, role:org-admin, clusters, *, *, allow
           p, role:org-admin, repositories, *, *, allow
-          p, role:org-admin, logs, get, *, allow
-          p, role:org-admin, exec, create, */*, allow
+          p, role:org-admin, logs, *, *, allow
+          p, role:org-admin, exec, *, */*, allow
           g, argocd-admins, role:org-admin
         scopes: '[email, groups]'
     cm:

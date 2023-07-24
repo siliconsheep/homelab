@@ -1,3 +1,6 @@
+global:
+  bootstrap: false
+
 cilium:
   autoDirectNodeRoutes: true
   
@@ -22,7 +25,7 @@ cilium:
         - icmp
         - http
       serviceMonitor:
-        enabled: true
+        enabled: false #TODO: flip to true
       dashboards:
         enabled: true
         annotations:
@@ -33,7 +36,7 @@ cilium:
       rollOutPods: true
       prometheus:
         serviceMonitor:
-          enabled: true
+          enabled: false #TODO: flip to true
     
     ui:
       enabled: true
@@ -72,8 +75,8 @@ cilium:
     rollOutPods: true
     prometheus:
       enabled: true
-      # serviceMonitor:
-      #   enabled: true
+      serviceMonitor:
+        enabled: false #TODO: flip to true
     dashboards:
       enabled: true
       annotations:
@@ -81,8 +84,8 @@ cilium:
   
   prometheus:
     enabled: true
-    # serviceMonitor:
-    #   enabled: true
+    serviceMonitor:
+      enabled: false #TODO: flip to true
   
   dashboards:
     enabled: true

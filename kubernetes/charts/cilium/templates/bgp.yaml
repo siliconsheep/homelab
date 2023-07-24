@@ -1,4 +1,4 @@
-{{- if eq .Values.cilium.cluster.name "siliconsheep-home" }}
+{{- if and (eq .Values.cilium.cluster.name "siliconsheep-home") (not .Values.global.bootstrap) }}
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPPeeringPolicy
 metadata:
