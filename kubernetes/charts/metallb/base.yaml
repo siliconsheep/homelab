@@ -1,6 +1,0 @@
-metallb:
-  controller:
-    priorityClassName: system-node-critical
-  speaker:
-    frr:
-      enabled: true
