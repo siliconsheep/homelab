@@ -26,7 +26,7 @@ spec:
       annotations:
         argocd.argoproj.io/manifest-generate-paths: {{`'/kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
     spec:
-      project: default
+      project: {{`'{{or (index . "project") "default" }}'`}}
       source:
         path: {{`'kubernetes/charts/{{or (index . "chartPath") .name }}'`}}
         targetRevision: HEAD
