@@ -1,5 +1,5 @@
 networkPolicies:
-  enabled: false
+  enabled: true
 
 app-template:
   image:
