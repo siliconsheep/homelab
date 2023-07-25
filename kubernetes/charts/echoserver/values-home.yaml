@@ -1,3 +1,6 @@
+networkPolicies:
+  enabled: true
+
 app-template:
   ingress:
     main:
