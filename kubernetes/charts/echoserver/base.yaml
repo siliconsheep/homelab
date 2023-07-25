@@ -1,3 +1,6 @@
+networkPolicies:
+  enabled: true
+
 app-template:
   image:
     repository: ghcr.io/mendhak/http-https-echo

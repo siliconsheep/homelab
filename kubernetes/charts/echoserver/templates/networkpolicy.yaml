@@ -1,0 +1,21 @@
+{{- if .Values.networkPolicies.enabled }}
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: echoserver
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: echoserver-home
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: ingress-nginx-home
+            app.kubernetes.io/name: ingress-nginx
+            io.kubernetes.pod.namespace: ingress
+      toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP
+{{- end }}
