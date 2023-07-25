@@ -16,6 +16,6 @@ spec:
             io.kubernetes.pod.namespace: ingress
       toPorts:
         - ports:
-            - port: "80"
+            - port: "8080"
               protocol: TCP
 {{- end }}
