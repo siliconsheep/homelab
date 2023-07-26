@@ -1,6 +1,9 @@
 global:
   fullnameOverride: sonarr
 
+networkPolicies:
+  enabled: true
+
 app-template:
   controller:
     replicas: 1

@@ -1,6 +1,9 @@
 global:
   fullnameOverride: radarr
 
+networkPolicies:
+  enabled: true
+
 app-template:
   controller:
     replicas: 1
