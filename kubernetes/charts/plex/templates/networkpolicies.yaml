@@ -41,16 +41,16 @@ spec:
             - port: "443"
               protocol: TCP
           rules:
-            http:
-            - path: "/.*"
+            http: 
+            - {}
               
     - toPorts:
         - ports:
             - port: "80"
               protocol: TCP
           rules:
-            http:
-            - path: "/.*"
+            http: 
+            - {}
               
     
 {{- end }}
