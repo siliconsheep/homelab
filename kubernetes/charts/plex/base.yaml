@@ -7,7 +7,7 @@ networkPolicies:
 app-template:
   controller:
     replicas: 1
-    annotations:
+    podAnnotations:
       policy.cilium.io/proxy-visibility: "<Egress/53/UDP/DNS>,<Egress/443/TCP/HTTP>"
   image:
     repository: ghcr.io/onedr0p/plex
