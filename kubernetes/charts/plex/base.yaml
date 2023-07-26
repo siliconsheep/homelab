@@ -11,8 +11,9 @@ app-template:
   image:
     repository: ghcr.io/onedr0p/plex
     tag: 1.32.5.7349-8f4248874@sha256:805ad80226d54f03c21efe84979558e7c3d0b07f345b9c929ff11de8cc216151
-    podAnnotations:
-      policy.cilium.io/proxy-visibility: "<Egress/53/UDP/DNS>,<Egress/443/TCP/HTTP>"
+
+  podAnnotations:
+    policy.cilium.io/proxy-visibility: "<Egress/53/UDP/DNS>,<Egress/443/TCP/HTTP>"
 
   env:
     TZ: "Europe/Stockholm"
