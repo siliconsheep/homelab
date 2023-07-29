@@ -2,7 +2,7 @@ global:
   fullnameOverride: plex
 
 networkPolicies:
-  enabled: true
+  enabled: false
 
 app-template:
   controller:
