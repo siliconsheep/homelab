@@ -29,7 +29,8 @@ app-template:
             - path: /
               pathType: Prefix
       tls:
-        - hosts:
+        - secretName: tautulli-siliconsheep-se
+          hosts:
             - "tautulli.siliconsheep.se"
   podSecurityContext:
     runAsUser: 568
