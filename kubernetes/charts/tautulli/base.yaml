@@ -1,0 +1,65 @@
+global:
+  fullnameOverride: tautulli
+
+app-template:
+  controller:
+    type: statefulset
+  image:
+    repository: ghcr.io/onedr0p/tautulli
+    tag: 2.12.5@sha256:d0757cd22196df22e251b9be8db9e729493fb573a07d4d957b553c6676e64440
+  env:
+    TZ: Europe/Stockholm
+  service:
+    main:
+      ports:
+        http:
+          port: 8181
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/auth-url: https://auth2.siliconsheep.se/oauth2/auth
+        nginx.ingress.kubernetes.io/auth-signin: https://auth2.siliconsheep.se/oauth2/start?rd=$scheme://$best_http_host$request_uri
+        nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: "tautulli.siliconsheep.se"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - "tautulli.siliconsheep.se"
+  podSecurityContext:
+    runAsUser: 568
+    runAsGroup: 568
+    fsGroup: 568
+    fsGroupChangePolicy: OnRootMismatch
+  persistence:
+    add-ons:
+      enabled: true
+      type: emptyDir
+  volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      storageClass: longhorn
+  resources:
+    requests:
+      cpu: 10m
+      memory: 250Mi
+    limits:
+      memory: 500Mi
+  sidecars:
+    jbops:
+      image: registry.k8s.io/git-sync/git-sync:v3.6.9
+      imagePullPolicy: IfNotPresent
+      args:
+        - --repo=https://github.com/blacktwin/JBOPS
+        - --branch=master
+        - --wait=86400 # 1 day
+        - --root=/add-ons
+      volumeMounts:
+        - { name: add-ons, mountPath: /add-ons }

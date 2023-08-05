@@ -97,6 +97,11 @@
   project: apps
   valueFiles:
   - base.yaml
+- name: tautulli
+  namespace: media
+  project: apps
+  valueFiles:
+  - base.yaml
 - name: echoserver
   namespace: default
   project: apps
