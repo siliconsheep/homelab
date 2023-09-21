@@ -3,7 +3,7 @@ vault-secret-provider:
   cluster: oke
   roleName: argocd
   defaultObjectPath: auth/oauth-credentials/argocd
-  objects:  
+  objects:
     - name: domain
     - name: client-id
     - name: client-secret
@@ -26,9 +26,9 @@ argo-cd:
       serviceMonitor:
         enabled: true
         relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-oke"
       rules:
         enabled: false
         spec:
@@ -56,14 +56,14 @@ argo-cd:
                 The application [{{`{{$labels.name}}`}} has not been synchronized for over
                 12 hours which means that the state of this cloud has drifted away from the
                 state inside Git.
-    
+
     resources:
       requests:
         cpu: 150m
         memory: 1Gi
       limits:
         memory: 1Gi
-  
+
   dex:
     enabled: true
     fullnameOverride: dex
@@ -82,22 +82,22 @@ argo-cd:
       tls:
         - secretName: argocd-siliconsheep-se
           hosts: [argocd.siliconsheep.se]
-    
+
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
         relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-oke"
     resources:
       requests:
         cpu: 50m
         memory: 150Mi
       limits:
         memory: 150Mi
-    
+
     volumeMounts:
       - name: secrets-fakemount
         mountPath: /mnt/secrets-fakemount
@@ -110,7 +110,7 @@ argo-cd:
           readOnly: true
           volumeAttributes:
             secretProviderClass: argocd-oke
-  
+
   repoServer:
     autoscaling:
       enabled: true
@@ -138,9 +138,27 @@ argo-cd:
       serviceMonitor:
         enabled: true
         relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-oke"
+    extraContainers:
+      - name: plugin-helm-raw
+        command: [/var/run/argocd/argocd-cmp-server]
+        args: [--loglevel, debug]
+        image: '{{ default .Values.global.image.repository .Values.server.image.repository }}:{{ default (include "argo-cd.defaultTag" .) .Values.server.image.tag }}'
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: cmp-tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: helm-raw.yaml
+            name: cmp-plugin
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
@@ -148,10 +166,17 @@ argo-cd:
       - name: infra-vars
         configMap:
           name: infra-vars
+      - name: cmp-plugin
+        configMap:
+          name: cmp-plugin
+      - name: custom-tools
+        emptyDir: {}
+      - name: cmp-tmp
+        emptyDir: {}
     volumeMounts:
       - name: infra-vars
         mountPath: /infra-vars
-  
+
   applicationSet:
     enabled: true
     fullnameOverride: applicationset
@@ -162,22 +187,22 @@ argo-cd:
       serviceMonitor:
         enabled: true
         relabelings:
-        - action: replace
-          targetLabel: "cluster"
-          replacement: "siliconsheep-oke"
-  
+          - action: replace
+            targetLabel: "cluster"
+            replacement: "siliconsheep-oke"
+
   configs:
     rbac:
-        create: true
-        policy.default: role:readonly
-        policy.csv: |
-          p, role:org-admin, applications, *, */*, allow
-          p, role:org-admin, clusters, *, *, allow
-          p, role:org-admin, repositories, *, *, allow
-          p, role:org-admin, logs, *, *, allow
-          p, role:org-admin, exec, *, */*, allow
-          g, argocd-admins, role:org-admin
-        scopes: '[email, groups]'
+      create: true
+      policy.default: role:readonly
+      policy.csv: |
+        p, role:org-admin, applications, *, */*, allow
+        p, role:org-admin, clusters, *, *, allow
+        p, role:org-admin, repositories, *, *, allow
+        p, role:org-admin, logs, *, *, allow
+        p, role:org-admin, exec, *, */*, allow
+        g, argocd-admins, role:org-admin
+      scopes: "[email, groups]"
     cm:
       admin.enabled: "true"
       url: https://argocd.siliconsheep.se
@@ -264,14 +289,37 @@ argo-cd:
         hs = {}
         hs.status = "Healthy"
         return hs
-      resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
+      ? resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration
+      : |
         jqPathExpressions:
         - '.webhooks[]?.clientConfig.caBundle'
         - '.webhooks[]?.failurePolicy'
-      resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
+      ? resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration
+      : |
         jqPathExpressions:
         - '.webhooks[]?.clientConfig.caBundle'
         - '.webhooks[]?.failurePolicy'
-      resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition: |
+      ? resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition
+      : |
         jqPathExpressions:
         - '.spec.conversion?.webhooks[]?.clientConfig.caBundle'
+
+  extraObjects:
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: cmp-plugin
+        namespace: "{{ .Release.Namespace }}"
+      data:
+        helm-raw.yaml: |
+          apiVersion: argoproj.io/v1alpha1
+          kind: ConfigManagementPlugin
+          metadata:
+            name: helm-raw
+          spec:
+            init:
+              command: ["sh", "-c"]
+              args: ["helm dependency build"]
+            generate:
+              command: ["sh", "-c"]
+              args: ["helm template $ARGOCD_APP_NAME -n $ARGOCD_APP_NAMESPACE ${ARGOCD_ENV_helm_args} . --include-crds"]
