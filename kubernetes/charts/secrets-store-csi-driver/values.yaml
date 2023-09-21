@@ -12,7 +12,7 @@ secrets-store-csi-driver:
 
     livenessProbeImage:
       repository: registry.k8s.io/sig-storage/livenessprobe
-      tag: v2.10.0
+      tag: v2.11.0
 
   logVerbosity: 0
   logFormatJSON: false
