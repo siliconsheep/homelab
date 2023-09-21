@@ -16,6 +16,10 @@ vault-secret-provider:
   secretName: oauth2-proxy-secrets
 
 app-template:
+  image:
+    repository: quay.io/oauth2-proxy/oauth2-proxy
+    tag: v7.5.0
+    
   ingress:
     main:
       hosts:
