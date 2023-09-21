@@ -3,7 +3,7 @@ name: velero
 version: 1.0.0
 dependencies:
   - name: velero
-    version: 4.1.4
+    version: 5.0.2
     repository: https://vmware-tanzu.github.io/helm-charts
   - name: vault-secret-provider
     version: 1.0.0
