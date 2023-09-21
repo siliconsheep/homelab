@@ -180,8 +180,8 @@ argo-cd:
         scopes: '[email, groups]'
     cmp:
       create: true
-      plugins: |
-        - name: helm-raw
+      plugins:
+        helm-raw:
           init:
             command: ["sh", "-c"]
             args: ["helm dependency build"]
