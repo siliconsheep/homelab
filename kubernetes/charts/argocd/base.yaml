@@ -178,6 +178,16 @@ argo-cd:
           p, role:org-admin, exec, *, */*, allow
           g, argocd-admins, role:org-admin
         scopes: '[email, groups]'
+    cmp:
+      create: true
+      plugins: |
+        - name: helm-raw
+          init:
+            command: ["sh", "-c"]
+            args: ["helm dependency build"]
+          generate:
+            command: ["sh", "-c"]
+            args: ["helm template $ARGOCD_APP_NAME -n $ARGOCD_APP_NAMESPACE ${ARGOCD_ENV_helm_args} . --include-crds"]
     cm:
       admin.enabled: "true"
       url: https://argocd.siliconsheep.se
@@ -275,11 +285,3 @@ argo-cd:
       resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition: |
         jqPathExpressions:
         - '.spec.conversion?.webhooks[]?.clientConfig.caBundle'
-      configManagementPlugins: |
-        - name: helm-raw
-          init:
-            command: ["sh", "-c"]
-            args: ["helm dependency build"]
-          generate:
-            command: ["sh", "-c"]
-            args: ["helm template $ARGOCD_APP_NAME -n $ARGOCD_APP_NAMESPACE ${ARGOCD_ENV_helm_args} . --include-crds"]
