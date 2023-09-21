@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ConfigManagementPlugin
 metadata:
   name: helm-raw
+  namespace: argocd
 spec:
   init:
     command: ["sh", "-c"]
