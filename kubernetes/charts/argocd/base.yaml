@@ -159,6 +159,8 @@ argo-cd:
           - mountPath: /home/argocd/cmp-server/config/plugin.yaml
             subPath: helm-raw.yaml
             name: cmp-plugin
+          - mountPath: /infra-vars
+            name: infra-vars
     env:
       - name: "ARGOCD_EXEC_TIMEOUT"
         value: "5m"
@@ -173,9 +175,6 @@ argo-cd:
         emptyDir: {}
       - name: cmp-tmp
         emptyDir: {}
-    volumeMounts:
-      - name: infra-vars
-        mountPath: /infra-vars
 
   applicationSet:
     enabled: true
