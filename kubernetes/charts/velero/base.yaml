@@ -13,7 +13,7 @@ velero:
   # AWS backend and CSI plugins configuration
   initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.8.0
+      image: velero/velero-plugin-for-aws:v1.8.1
       imagePullPolicy: IfNotPresent
       volumeMounts:
         - mountPath: /target
