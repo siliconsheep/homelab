@@ -13,7 +13,7 @@ ingress-nginx:
     service:
       enabled: true
       type: LoadBalancer
-      externalTrafficPolicy: Local
+      externalTrafficPolicy: Cluster
 
     publishService:
       enabled: true
