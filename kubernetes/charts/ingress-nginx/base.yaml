@@ -46,14 +46,5 @@ ingress-nginx:
     extraArgs:
       default-ssl-certificate: "ingress/siliconsheep-se-tls"
 
-    topologySpreadConstraints:
-      - maxSkew: 2
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/instance: ingress-nginx
-            app.kubernetes.io/component: controller
-
   defaultBackend:
     enabled: false

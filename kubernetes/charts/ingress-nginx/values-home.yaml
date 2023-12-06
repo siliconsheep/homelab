@@ -13,7 +13,7 @@ ingress-nginx:
       annotations:
         reloader.stakater.com/match: "true"
         io.cilium/lb-ipam-ips: "172.27.120.1"
-    
+
     publishService:
       pathOverride: "ingress/ingress-expose"
 
@@ -23,3 +23,12 @@ ingress-nginx:
         memory: 512Mi
       limits:
         memory: 512Mi
+
+    topologySpreadConstraints:
+      - maxSkew: 2
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: ingress-nginx-home
+            app.kubernetes.io/component: controller
