@@ -1,0 +1,2 @@
+bound_service_account_names: ["velero-home-server"]
+token_policies: ["velero"]

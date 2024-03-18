@@ -1,0 +1,2 @@
+bound_service_account_names: ["oauth2-proxy", "oauth2-proxy-redis"]
+token_policies: ["oauth2-proxy-home"]

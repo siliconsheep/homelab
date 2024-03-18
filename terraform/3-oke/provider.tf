@@ -5,14 +5,12 @@ terraform {
       version = "~> 4.98"
     }
 
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 3.28.0"
+    cloudinit = {
+      source  = "hashicorp/cloudinit"
+      version = "~> 2.2.0"
     }
   }
 }
-
-provider "cloudflare" {}
 
 provider "oci" {
   ignore_defined_tags = ["Oracle-Tags.CreatedBy", "Oracle-Tags.CreatedOn"]

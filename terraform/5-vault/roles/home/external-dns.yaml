@@ -1,0 +1,2 @@
+bound_service_account_names: ["external-dns"]
+token_policies: ["external-dns"]
