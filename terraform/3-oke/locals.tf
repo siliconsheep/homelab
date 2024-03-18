@@ -6,8 +6,8 @@ locals {
     "Siliconsheep.Cluster" = "siliconsheep-oke"
   }
 
-  master_kubernetes_version = "1.26.2"
-  node_kubernetes_version   = "1.26.2"
+  master_kubernetes_version = "1.28.2"
+  node_kubernetes_version   = "1.28.2"
 
   protocol_ICMP = "1"
   protocol_TCP  = "6"
@@ -19,7 +19,7 @@ locals {
 
   parsed_oke_images_aarch64 = {
     for source in data.oci_containerengine_node_pool_option.all_node_pool_options.sources : source.image_id =>
-    flatten(regexall("Oracle-Linux-8.7-aarch64-([^-]+)-\\d+-OKE-${local.node_kubernetes_version}", source.source_name)) if source.source_type == "IMAGE"
+    flatten(regexall("Oracle-Linux-8.9-aarch64-([^-]+)-\\d+-OKE-${local.node_kubernetes_version}", source.source_name)) if source.source_type == "IMAGE"
   }
   most_recent_date_aarch64 = reverse(sort(flatten(values(local.parsed_oke_images_aarch64))))[0]
 
@@ -27,7 +27,7 @@ locals {
 
   parsed_oke_images_amd64 = {
     for source in data.oci_containerengine_node_pool_option.all_node_pool_options.sources : source.image_id =>
-    flatten(regexall("Oracle-Linux-8.7-([^-]+)-\\d+-OKE-${local.node_kubernetes_version}", source.source_name)) if source.source_type == "IMAGE"
+    flatten(regexall("Oracle-Linux-8.9-([^-]+)-\\d+-OKE-${local.node_kubernetes_version}", source.source_name)) if source.source_type == "IMAGE"
   }
   most_recent_date_amd64 = reverse(sort(flatten(values(local.parsed_oke_images_amd64))))[0]
 
