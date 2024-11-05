@@ -3,7 +3,7 @@ name: longhorn
 version: 1.0.0
 dependencies:
   - name: longhorn
-    version: 1.5.2
+    version: 1.5.5
     repository: https://charts.longhorn.io
   - name: vault-secret-provider
     version: 1.0.0
