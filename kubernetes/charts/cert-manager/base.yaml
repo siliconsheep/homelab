@@ -13,7 +13,6 @@ cert-manager:
       memory: 125Mi
 
   webhook:
-    enabled: true
     resources:
       requests:
         cpu: 25m
