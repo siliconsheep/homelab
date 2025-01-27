@@ -10,7 +10,7 @@ app-template:
 
   image:
     repository: ghcr.io/onedr0p/sabnzbd
-    tag: 4.4.1@sha256:4188d3c29c53de1018edcfd5dc2d0a0c7955b9a239b91ff6c859626abd3494dc
+    tag: 4.4.1@sha256:15c1e8deb2777fed44352448a8d04ff65694a37668b20c01abb13e077f793655
   env:
     TZ: "Europe/Stockholm"
     SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd,sabnzbd.siliconsheep.se
