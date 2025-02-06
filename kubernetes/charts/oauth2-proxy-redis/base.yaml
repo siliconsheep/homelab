@@ -19,7 +19,7 @@ app-template:
 
   image:
     repository: public.ecr.aws/docker/library/redis
-    tag: 7.4.1@sha256:ea96c435dc17b011f54c6a883c3c45e7726242b075de61c6fe40a10ae6ae0f83
+    tag: 7.4.2@sha256:93a8d83b707d0d6a1b9186edecca2e37f83722ae0e398aee4eea0ff17c2fad0e
 
   podAnnotations:
     secret.reloader.stakater.com/reload: oauth2-proxy-secrets
