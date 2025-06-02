@@ -3,7 +3,7 @@ apiVersion: v2
 version: 1.0.1
 dependencies:
   - name: kube-prometheus-stack
-    version: 52.1.0
+    version: 72.9.1
     repository: https://prometheus-community.github.io/helm-charts
   - name: vault-secret-provider
     version: 1.0.0
