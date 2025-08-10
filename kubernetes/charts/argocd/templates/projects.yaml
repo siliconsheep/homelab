@@ -12,8 +12,7 @@ spec:
   - namespace: '*'
     server: '*'
   sourceRepos:
-  - https://github.com/siliconsheep/homelab
-  - https://bjw-s.github.io/helm-charts
+  - '*'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -29,5 +28,4 @@ spec:
   - namespace: '*'
     server: '*'
   sourceRepos:
-  - https://github.com/siliconsheep/homelab
-  - https://bjw-s.github.io/helm-charts
+  -'*'
