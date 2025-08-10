@@ -3,5 +3,5 @@ name: echoserver
 version: 1.0.0
 dependencies:
   - name: app-template
-    version: 1.5.1
+    version: 4.2.0
     repository: https://bjw-s-labs.github.io/helm-charts/
