@@ -3,7 +3,7 @@ apiVersion: v2
 version: 1.0.0
 dependencies:
   - name: argo-cd
-    version: 7.7.11
+    version: 7.7.23
     repository: https://argoproj.github.io/argo-helm
   - name: vault-secret-provider
     version: 1.0.0
